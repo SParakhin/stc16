@@ -4,9 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>university.innopolis.stc</groupId>
+    <groupId>stc16.innobazaar</groupId>
     <artifactId>innobazaar</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <url>http://maven.apache.org</url>
 
     <properties>
         <maven-compiler-plugin.source>8</maven-compiler-plugin.source>
@@ -23,6 +25,8 @@
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
         <c3p0.version>0.9.5.4</c3p0.version>
+        <spring-orm.version>5.1.5.RELEASE</spring-orm.version>
+        <mysql-connector-java.version>5.1.47</mysql-connector-java.version>
     </properties>
 
     <dependencies>
@@ -167,6 +171,19 @@
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring-orm.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-java.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

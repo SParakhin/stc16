@@ -7,10 +7,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  $END$
-  </body>
+<head>
+    <title>Ура, заработало</title>
+</head>
+<body>
+Остановись, подумай!!! Успеешь ли ты вовремя сдать проект ?
+</body>
 </html>
