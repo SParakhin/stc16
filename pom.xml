@@ -10,7 +10,6 @@
     <packaging>war</packaging>
     <url>http://maven.apache.org</url>
 
-    <packaging>war</packaging>
 
     <properties>
         <maven-compiler-plugin.source>8</maven-compiler-plugin.source>
