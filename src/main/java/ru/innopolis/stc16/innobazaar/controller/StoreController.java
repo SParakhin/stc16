@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.innopolis.stc16.innobazaar.service.UserService;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/store")
 public class AppController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
+    @GetMapping("/main")
     public String index() {
-        return "index";
+        return "storeMain";
     }
 }
