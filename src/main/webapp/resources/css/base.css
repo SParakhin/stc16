@@ -1,0 +1,33 @@
+body {
+    background-image: url(https://kipmu.ru/wp-content/uploads/kobobl.jpg);
+    background-size: cover;
+}
+
+header {
+    background-color: cornflowerblue;
+}
+
+header ul {
+    margin: 0;
+}
+
+header a, header li {
+    color: white;
+    font-weight: bold;
+}
+
+
+section#login.wrap-headline {
+    position: relative;
+    padding-top: 20%;
+    padding-bottom: 20%;
+}
+
+section#login hr {
+    width: 10%
+}
+
+section#login .btn-default {
+    background-color: rgba(255, 255, 255,  0.5);
+    border: none;
+}

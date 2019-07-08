@@ -10,10 +10,9 @@
     <packaging>war</packaging>
     <url>http://maven.apache.org</url>
 
-
     <properties>
         <maven-compiler-plugin.source>8</maven-compiler-plugin.source>
-        <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
+        <postgresql.version>42.2.5</postgresql.version>
         <spring.version>5.1.5.RELEASE</spring.version>
         <hibernate.version>5.3.6.Final</hibernate.version>
         <javax.servlet.jsp-api.version>2.3.3</javax.servlet.jsp-api.version>
@@ -27,16 +26,17 @@
         <hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
         <c3p0.version>0.9.5.4</c3p0.version>
         <spring-orm.version>5.1.5.RELEASE</spring-orm.version>
-        <mysql-connector-java.version>5.1.47</mysql-connector-java.version>
+        <bootstrap.version>4.3.1</bootstrap.version>
+        <jquery.version>3.4.1</jquery.version>
+        <webjars-locator.version>0.36</webjars-locator.version>
     </properties>
-
 
     <dependencies>
 
         <!--Postgresql-->
 
         <dependency>
-            <groupId>postgresql</groupId>
+            <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
         </dependency>
@@ -51,6 +51,11 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
         </dependency>
         <dependency>
@@ -89,12 +94,6 @@
             <artifactId>spring-security-taglibs</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
 
         <!-- Hibernate -->
 
@@ -154,6 +153,23 @@
             <version>${jstl-api.version}</version>
         </dependency>
 
+        <!-- bootstrap -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>${bootstrap.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>${jquery.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator</artifactId>
+            <version>${webjars-locator.version}</version>
+        </dependency>
+
         <!-- log4j -->
 
         <dependency>
@@ -178,18 +194,6 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${spring-orm.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql-connector-java.version}</version>
         </dependency>
 
     </dependencies>
