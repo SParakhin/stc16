@@ -14,8 +14,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import ru.innopolis.stc16.innobazaar.config.initializator.TestDataInit;
-import ru.innopolis.stc16.innobazaar.service.UserService;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -70,7 +68,7 @@ public class AppContext {
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[]{"ru.innopolis.stc16.innobazaar"});
+        em.setPackagesToScan("ru.innopolis.stc16.innobazaar");
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(hibernateProperties());
@@ -78,9 +76,4 @@ public class AppContext {
         return em;
     }
 
-    @Bean(initMethod = "init")
-    @Autowired
-    public TestDataInit initTestData(UserService customerService) {
-        return new TestDataInit(customerService);
-    }
 }
