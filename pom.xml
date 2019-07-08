@@ -27,6 +27,9 @@
         <hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
         <c3p0.version>0.9.5.4</c3p0.version>
         <spring-orm.version>5.1.5.RELEASE</spring-orm.version>
+        <bootstrap.version>4.3.1</bootstrap.version>
+        <jquery.version>3.4.1</jquery.version>
+        <webjars-locator.version>0.36</webjars-locator.version>
         <mysql-connector-java.version>5.1.47</mysql-connector-java.version>
     </properties>
 
@@ -153,6 +156,24 @@
             <artifactId>jstl</artifactId>
             <version>${jstl-api.version}</version>
         </dependency>
+
+        <!-- bootstrap -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>${bootstrap.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>${jquery.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator</artifactId>
+            <version>${webjars-locator.version}</version>
+        </dependency>
+
 
         <!-- log4j -->
 
