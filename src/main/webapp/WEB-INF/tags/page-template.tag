@@ -17,6 +17,8 @@
     </title>
 </head>
 
+<t:header-template/>
+
 <body>
 <jsp:doBody/>
 </body>
