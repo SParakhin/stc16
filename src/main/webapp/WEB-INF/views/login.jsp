@@ -4,6 +4,7 @@
 
 <t:page-template>
     <jsp:attribute name="titleText">Login page</jsp:attribute>
+    <jsp:attribute name="metaDescription">Login page for innobazaar</jsp:attribute>
     <jsp:body>
 
         <h1>Login to the system</h1>
