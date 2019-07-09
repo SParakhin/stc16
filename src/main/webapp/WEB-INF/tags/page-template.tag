@@ -21,4 +21,6 @@
 <jsp:doBody/>
 </body>
 
+<t:footer-template/>
+
 </html>
