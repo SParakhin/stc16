@@ -4,7 +4,7 @@
 
 <t:page-template>
     <jsp:attribute name="titleText">Welcome page</jsp:attribute>
-    <jsp:attribute name="metaDescription">Welcome description</jsp:attribute>
+    <jsp:attribute name="metaDescription">Main page</jsp:attribute>
     <jsp:body>
 
         <h1>Welcome to Innobazaar!</h1>

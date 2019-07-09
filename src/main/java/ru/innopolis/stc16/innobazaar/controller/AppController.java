@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AppController {
 
     @GetMapping("/")
-    public String welcome() {
-        return "welcome";
+    public String showMain() {
+
+        return "app-main";
     }
 }
