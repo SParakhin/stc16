@@ -7,7 +7,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 
-<html>
 <head>
     <meta charset="utf-8">
     <meta name="description" content="<jsp:invoke fragment="metaDescription"/>">
@@ -17,12 +16,14 @@
     </title>
 </head>
 
+<body>
+
 <t:header-template/>
 
-<body>
 <jsp:doBody/>
-</body>
 
 <t:footer-template/>
+
+</body>
 
 </html>
