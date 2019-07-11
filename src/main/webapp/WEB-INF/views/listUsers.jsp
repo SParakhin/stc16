@@ -16,13 +16,7 @@
 <div class="container">
     <div class="col-md-offset-1 col-md-10">
         <h2>Тестовый список пользователей</h2>
-        <%--<hr/>--%>
 
-        <%--<input type="button" value="Add Customer"--%>
-               <%--onclick="window.location.href='showForm'; return false;"--%>
-               <%--class="btn btn-primary"/>--%>
-        <%--<br/>--%>
-        <%--<br/>--%>
         <div class="panel panel-info">
             <div class="panel-heading">
                 <div class="panel-title">Список пользователей</div>
@@ -36,7 +30,7 @@
                         <th>Action</th>
                     </tr>
 
-                    <!-- loop over and print our customers -->
+                    <!-- loop over and print our users -->
                     <c:forEach var="user" items="${users}">
 
                         <!-- construct an "update" link with user id -->

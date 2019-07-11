@@ -2,6 +2,7 @@ package ru.innopolis.stc16.innobazaar.entity;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 @Entity
@@ -11,13 +12,18 @@ public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty
     private String address;
+    @NotEmpty
     @Column(name = "post_code")
     private String postCode;
+    @NotEmpty
     private String city;
+    @NotEmpty
     private String country;
     @ManyToOne
     private User user;
+    @NotEmpty
     private String description;
 
     public Address() {

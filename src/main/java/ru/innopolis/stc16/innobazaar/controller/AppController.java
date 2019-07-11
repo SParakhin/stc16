@@ -22,12 +22,14 @@ public class AppController {
     UserService userService;
 
     @GetMapping("/")
-    public String welcome() {
-        return "welcome";
+    public String showMain() {
+
+        return "app-main";
     }
 
     /**
      * Метод отображения формы регистрации пользователя
+     *
      * @param model
      * @return
      */
@@ -40,43 +42,49 @@ public class AppController {
 
     /**
      * Метод сохранения нового пользователя в БД
+     *
      * @param user
      * @param bindingResult
      * @return
      */
     @PostMapping("/saveUser")
-    public String saveUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
+    public String saveUser(@Valid User user,
+                           BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "registration";
         }
         userService.saveUser(user);
-        return "welcome";
+        return "redirect:/listUsers";
     }
 
     /**
      * Метод для отображения формы для изменения или удаления профиля пользователя
+     *
      * @param id
      * @param model
      * @return
      */
     @GetMapping("/updateUserForm")
-    public String showFormUpdateUser(@Valid @RequestParam("id") @PathVariable Long id, Model model) {
+    public String showFormUpdateUser(@RequestParam("id") @PathVariable Long id,
+                                     Model model) {
         User user = userService.getUser(id);
         if (user != null) {
             model.addAttribute("user", user);
             return "editUser";
         }
-        return "welcome";
+        return "redirect:/listUsers";
     }
 
     /**
      * Метод для изменения профиля пользователя
+     *
      * @param user
      * @param bindingResult
      * @return
      */
     @PostMapping("/updateUser")
-    public String updateUser(@Valid User user, BindingResult bindingResult) {
+    public String updateUser(@Valid User user,
+                             BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "editUser";
         }
@@ -86,10 +94,11 @@ public class AppController {
 
     /**
      * Метод для удаления профиля пользователя
+     *
      * @param id
      * @return
      */
-    @PostMapping("/deleteUser")
+    @GetMapping("/deleteUser")
     public String deleteUser(@RequestParam("id") @PathVariable Long id) {
         userService.deleteUser(id);
         return "redirect:/listUsers";
@@ -97,39 +106,36 @@ public class AppController {
 
     /**
      * Метод для отображения формы добавления адреса доставки для пользователя
+     *
      * @param id
      * @param model
      * @param session
      * @return
      */
     @GetMapping("/addAddressForm")
-    public String showFormAddAddress(@Valid @RequestParam("id") Long id,
+    public String showFormAddAddress(@RequestParam("id") @PathVariable Long id,
                                      Model model,
                                      HttpSession session) {
-        User user = userService.getUser(id);
-        if (user != null) {
-            session.setAttribute("id", id);
-            Address address = new Address();
-            model.addAttribute("address", address);
-            model.addAttribute("user", user);
-            return "addAddress";
-        }
-        return "redirect:/listUsers";
+        session.setAttribute("id", id);
+        Address address = new Address();
+        model.addAttribute("address", address);
+        return "addAddress";
     }
 
     /**
      * Метод сохранения адреса доставки пользователя
+     *
      * @param session
      * @param address
      * @param bindingResult
      * @return
      */
     @PostMapping("/saveAddressToUser")
-    public String saveAddressToUser(HttpSession session,
-                                    Address address,
-                                    BindingResult bindingResult) {
+    public String saveAddressToUser(@Valid Address address,
+                                    BindingResult bindingResult,
+                                    HttpSession session) {
         if (bindingResult.hasErrors()) {
-            return "editUser";
+            return "addAddress";
         }
         Object userId = session.getAttribute("id");
         User user = userService.getUser((Long) userId);
