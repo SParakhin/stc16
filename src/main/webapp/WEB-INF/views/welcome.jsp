@@ -43,6 +43,13 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">Контакты</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<spring:url value="/addUserForm"/>">Регистрация</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="<spring:url value="/listUsers"/>">Список пользователей</a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -62,6 +69,7 @@
         </div>
     </div>
 </section>
+
 
 <script src="webjars/jquery/3.4.1/jquery.min.js"></script>
 <script src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>

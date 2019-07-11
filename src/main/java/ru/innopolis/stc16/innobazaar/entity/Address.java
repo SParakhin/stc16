@@ -18,6 +18,7 @@ public class Address implements Serializable {
     private String country;
     @ManyToOne
     private User user;
+    private String description;
 
     public Address() {
     }
@@ -70,6 +71,14 @@ public class Address implements Serializable {
         this.user = user;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Address{");
@@ -78,7 +87,8 @@ public class Address implements Serializable {
         sb.append(", postCode='").append(postCode).append('\'');
         sb.append(", city='").append(city).append('\'');
         sb.append(", country='").append(country).append('\'');
-        sb.append(", user=").append(user);
+        sb.append(", user=").append(user).append('\'');
+        sb.append(", description=").append(description);
         sb.append('}');
         return sb.toString();
     }
