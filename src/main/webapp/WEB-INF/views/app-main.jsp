@@ -9,11 +9,5 @@
 
         <h1>H1</h1>
 
-        <ul>
-            <li><a href="/addUserForm">Регистрация</a></li>
-            <li><a href="/listUsers">Список пользователей</a></li>
-        </ul>
-
-
     </jsp:body>
 </t:page-template>

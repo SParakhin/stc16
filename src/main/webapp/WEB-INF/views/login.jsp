@@ -4,7 +4,7 @@
 
 <t:page-template>
     <jsp:attribute name="titleText">Вход</jsp:attribute>
-    <jsp:attribute name="metaDescription">Страица авторизации пользователя</jsp:attribute>
+    <jsp:attribute name="metaDescription">Страница авторизации пользователя</jsp:attribute>
     <jsp:body>
 
         <h1>Вход в систему</h1>

@@ -1,4 +1,4 @@
-<%@tag description="Footer page block" pageEncoding="UTF-8"%>
+<%@tag description="Footer page block" pageEncoding="UTF-8" %>
 <h3><a href="${pageContext.request.contextPath}/">Innobazaar</a></h3>
 <UL>
     <li>пункт 1</li>
@@ -7,4 +7,7 @@
     <li>пункт...</li>
     <li>пункт_N</li>
     <li><a href="${pageContext.request.contextPath}/login">Вход</a></li>
+    <li><a href="/addUserForm">Регистрация</a></li>
+    <li><a href="/listUsers">Список пользователей</a></li>
+</ul>
 </UL>
