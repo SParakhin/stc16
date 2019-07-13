@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
@@ -18,14 +19,14 @@
                     <form method="post" action="${pageContext.request.contextPath}/auth_user">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">login</span>
+                                <span class="input-group-text" id="basic-addon1">логин</span>
                             </div>
                             <input class="form-control" type="text" name="name"><br/>
                         </div>
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon2">password</span>
+                                <span class="input-group-text" id="basic-addon2">пароль</span>
                             </div>
                             <input class="form-control" type="password" name="password"><br/>
                         </div>
