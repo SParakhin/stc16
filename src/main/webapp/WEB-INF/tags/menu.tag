@@ -1,5 +1,6 @@
 <%@tag description="Menu page block" pageEncoding="UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <nav class="navbar fixed-top navbar-expand-xl navbar-light bg-light shadow p-3 mb-5" style="opacity: 0.95;">
     <div class="container-fluid font-weight-bold">
