@@ -1,7 +1,5 @@
 package ru.innopolis.stc16.innobazaar.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,8 +16,11 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     /**
      * Метод отображения формы регистрации пользователя

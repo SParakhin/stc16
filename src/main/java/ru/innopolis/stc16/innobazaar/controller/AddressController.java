@@ -21,8 +21,11 @@ import java.util.List;
 @Controller
 public class AddressController {
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
+
+    public AddressController(UserService userService) {
+        this.userService = userService;
+    }
 
     /**
      * Метод для отображения формы добавления адреса доставки для пользователя
