@@ -10,9 +10,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
+    <!-- Custom styles -->
+    <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet">
 
     <meta name="description" content="<jsp:invoke fragment="metaDescription"/>">
 
@@ -22,24 +24,16 @@
 </head>
 
 <body>
+<t:header-template/>
 
 <div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col col-sm-10 col-md-9 col-lg-7">
-            <t:header-template/>
-        </div>
-    </div>
     <div class="row justify-content-center">
         <div class="col col-sm-10 col-md-9 col-lg-7">
             <jsp:doBody/>
         </div>
     </div>
-    <div class="row justify-content-center">
-        <div class="col col-sm-10 col-md-9 col-lg-7">
-            <t:footer-template/>
-        </div>
-    </div>
 </div>
+<t:footer-template/>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
