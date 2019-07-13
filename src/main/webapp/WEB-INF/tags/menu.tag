@@ -12,27 +12,27 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto text-uppercase">
-                <li class="nav-item text-lowercase">
+            <ul class="navbar-nav ml-auto text-lowercase">
+                <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/">пункт 1</a>
                 </li>
-                <li class="nav-item text-lowercase">
+                <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/">пункт 2</a>
                 </li>
-                <li class="nav-item text-lowercase">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/">пункт...</a>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/addUserForm">регистрация</a>
                 </li>
-                <li class="nav-item text-lowercase">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/">пункт N</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/listUsers">пользователи</a>
                 </li>
-                <li class="nav-item text-lowercase">
+                <li class="nav-item">
 						<span class="navbar-brand mb-0 h6">
-							<!-- Add new Article buttonn -->
 							<input class="btn btn-success my-2 my-sm-0" type="button" value="Войти"
                                    onclick="window.location.href='login'; return false;"/>
 						</span>
                 </li>
-                <li class="nav-item text-lowercase">
+                <li class="nav-item">
                     <form:form class="form-inline"
                                action="${pageContext.request.contextPath}/logout"
                                method="POST">
