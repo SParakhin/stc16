@@ -43,6 +43,10 @@
                         </div>
 
                         <input class="btn btn-lg btn-success my-1" type="submit" value="войти"/>
+                        <span class="navbar-brand mb-0 h6">
+							<input class="btn btn-lg btn-info my-2 my-sm-0" type="button" value="регистрация"
+                                   onclick="window.location.href='addUserForm'; return false;"/>
+						</span>
                     </form:form>
                 </div>
             </div>
