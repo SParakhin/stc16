@@ -41,7 +41,7 @@
                 <security:authorize access="isAuthenticated()">
                 <ul class="navbar-nav ml-auto">
                     <li class="navbar-item mt-1 mr-3">вы вошли как:
-                        <a href="${pageContext.request.contextPath}/">
+                        <a href="#">
                             <security:authentication property="principal.username"/>
                         </a>
                     </li>
