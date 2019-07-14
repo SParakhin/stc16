@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
@@ -16,12 +17,22 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col col-md-6 justify-content-center">
-                    <form method="post" action="${pageContext.request.contextPath}/auth_user">
+                    <form:form action="${pageContext.request.contextPath}/authenticateTheUser" method="POST">
+                        <c:if test="${param.error != null}">
+                            <span class="text-danger text-monospace">
+                                <i>*** Извините! Вы ввели некорректное имя пользователя/пароль ***</i>
+                            </span>
+                        </c:if>
+                        <c:if test="${param.logout != null}">
+                            <span class="text-info text-monospace">
+                                <i>*** Вы вышли из своей учётной записи! ***</i>
+                            </span>
+                        </c:if>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">логин</span>
                             </div>
-                            <input class="form-control" type="text" name="name"><br/>
+                            <input class="form-control" type="text" name="username"><br/>
                         </div>
 
                         <div class="input-group mb-3">
@@ -32,7 +43,11 @@
                         </div>
 
                         <input class="btn btn-lg btn-success my-1" type="submit" value="войти"/>
-                    </form>
+                        <span class="navbar-brand mb-0 h6">
+							<input class="btn btn-lg btn-info my-2 my-sm-0" type="button" value="регистрация"
+                                   onclick="window.location.href='addUserForm'; return false;"/>
+						</span>
+                    </form:form>
                 </div>
             </div>
         </div>
