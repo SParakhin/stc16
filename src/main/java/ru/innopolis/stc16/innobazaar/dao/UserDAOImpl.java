@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class UserDAOImpl implements UserDAO {
     @Transactional(readOnly = true)
 
     public List<User> getAllUser() {
-        return entityManager.createNativeQuery("select * from users", User.class).getResultList();
+        return entityManager.createQuery("From User").getResultList();
     }
 
     @Override

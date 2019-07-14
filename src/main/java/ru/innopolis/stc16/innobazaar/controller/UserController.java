@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.innopolis.stc16.innobazaar.entity.User;
 import ru.innopolis.stc16.innobazaar.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
@@ -29,10 +30,12 @@ public class UserController {
      * @return
      */
     @GetMapping("/addUserForm")
-    public String showFormRegistrationUser(Model model) {
+    public String showFormRegistrationUser(Model model,
+                                           HttpServletRequest request) {
         User user = new User();
+        request.setAttribute("newUser", user);
         model.addAttribute("user", user);
-        return "registration";
+        return "userForm";
     }
 
     /**
@@ -46,7 +49,7 @@ public class UserController {
     public String saveUser(@Valid User user,
                            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "registration";
+            return "userForm";
         }
         userService.saveUser(user);
         return "redirect:/listUsers";
@@ -67,7 +70,7 @@ public class UserController {
         User user = userService.getUser(id);
         if (user != null) {
             model.addAttribute("user", user);
-            return "editUser";
+            return "userForm";
         }
         return "redirect:/listUsers";
     }

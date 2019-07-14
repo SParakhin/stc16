@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user_details")
 public class User implements Serializable {
 
     @Id

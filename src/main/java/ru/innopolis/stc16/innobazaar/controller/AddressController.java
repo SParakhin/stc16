@@ -12,6 +12,7 @@ import ru.innopolis.stc16.innobazaar.entity.Address;
 import ru.innopolis.stc16.innobazaar.entity.User;
 import ru.innopolis.stc16.innobazaar.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -36,11 +37,13 @@ public class AddressController {
      */
     @GetMapping("/address/addAddressForm")
     public String showFormAddAddress(Model model,
-                                     HttpSession session) {
+                                     HttpSession session,
+                                     HttpServletRequest request) {
         session.getAttribute("id");
         Address address = new Address();
         model.addAttribute("address", address);
-        return "addAddress";
+        request.setAttribute("newAddress", address);
+        return "addressForm";
     }
 
     /**
@@ -98,7 +101,7 @@ public class AddressController {
             if (address.getId().equals(id)) ;
             model.addAttribute("address", address);
             session.setAttribute("address", address);
-            return "editAddress";
+            return "addressForm";
         }
         return "redirect:/address/listAddress";
     }
