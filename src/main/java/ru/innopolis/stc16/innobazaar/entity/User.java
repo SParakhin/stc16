@@ -1,12 +1,15 @@
 package ru.innopolis.stc16.innobazaar.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user_details")
 public class User implements Serializable {
 
     @Id
@@ -14,19 +17,23 @@ public class User implements Serializable {
     private Long id;
 
     @Column(name = "first_name")
+    @NotEmpty
     private String firstName;
 
     @Column(name = "last_name")
+    @Size(min = 1, message = "Поле не может быть пустым")
     private String lastName;
-
+    @NotEmpty
     private String email;
     private String phone;
+    @NotEmpty
     private String login;
+    @NotEmpty
     private String password;
 
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             orphanRemoval = true)
     private List<Address> addressList = new ArrayList<>();
 
@@ -116,7 +123,7 @@ public class User implements Serializable {
         return getAddressList().add(address);
     }
 
-    public boolean addStoreToUser (Store store){
+    public boolean addStoreToUser(Store store) {
         store.setUser(this);
         return getStoreList().add(store);
     }

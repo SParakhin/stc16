@@ -2,6 +2,7 @@ package ru.innopolis.stc16.innobazaar.entity;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 @Entity
@@ -11,13 +12,19 @@ public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty
     private String address;
+    @NotEmpty
     @Column(name = "post_code")
     private String postCode;
+    @NotEmpty
     private String city;
+    @NotEmpty
     private String country;
     @ManyToOne
     private User user;
+    @NotEmpty
+    private String description;
 
     public Address() {
     }
@@ -70,6 +77,14 @@ public class Address implements Serializable {
         this.user = user;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Address{");
@@ -78,7 +93,8 @@ public class Address implements Serializable {
         sb.append(", postCode='").append(postCode).append('\'');
         sb.append(", city='").append(city).append('\'');
         sb.append(", country='").append(country).append('\'');
-        sb.append(", user=").append(user);
+        sb.append(", user=").append(user).append('\'');
+        sb.append(", description=").append(description);
         sb.append('}');
         return sb.toString();
     }

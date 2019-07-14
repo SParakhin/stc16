@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -24,11 +25,11 @@ public class UserDAOImpl implements UserDAO {
     @Transactional(readOnly = true)
 
     public List<User> getAllUser() {
-        return entityManager.createNativeQuery("select * from users", User.class).getResultList();
+        return entityManager.createQuery("From User").getResultList();
     }
 
     @Override
-    public void deleteUser(int id) {
+    public void deleteUser(Long id) {
         User user = entityManager.find(User.class, id);
         entityManager.remove(user);
     }
@@ -45,7 +46,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUser(int id) {
+    public User getUser(Long id) {
         User user = entityManager.find(User.class, id);
         return user;
     }
