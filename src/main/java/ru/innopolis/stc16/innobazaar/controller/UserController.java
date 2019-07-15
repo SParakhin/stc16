@@ -86,7 +86,7 @@ public class UserController {
     public String updateUser(@Valid User user,
                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "editUser";
+            return "userForm";
         }
         userService.updateUser(user);
         return "redirect:/listUsers";
