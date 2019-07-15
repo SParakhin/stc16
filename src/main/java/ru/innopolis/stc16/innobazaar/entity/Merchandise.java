@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Сущность Товар
+ * Сущность "Товар"
  */
 @Entity
 @Data

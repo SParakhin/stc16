@@ -8,7 +8,7 @@ import ru.innopolis.stc16.innobazaar.entity.Merchandise;
 import java.util.List;
 
 /**
- * Реализация Service Товара
+ * Реализация Service сущности "Товара"
  */
 @Service
 public class MerchandiseServiceImpl implements MerchandiseService {

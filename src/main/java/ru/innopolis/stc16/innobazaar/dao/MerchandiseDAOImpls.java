@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
- * Реализация DAO Товара
+ * Реализация DAO "Товар"
  */
 @Repository
 @Transactional

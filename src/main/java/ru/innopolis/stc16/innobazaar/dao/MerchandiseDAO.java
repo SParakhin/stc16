@@ -5,9 +5,8 @@ import ru.innopolis.stc16.innobazaar.entity.Merchandise;
 import java.util.List;
 
 /**
- * DAO Товар
+ * DAO "Товар"
  */
-
 public interface MerchandiseDAO {
 
     List<Merchandise> getAllMerchandise();

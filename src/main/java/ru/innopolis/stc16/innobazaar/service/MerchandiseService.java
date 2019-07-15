@@ -5,7 +5,7 @@ import ru.innopolis.stc16.innobazaar.entity.Merchandise;
 import java.util.List;
 
 /**
- * Service Товара
+ * Service сущности "Товар"
  */
 public interface MerchandiseService {
 
