@@ -1,15 +1,16 @@
 package ru.innopolis.stc16.innobazaar.entity;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @Entity
-@Table(name = "user_details")
+@Table(name = "users")
 public class User implements Serializable {
 
     @Id
@@ -27,7 +28,8 @@ public class User implements Serializable {
     private String email;
     private String phone;
     @NotEmpty
-    private String login;
+    @Column(unique = true)
+    private String username;
     @NotEmpty
     private String password;
 
@@ -42,6 +44,12 @@ public class User implements Serializable {
             fetch = FetchType.LAZY,
             orphanRemoval = true)
     private List<Store> storeList = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "authority_id", updatable = false)
+    private Authorities authorities;
+
+    private boolean enabled = true;
 
     public User() {
     }
@@ -94,12 +102,12 @@ public class User implements Serializable {
         this.addressList = addressList;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -116,6 +124,22 @@ public class User implements Serializable {
 
     public void setStoreList(List<Store> storeList) {
         this.storeList = storeList;
+    }
+
+    public Authorities getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Authorities authorities) {
+        this.authorities = authorities;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public boolean addAddressToUser(Address address) {

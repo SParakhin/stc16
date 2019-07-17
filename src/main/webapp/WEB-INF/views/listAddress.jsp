@@ -29,13 +29,13 @@
                             <!-- loop over and print our users -->
                             <c:forEach var="address" items="${addresses}">
 
-                                <!-- construct an "update" link with user id -->
+                                <!-- construct an "update" link with username id -->
                                 <c:url var="updateLink" value="/address/updateAddressForm">
                                     <c:param name="id" value="${address.id}"/>
                                 </c:url>
 
 
-                                <!-- construct an "delete" link with user id -->
+                                <!-- construct an "delete" link with username id -->
                                 <c:url var="deleteLink" value="/address/deleteAddress">
                                     <c:param name="id" value="${address.id}"/>
                                 </c:url>

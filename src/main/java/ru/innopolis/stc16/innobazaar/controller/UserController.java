@@ -95,14 +95,22 @@ public class UserController {
     /**
      * Метод для удаления профиля пользователя
      *
-     * @param id
+     * @param session
      * @return
      */
     @GetMapping("/user/deleteUser")
-    public String deleteUser(@RequestParam("id") Long id) {
+    public String deleteUser(HttpSession session) {
+        Object userId = session.getAttribute("id");
+        userService.deleteUser((Long) userId);
+        return "redirect:/listUsers";
+    }
+
+    @GetMapping("/user/deleteUserFromList")
+    public String deleteUser(@RequestParam Long id) {
         userService.deleteUser(id);
         return "redirect:/listUsers";
     }
+
 
     @GetMapping("/listUsers")
     public String listUsers(Model model) {

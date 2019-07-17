@@ -28,7 +28,12 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(securityDataSource);
+        auth.jdbcAuthentication().dataSource(securityDataSource)
+                .usersByUsernameQuery("select username, password, enabled"
+                        + " from users where username=?")
+                .authoritiesByUsernameQuery("select username, authority "
+                        + "from authorities where username=?")
+                .passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override
@@ -50,5 +55,10 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().loginPage("/login").loginProcessingUrl("/authenticateTheUser").permitAll()
                 .and()
                 .logout().permitAll();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
