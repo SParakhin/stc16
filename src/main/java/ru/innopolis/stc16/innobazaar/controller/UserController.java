@@ -1,5 +1,7 @@
 package ru.innopolis.stc16.innobazaar.controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,22 +60,34 @@ public class UserController {
     /**
      * Метод для отображения формы для изменения или удаления профиля пользователя
      *
-     * @param id
      * @param model
      * @return
      */
+//    @GetMapping("/user/updateUserForm")
+//    public String showFormUpdateUser(@RequestParam("id") Long id,
+//                                     Model model,
+//                                     HttpSession session) {
+//        session.setAttribute("id", id);
+//        User user = userService.getUser(id);
+//        if (user != null) {
+//            model.addAttribute("user", user);
+//            return "userForm";
+//        }
+//        return "redirect:/listUsers";
+//    }
     @GetMapping("/user/updateUserForm")
-    public String showFormUpdateUser(@RequestParam("id") Long id,
-                                     Model model,
+    public String showFormUpdateUser(Model model,
                                      HttpSession session) {
-        session.setAttribute("id", id);
-        User user = userService.getUser(id);
+        Object username = session.getAttribute("username");
+        User user = userService.getUserByUsername((String) username);
         if (user != null) {
             model.addAttribute("user", user);
+            session.setAttribute("id", user.getId());
             return "userForm";
         }
         return "redirect:/listUsers";
     }
+
 
     /**
      * Метод для изменения профиля пользователя
@@ -117,5 +131,17 @@ public class UserController {
         List<User> users = userService.getAllUser();
         model.addAttribute("users", users);
         return "listUsers";
+    }
+
+    @GetMapping("/user")
+    public String showUserPage(Model model,
+                               HttpSession session) {
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("userAuth", user);
+        session.setAttribute("username", user.getUsername());
+        User userForId = userService.getUserByUsername(user.getUsername());
+        Long userId = userForId.getId();
+        session.setAttribute("id",userId);
+        return "user";
     }
 }

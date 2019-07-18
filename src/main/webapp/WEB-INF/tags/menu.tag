@@ -22,7 +22,7 @@
                         категории
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">пункт 1</a>
+                        <a class="dropdown-item" href="/user">мой профиль</a>
                         <a class="dropdown-item" href="#">пункт 2</a>
                     </div>
                 </li>
