@@ -62,7 +62,7 @@ public class Authorities implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Authorities authorities = (Authorities) o;
-        return id == authorities.id;
+        return id.longValue() == authorities.id.longValue();
     }
 
     @Override
