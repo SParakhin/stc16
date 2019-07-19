@@ -24,14 +24,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private final UserDAO userDAO;
+    @Autowired
+    private UserDAO userDAO;
 
     @Autowired
     private RoleDao roleDao;
-
-    public UserServiceImpl(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
 
     @Override
     public List<User> getAllUser() {

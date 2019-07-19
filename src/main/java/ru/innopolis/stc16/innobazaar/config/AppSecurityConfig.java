@@ -21,6 +21,9 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
@@ -35,6 +38,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         characterEncodingFilter.setEncoding("UTF-8");
         characterEncodingFilter.setForceEncoding(true);
         http.addFilterBefore(characterEncodingFilter, CsrfFilter.class);
+        http.csrf().disable().addFilterBefore(characterEncodingFilter, CsrfFilter.class);
 
         /*
         Конфигурирование доступа
@@ -42,7 +46,11 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/listUsers").hasRole("ADMIN")
                 .and()
-                .formLogin().loginPage("/login").loginProcessingUrl("/authenticateTheUser").permitAll()
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/authenticateTheUser")
+                .successHandler(customAuthenticationSuccessHandler)
+                .permitAll()
                 .and()
                 .logout().permitAll();
     }
