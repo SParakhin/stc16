@@ -22,7 +22,7 @@
                         категории
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/user">мой профиль</a>
+                        <a class="dropdown-item" href="#">пункт 1</a>
                         <a class="dropdown-item" href="#">пункт 2</a>
                     </div>
                 </li>
@@ -41,7 +41,7 @@
                 <security:authorize access="isAuthenticated()">
                 <ul class="navbar-nav ml-auto">
                     <li class="navbar-item mt-1 mr-3">вы вошли как:
-                        <a href="#">
+                        <a href="/user">
                             <security:authentication property="principal.username"/>
                         </a>
                     </li>

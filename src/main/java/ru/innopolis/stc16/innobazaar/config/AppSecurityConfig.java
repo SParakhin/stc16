@@ -3,7 +3,6 @@ package ru.innopolis.stc16.innobazaar.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,22 +11,27 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
-import ru.innopolis.stc16.innobazaar.service.UserService;
+import ru.innopolis.stc16.innobazaar.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserService userService;
+    private  UserDetailsServiceImpl authenticationService;
+//    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
-    @Autowired
-    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.authenticationProvider(authenticationProvider());
+//    }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
-    }
+//    @Autowired
+//    public AppSecurityConfig(UserDetailsServiceImpl authenticationService,
+//                             CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
+//        this.authenticationService = authenticationService;
+//        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -49,7 +53,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/authenticateTheUser")
-                .successHandler(customAuthenticationSuccessHandler)
+//                .successHandler(customAuthenticationSuccessHandler)
                 .permitAll()
                 .and()
                 .logout().permitAll();
@@ -60,11 +64,19 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-        auth.setUserDetailsService(userService); //set the custom user details service
-        auth.setPasswordEncoder(passwordEncoder()); //set the password encoder - bcrypt
-        return auth;
+//    @Bean
+//    public DaoAuthenticationProvider authenticationProvider() {
+//        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+//        auth.setUserDetailsService(userService); //set the custom user details service
+//        auth.setPasswordEncoder(passwordEncoder()); //set the password encoder - bcrypt
+//        return auth;
+//    }
+
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        //The name of the configureGlobal method is not important. However,
+        // it is important to only configure AuthenticationManagerBuilder in a class annotated with either @EnableWebSecurity
+        auth.userDetailsService(authenticationService);
     }
 }

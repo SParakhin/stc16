@@ -1,16 +1,20 @@
 package ru.innopolis.stc16.innobazaar.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,23 +38,26 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
+            targetEntity = Address.class,
+            fetch = FetchType.EAGER,
             orphanRemoval = true)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Address> addressList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             orphanRemoval = true)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Store> storeList = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = CascadeType.MERGE,
+            targetEntity = Role.class)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
-
-    private boolean enabled = true;
 
     public User() {
     }
@@ -125,8 +132,33 @@ public class User implements Serializable {
         return username;
     }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
     }
 
     public String getPassword() {
@@ -143,14 +175,6 @@ public class User implements Serializable {
 
     public void setStoreList(List<Store> storeList) {
         this.storeList = storeList;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 
     public Collection<Role> getRoles() {

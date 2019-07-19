@@ -6,9 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.innopolis.stc16.innobazaar.entity.User;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.validation.constraints.NotNull;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -22,7 +22,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     @Transactional(readOnly = true)
-
     public List<User> getAllUser() {
         return entityManager.createQuery("From User").getResultList();
     }
@@ -39,7 +38,6 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    @NotNull
     public void saveUser(User user) {
         entityManager.persist(user);
     }
@@ -52,9 +50,14 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User getUserByUsername(String username) {
-        Query query = entityManager.createQuery("select e FROM User e where e.username=:username");
-        query.setParameter("username", username);
-        User user = (User) query.getSingleResult();
+        User user = null;
+        try {
+            TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
+            query.setParameter("username", username);
+            user = query.getSingleResult();
+        } catch (NoResultException e) {
+            //logger
+        }
         return user;
     }
 }

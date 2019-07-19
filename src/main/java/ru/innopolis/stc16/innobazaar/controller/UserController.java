@@ -78,8 +78,8 @@ public class UserController {
     @GetMapping("/user/updateUserForm")
     public String showFormUpdateUser(Model model,
                                      HttpSession session) {
-        Object username = session.getAttribute("username");
-        User user = userService.getUserByUsername((String) username);
+        User user = (User) session.getAttribute("user");
+//        User user = userService.getUserByUsername((String) username);
         if (user != null) {
             model.addAttribute("user", user);
             session.setAttribute("id", user.getId());
@@ -139,9 +139,9 @@ public class UserController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("userAuth", user);
         session.setAttribute("username", user.getUsername());
-//        User userForId = userService.getUserByUsername(user.getUsername());
         Long userId = user.getId();
-        session.setAttribute("id",userId);
+        session.setAttribute("id", userId);
+        session.setAttribute("user", user);
         return "user";
     }
 }
