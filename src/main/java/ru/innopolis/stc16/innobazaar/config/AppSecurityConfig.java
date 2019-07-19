@@ -3,37 +3,27 @@ package ru.innopolis.stc16.innobazaar.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
-
-import javax.sql.DataSource;
+import ru.innopolis.stc16.innobazaar.service.UserService;
 
 @Configuration
 @EnableWebSecurity
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final DataSource securityDataSource;
-
     @Autowired
-    public AppSecurityConfig(DataSource securityDataSource) {
-        this.securityDataSource = securityDataSource;
-    }
+    private UserService userService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(securityDataSource)
-                .usersByUsernameQuery("select username, password, enabled"
-                        + " from users where username=?")
-                .authoritiesByUsernameQuery("select username, authority "
-                        + "from authorities where username=?")
-                .passwordEncoder(new BCryptPasswordEncoder());
+        auth.authenticationProvider(authenticationProvider());
     }
 
     @Override
@@ -60,5 +50,13 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+        auth.setUserDetailsService(userService); //set the custom user details service
+        auth.setPasswordEncoder(passwordEncoder()); //set the password encoder - bcrypt
+        return auth;
     }
 }

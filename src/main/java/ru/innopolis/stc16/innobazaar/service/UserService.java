@@ -1,10 +1,11 @@
 package ru.innopolis.stc16.innobazaar.service;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.innopolis.stc16.innobazaar.entity.User;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     public List<User> getAllUser();
 

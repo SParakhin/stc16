@@ -1,12 +1,11 @@
 package ru.innopolis.stc16.innobazaar.entity;
 
-import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -45,13 +44,33 @@ public class User implements Serializable {
             orphanRemoval = true)
     private List<Store> storeList = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "authority_id", updatable = false)
-    private Authorities authorities;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Collection<Role> roles;
 
     private boolean enabled = true;
 
     public User() {
+    }
+
+    public User(String username, String password, String firstName, String lastName, String email) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
+    public User(String username, String password, String firstName, String lastName, String email,
+                Collection<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -126,20 +145,20 @@ public class User implements Serializable {
         this.storeList = storeList;
     }
 
-    public Authorities getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(Authorities authorities) {
-        this.authorities = authorities;
-    }
-
     public boolean isEnabled() {
         return enabled;
     }
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 
     public boolean addAddressToUser(Address address) {

@@ -136,11 +136,11 @@ public class UserController {
     @GetMapping("/user")
     public String showUserPage(Model model,
                                HttpSession session) {
-        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("userAuth", user);
         session.setAttribute("username", user.getUsername());
-        User userForId = userService.getUserByUsername(user.getUsername());
-        Long userId = userForId.getId();
+//        User userForId = userService.getUserByUsername(user.getUsername());
+        Long userId = user.getId();
         session.setAttribute("id",userId);
         return "user";
     }
