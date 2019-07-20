@@ -44,3 +44,8 @@ INSERT INTO public.authorities (username, authority)
 VALUES ('dbmaster', 'ROLE_ADMIN');
 INSERT INTO public.authorities (username, authority)
 VALUES ('dbuser', 'ROLE_USER');
+
+INSERT INTO public.role (name)
+VALUES ('ROLE_ADMIN');
+INSERT INTO public.role (name)
+VALUES ('ROLE_USER');

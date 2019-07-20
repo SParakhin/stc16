@@ -1,5 +1,7 @@
 package ru.innopolis.stc16.innobazaar.controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +14,7 @@ import ru.innopolis.stc16.innobazaar.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -58,18 +61,18 @@ public class UserController {
     /**
      * Метод для отображения формы для изменения или удаления профиля пользователя
      *
-     * @param id
      * @param model
      * @return
      */
+
     @GetMapping("/user/updateUserForm")
-    public String showFormUpdateUser(@RequestParam("id") Long id,
-                                     Model model,
-                                     HttpSession session) {
-        session.setAttribute("id", id);
-        User user = userService.getUser(id);
+    public String showFormUpdateUser(Model model,
+                                     HttpSession session,
+                                     Principal principal) {
+        User user = userService.getUserByUsername(principal.getName());
         if (user != null) {
             model.addAttribute("user", user);
+            session.setAttribute("userId", user.getId());
             return "userForm";
         }
         return "redirect:/listUsers";
@@ -84,30 +87,54 @@ public class UserController {
      */
     @PostMapping("/user/updateUser")
     public String updateUser(@Valid User user,
+                             Principal principal,
                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "userForm";
         }
+        user.setUsername(principal.getName());
         userService.updateUser(user);
-        return "redirect:/listUsers";
+        return "redirect:/user";
     }
+
 
     /**
      * Метод для удаления профиля пользователя
      *
-     * @param id
+     * @param session
      * @return
      */
     @GetMapping("/user/deleteUser")
-    public String deleteUser(@RequestParam("id") Long id) {
+    public String deleteUser(HttpSession session) {
+        Object userId = session.getAttribute("id");
+        userService.deleteUser((Long) userId);
+        session.invalidate();
+        return "redirect:/login";
+    }
+
+    @GetMapping("/user/deleteUserFromList")
+    public String deleteUser(@RequestParam Long id) {
         userService.deleteUser(id);
         return "redirect:/listUsers";
     }
+
 
     @GetMapping("/listUsers")
     public String listUsers(Model model) {
         List<User> users = userService.getAllUser();
         model.addAttribute("users", users);
         return "listUsers";
+    }
+
+    @GetMapping("/user")
+    public String showUserPage(Model model,
+                               HttpSession session) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("userAuth", user);
+        session.setAttribute("username", user.getUsername());
+        Long userId = user.getId();
+        session.setAttribute("id", userId);
+        session.setAttribute("user", user);
+        return "user";
     }
 }

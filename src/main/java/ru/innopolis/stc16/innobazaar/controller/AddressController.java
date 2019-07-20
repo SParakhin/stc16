@@ -39,9 +39,11 @@ public class AddressController {
     public String showFormAddAddress(Model model,
                                      HttpSession session,
                                      HttpServletRequest request) {
-        session.getAttribute("id");
+        Object userId = session.getAttribute("id");
+        User user = userService.getUser((Long) userId);
         Address address = new Address();
         model.addAttribute("address", address);
+        model.addAttribute("user", user);
         request.setAttribute("newAddress", address);
         return "addressForm";
     }
@@ -64,7 +66,7 @@ public class AddressController {
         Object userId = session.getAttribute("id");
         User user = userService.getUser((Long) userId);
         user.addAddressToUser(address);
-        userService.updateUser(user);
+        userService.updateUserAddress(user);
         return "redirect:/address/listAddress";
     }
 
@@ -106,6 +108,7 @@ public class AddressController {
         return "redirect:/address/listAddress";
     }
 
+
     /**
      * Метод редактирования адреса доставки
      *
@@ -135,7 +138,7 @@ public class AddressController {
             }
         }
         user.setAddressList(addresses);
-        userService.updateUser(user);
+        userService.updateUserAddress(user);
         return "redirect:/address/listAddress";
     }
 
@@ -151,7 +154,7 @@ public class AddressController {
             }
             user.setAddressList(temp);
         }
-        userService.updateUser(user);
+        userService.updateUserAddress(user);
         return "redirect:/address/listAddress";
     }
 }

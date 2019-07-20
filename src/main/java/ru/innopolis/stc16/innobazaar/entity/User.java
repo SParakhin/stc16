@@ -1,16 +1,20 @@
 package ru.innopolis.stc16.innobazaar.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @Entity
-@Table(name = "user_details")
-public class User implements Serializable {
+@Table(name = "users")
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,23 +31,61 @@ public class User implements Serializable {
     private String email;
     private String phone;
     @NotEmpty
-    private String login;
+    @Column(unique = true)
+    private String username;
     @NotEmpty
     private String password;
 
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
+            targetEntity = Address.class,
             fetch = FetchType.EAGER,
             orphanRemoval = true)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Address> addressList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             orphanRemoval = true)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Store> storeList = new ArrayList<>();
 
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = CascadeType.MERGE,
+            targetEntity = Role.class)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Collection<Role> roles;
+
+    public void update(User user) {
+        setFirstName(user.getFirstName());
+        setLastName(user.getLastName());
+        setEmail(user.getEmail());
+        setPhone(user.getPhone());
+        setPassword(user.getPassword());
+    }
+
     public User() {
+    }
+
+    public User(String username, String password, String firstName, String lastName, String email) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
+    public User(String username, String password, String firstName, String lastName, String email,
+                Collection<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -94,12 +136,37 @@ public class User implements Serializable {
         this.addressList = addressList;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
     }
 
     public String getPassword() {
@@ -118,6 +185,14 @@ public class User implements Serializable {
         this.storeList = storeList;
     }
 
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
+
     public boolean addAddressToUser(Address address) {
         address.setUser(this);
         return getAddressList().add(address);
@@ -133,7 +208,7 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id;
+        return id.longValue() == user.id.longValue();
     }
 
     @Override
@@ -146,7 +221,15 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
+        final StringBuilder sb = new StringBuilder("User{");
+        sb.append("id=").append(id);
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", phone='").append(phone).append('\'');
+        sb.append(", username='").append(username).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }
 

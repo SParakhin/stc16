@@ -18,6 +18,7 @@
             <div class="row justify-content-center">
                 <div class="col col-md-6 justify-content-center">
                     <form:form action="${pageContext.request.contextPath}/authenticateTheUser" method="POST">
+                        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
                         <c:if test="${param.error != null}">
                             <span class="text-danger text-monospace">
                                 <i>*** Извините! Вы ввели некорректное имя пользователя/пароль ***</i>
@@ -41,7 +42,7 @@
                             </div>
                             <input class="form-control" type="password" name="password"><br/>
                         </div>
-
+                        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
                         <input class="btn btn-lg btn-success my-1" type="submit" value="войти"/>
                         <span class="navbar-brand mb-0 h6">
 							<input class="btn btn-lg btn-info my-2 my-sm-0" type="button" value="регистрация"
