@@ -14,7 +14,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">    <!-- Custom styles -->
     <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet">
-
     <meta name="description" content="<jsp:invoke fragment="metaDescription"/>">
 
     <title>

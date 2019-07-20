@@ -1,5 +1,6 @@
 package ru.innopolis.stc16.innobazaar.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotEmpty;
  */
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "category")
 public class Category {
@@ -27,4 +29,6 @@ public class Category {
     @NotEmpty
     @Column(unique = true)
     private String name;
+
+    private String pictureUrl;
 }

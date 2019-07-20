@@ -1,0 +1,18 @@
+insert into category(name) values ('category1');
+insert into category(name) values ('category2');
+insert into category(name) values ('category3');
+insert into category(name) values ('category4');
+insert into category(name) values ('category5');
+insert into category(name) values ('category6');
+insert into category(name) values ('category7');
+insert into merchandise(name, category_id) values ('product_1_1', 1);
+insert into merchandise(name, category_id) values ('product_1_2', 1);
+insert into merchandise(name, category_id) values ('product_1_3', 1);
+insert into merchandise(name, category_id) values ('product_1_4', 1);
+insert into merchandise(name, category_id) values ('product_2_1', 2);
+insert into merchandise(name, category_id) values ('product_2_1', 2);
+insert into merchandise(name, category_id) values ('product_2_1', 2);
+insert into merchandise(name, category_id) values ('product_3_1', 3);
+insert into merchandise(name, category_id) values ('product_4_1', 4);
+insert into merchandise(name, category_id) values ('product_5_1', 5);
+insert into merchandise(name, category_id) values ('product_5_2', 5);

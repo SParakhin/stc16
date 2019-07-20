@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * Сущность "Товар"
@@ -18,13 +19,22 @@ public class Merchandise implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String description;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Store store;
     //TODO private String department;
     //TODO private String productDetail;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Category category;
+    private BigDecimal price;
+    private String pictureUrl;
 
-    public Merchandise(String name, Store store) {
+    public Merchandise(String name, String description, Store store, Category category, BigDecimal price, String pictureUrl) {
         this.name = name;
         this.store = store;
+        this.description = description;
+        this.category = category;
+        this.price = price;
+        this.pictureUrl = pictureUrl;
     }
 }
