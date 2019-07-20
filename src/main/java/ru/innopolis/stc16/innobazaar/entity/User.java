@@ -59,6 +59,14 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
 
+    public void update(User user) {
+        setFirstName(user.getFirstName());
+        setLastName(user.getLastName());
+        setEmail(user.getEmail());
+        setPhone(user.getPhone());
+        setPassword(user.getPassword());
+    }
+
     public User() {
     }
 
@@ -213,7 +221,15 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
+        final StringBuilder sb = new StringBuilder("User{");
+        sb.append("id=").append(id);
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", phone='").append(phone).append('\'');
+        sb.append(", username='").append(username).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }
 

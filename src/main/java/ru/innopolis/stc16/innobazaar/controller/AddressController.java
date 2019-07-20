@@ -40,8 +40,11 @@ public class AddressController {
                                      HttpSession session,
                                      HttpServletRequest request) {
         session.getAttribute("id");
+        Object userId = session.getAttribute("id");
+        User user = userService.getUser((Long) userId);
         Address address = new Address();
         model.addAttribute("address", address);
+        model.addAttribute("user",user);
         request.setAttribute("newAddress", address);
         return "addressForm";
     }

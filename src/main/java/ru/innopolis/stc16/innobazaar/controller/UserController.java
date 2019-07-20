@@ -14,6 +14,7 @@ import ru.innopolis.stc16.innobazaar.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -77,17 +78,16 @@ public class UserController {
 //    }
     @GetMapping("/user/updateUserForm")
     public String showFormUpdateUser(Model model,
-                                     HttpSession session) {
-        User user = (User) session.getAttribute("user");
-//        User user = userService.getUserByUsername((String) username);
+                                     HttpSession session,
+                                     Principal principal) {
+        User user = userService.getUserByUsername(principal.getName());
         if (user != null) {
             model.addAttribute("user", user);
-            session.setAttribute("id", user.getId());
+            session.setAttribute("userId", user.getId());
             return "userForm";
         }
         return "redirect:/listUsers";
     }
-
 
     /**
      * Метод для изменения профиля пользователя
@@ -97,14 +97,16 @@ public class UserController {
      * @return
      */
     @PostMapping("/user/updateUser")
-    public String updateUser(@Valid User user,
+    public String updateUser(@Valid User user, Principal principal,
                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "userForm";
         }
+        user.setUsername(principal.getName());
         userService.updateUser(user);
-        return "redirect:/listUsers";
+        return "redirect:/user";
     }
+
 
     /**
      * Метод для удаления профиля пользователя
