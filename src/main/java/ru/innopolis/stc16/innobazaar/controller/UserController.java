@@ -64,18 +64,7 @@ public class UserController {
      * @param model
      * @return
      */
-//    @GetMapping("/user/updateUserForm")
-//    public String showFormUpdateUser(@RequestParam("id") Long id,
-//                                     Model model,
-//                                     HttpSession session) {
-//        session.setAttribute("id", id);
-//        User user = userService.getUser(id);
-//        if (user != null) {
-//            model.addAttribute("user", user);
-//            return "userForm";
-//        }
-//        return "redirect:/listUsers";
-//    }
+
     @GetMapping("/user/updateUserForm")
     public String showFormUpdateUser(Model model,
                                      HttpSession session,
@@ -97,7 +86,8 @@ public class UserController {
      * @return
      */
     @PostMapping("/user/updateUser")
-    public String updateUser(@Valid User user, Principal principal,
+    public String updateUser(@Valid User user,
+                             Principal principal,
                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "userForm";
@@ -118,7 +108,8 @@ public class UserController {
     public String deleteUser(HttpSession session) {
         Object userId = session.getAttribute("id");
         userService.deleteUser((Long) userId);
-        return "redirect:/listUsers";
+        session.invalidate();
+        return "redirect:/login";
     }
 
     @GetMapping("/user/deleteUserFromList")

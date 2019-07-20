@@ -35,6 +35,11 @@ public class UserDAOImpl implements UserDAO {
     public void updateUser(User user) {
         User myUser = getUserByUsername(user.getUsername());
         myUser.update(user);
+        entityManager.merge(myUser);
+    }
+
+    @Override
+    public void updateUserAddress(User user) {
         entityManager.merge(user);
     }
 

@@ -17,4 +17,6 @@ public interface UserDAO {
 
     public void updateUser(User user);
 
+    public void updateUserAddress(User user);
+
 }

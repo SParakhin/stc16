@@ -18,20 +18,7 @@ import ru.innopolis.stc16.innobazaar.service.UserDetailsServiceImpl;
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private  UserDetailsServiceImpl authenticationService;
-//    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.authenticationProvider(authenticationProvider());
-//    }
-
-//    @Autowired
-//    public AppSecurityConfig(UserDetailsServiceImpl authenticationService,
-//                             CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
-//        this.authenticationService = authenticationService;
-//        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
-//    }
+    private UserDetailsServiceImpl authenticationService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -53,7 +40,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/authenticateTheUser")
-//                .successHandler(customAuthenticationSuccessHandler)
                 .permitAll()
                 .and()
                 .logout().permitAll();
@@ -63,15 +49,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    @Bean
-//    public DaoAuthenticationProvider authenticationProvider() {
-//        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-//        auth.setUserDetailsService(userService); //set the custom user details service
-//        auth.setPasswordEncoder(passwordEncoder()); //set the password encoder - bcrypt
-//        return auth;
-//    }
-
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
