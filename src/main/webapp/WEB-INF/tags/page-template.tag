@@ -12,7 +12,7 @@
     <meta charset="utf-8">
     <!-- Bootstrap CSS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">    <!-- Custom styles -->
+    <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">    <!-- Custom styles -->
     <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet">
 
     <meta name="description" content="<jsp:invoke fragment="metaDescription"/>">
@@ -36,9 +36,9 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="webjars/jquery/3.0.0/jquery.min.js"></script>
-<script src="webjars/popper.js/1.14.3/umd/popper.min.js"></script>
-<script src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/webjars/jquery/3.0.0/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/webjars/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 
 </body>
