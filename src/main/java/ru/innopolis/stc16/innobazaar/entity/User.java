@@ -67,6 +67,8 @@ public class User implements UserDetails {
         setPassword(user.getPassword());
     }
 
+    private boolean enabled;
+
     public User() {
     }
 
@@ -157,7 +159,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
     public void setUsername(String username) {
@@ -191,6 +193,10 @@ public class User implements UserDetails {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public boolean addAddressToUser(Address address) {
