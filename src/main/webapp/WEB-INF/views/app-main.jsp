@@ -3,6 +3,7 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <t:page-template>
     <jsp:attribute name="titleText">Главная страница</jsp:attribute>
@@ -11,7 +12,7 @@
 
         <div class="container">
             <br>
-            <form action="${pageContext.request.contextPath}/search" method="POST">
+            <form:form action="${pageContext.request.contextPath}/search" method="POST">
                 <div class="row">
                     <div class="col">
                         <input name="query" class="form-control form-control-lg form-control-borderless"
@@ -43,7 +44,7 @@
                     </div>
                     <br>
                 </c:forEach>
-            </form>
+            </form:form>
         </div>
 
     </jsp:body>
