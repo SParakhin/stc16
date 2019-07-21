@@ -2,6 +2,7 @@
 
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <t:page-template>
     <jsp:attribute name="titleText">Главная страница</jsp:attribute>
@@ -9,7 +10,7 @@
     <jsp:body>
         <div class="container">
             <br>
-            <form action="${pageContext.request.contextPath}/search" method="POST">
+            <form:form action="${pageContext.request.contextPath}/search" method="POST">
 
                 <div class="row">
                     <div class="col">
@@ -108,7 +109,7 @@
                         </nav>
                     </footer>
                 </div>
-            </form>
+            </form:form>
         </div>
     </jsp:body>
 </t:page-template>
