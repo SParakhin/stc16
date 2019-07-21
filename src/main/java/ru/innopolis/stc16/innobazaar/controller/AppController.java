@@ -1,16 +1,38 @@
 package ru.innopolis.stc16.innobazaar.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.innopolis.stc16.innobazaar.entity.MerchandisePage;
+import ru.innopolis.stc16.innobazaar.service.CategoryService;
+import ru.innopolis.stc16.innobazaar.service.MerchandiseService;
 
 @Controller
 @RequestMapping("/")
 public class AppController {
 
-    @GetMapping("/")
-    public String showMain() {
+    private MerchandiseService merchandiseService;
+    private CategoryService categoryService;
 
+    AppController(MerchandiseService merchandiseService, CategoryService categoryService) {
+        this.merchandiseService = merchandiseService;
+        this.categoryService = categoryService;
+    }
+
+    @GetMapping("/")
+    public String showMain(Model model) {
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "app-main";
+    }
+
+    @PostMapping("/search")
+    public String search(ProductsSearchCriteria criteria, Model model) {
+        MerchandisePage merchandises = merchandiseService.getBySearchCriteria(criteria);
+        model.addAttribute("merchandisesPage", merchandises);
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("criteria", criteria);
+        return "search";
     }
 }
