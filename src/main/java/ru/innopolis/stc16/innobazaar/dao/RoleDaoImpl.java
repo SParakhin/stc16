@@ -9,8 +9,8 @@ import ru.innopolis.stc16.innobazaar.entity.Role;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-@Repository
 @Transactional
+@Repository
 public class RoleDaoImpl implements RoleDao {
 
     @Autowired

@@ -29,7 +29,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         characterEncodingFilter.setEncoding("UTF-8");
         characterEncodingFilter.setForceEncoding(true);
         http.addFilterBefore(characterEncodingFilter, CsrfFilter.class);
-        http.csrf().disable().addFilterBefore(characterEncodingFilter, CsrfFilter.class);
 
         /*
         Конфигурирование доступа

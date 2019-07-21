@@ -64,9 +64,9 @@ public class User implements UserDetails {
         setLastName(user.getLastName());
         setEmail(user.getEmail());
         setPhone(user.getPhone());
-        setPassword(user.getPassword());
     }
 
+    @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
     public User() {
@@ -197,6 +197,10 @@ public class User implements UserDetails {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
     }
 
     public boolean addAddressToUser(Address address) {

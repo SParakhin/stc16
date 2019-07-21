@@ -12,14 +12,14 @@
             <div class="col-lg-3 col-md-2 col-xs-2 left-bar left-menu">
                 <ul class="nav nav-pills nav-stacked nav-content">
                     <li>
-                        <a href="/user/updateUserForm">Мой профиль</a>
+                        <a href="${pageContext.request.contextPath}/user/updateUserForm">Мой профиль</a>
                     </li>
                     <li>
                         <a href="#">Мои магазины</a>
                     </li>
 
                     <li class="active">
-                        <a href="/address/listAddress">Мои адреса доставки</a>
+                        <a href="${pageContext.request.contextPath}/address/listAddress">Мои адреса доставки</a>
 
                     </li>
                 </ul>

@@ -53,6 +53,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setEnabled(true);
+        user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_ADMIN")));
         userDAO.updateUser(user);
     }
 
