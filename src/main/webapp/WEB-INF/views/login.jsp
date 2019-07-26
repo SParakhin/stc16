@@ -18,7 +18,7 @@
             <div class="row justify-content-center">
                 <div class="col col-md-6 justify-content-center">
                     <form:form action="${pageContext.request.contextPath}/authenticateTheUser" method="POST">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
                         <c:if test="${param.error != null}">
                             <span class="text-danger text-monospace">
                                 <i>*** Извините! Вы ввели некорректное имя пользователя/пароль ***</i>

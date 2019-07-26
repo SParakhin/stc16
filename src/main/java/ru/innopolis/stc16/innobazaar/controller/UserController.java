@@ -1,6 +1,5 @@
 package ru.innopolis.stc16.innobazaar.controller;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,8 +20,11 @@ public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    private final HttpSession session;
+
+    public UserController(UserService userService, HttpSession session) {
         this.userService = userService;
+        this.session = session;
     }
 
     /**
@@ -65,13 +67,10 @@ public class UserController {
      */
 
     @GetMapping("/user/updateUserForm")
-    public String showFormUpdateUser(Model model,
-                                     HttpSession session,
-                                     Principal principal) {
-        User user = userService.getUserByUsername(principal.getName());
+    public String showFormUpdateUser(Model model) {
+        User user = userService.getAuthenticatedUser();
         if (user != null) {
             model.addAttribute("user", user);
-            session.setAttribute("userId", user.getId());
             return "userForm";
         }
         return "redirect:/listUsers";
@@ -91,22 +90,21 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "userForm";
         }
+        session.setAttribute("userId",user.getId());
         user.setUsername(principal.getName());
         userService.updateUser(user);
-        return "redirect:/user";
+        return "redirect:/user/updateUserForm";
     }
-
 
     /**
      * Метод для удаления профиля пользователя
      *
-     * @param session
      * @return
      */
     @GetMapping("/user/deleteUser")
-    public String deleteUser(HttpSession session) {
-        Object userId = session.getAttribute("id");
-        userService.deleteUser((Long) userId);
+    public String deleteUser() {
+        User user = userService.getAuthenticatedUser();
+        userService.deleteUser(user.getId());
         session.invalidate();
         return "redirect:/login";
     }
@@ -117,7 +115,6 @@ public class UserController {
         return "redirect:/listUsers";
     }
 
-
     @GetMapping("/listUsers")
     public String listUsers(Model model) {
         List<User> users = userService.getAllUser();
@@ -126,14 +123,10 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String showUserPage(Model model,
-                               HttpSession session) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public String showUserPage(Model model) {
+        User user = userService.getAuthenticatedUser();
         model.addAttribute("userAuth", user);
-        session.setAttribute("username", user.getUsername());
-        Long userId = user.getId();
-        session.setAttribute("id", userId);
-        session.setAttribute("user", user);
+        model.addAttribute("user", user);
         return "user";
     }
 }

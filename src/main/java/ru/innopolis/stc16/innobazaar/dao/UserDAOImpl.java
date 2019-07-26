@@ -39,7 +39,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void updateUserAddress(User user) {
+    public void updateUserRelation(User user) {
         entityManager.merge(user);
     }
 

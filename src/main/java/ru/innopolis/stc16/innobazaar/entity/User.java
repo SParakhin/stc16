@@ -46,7 +46,7 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             orphanRemoval = true)
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Store> storeList = new ArrayList<>();
