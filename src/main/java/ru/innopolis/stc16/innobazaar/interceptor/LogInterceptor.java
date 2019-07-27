@@ -23,29 +23,27 @@ public class LogInterceptor implements HandlerInterceptor {
         HttpServletRequest cachedWrappedRequest = new ContentCachingRequestWrapper(request);
         Map<String, String[]> requestParameters = cachedWrappedRequest.getParameterMap();
 
-        System.out.println("=================================================");
-        System.out.println("=================================================");
-        System.out.println("=================================================");
-        LOGGER.info("=====>>>>> method: " + cachedWrappedRequest.getMethod());
-        LOGGER.info("=====>>>>> context path: " + cachedWrappedRequest.getContextPath());
-        LOGGER.info("=====>>>>> path info: " + cachedWrappedRequest.getPathInfo());
-        LOGGER.info("=====>>>>> path translated: " + cachedWrappedRequest.getPathTranslated());
-        LOGGER.info("=====>>>>> query string: " + cachedWrappedRequest.getQueryString());
-        LOGGER.info("=====>>>>> request URI: " + cachedWrappedRequest.getRequestURI());
-        LOGGER.info("=====>>>>> servlet path: " + cachedWrappedRequest.getServletPath());
-        LOGGER.info("=====>>>>> http servlet mapping: " + cachedWrappedRequest.getHttpServletMapping());
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        LOGGER.info("=====>>>>> user: " + ((principal instanceof UserDetails) ? ((UserDetails) principal).getUsername() : principal));
-        LOGGER.info("=====>>>>> authorities: " + SecurityContextHolder.getContext().getAuthentication().getAuthorities());
-
-        if (!requestParameters.isEmpty()) {
-            for (Map.Entry<String, String[]> par : requestParameters.entrySet()) {
-                if (!"_csrf".equals(par.getKey())) {
-                    LOGGER.info("===>>> post parameter " + par.getKey() + " : " + Arrays.toString(par.getValue()));
+        String method = cachedWrappedRequest.getMethod();
+        if ("post".equalsIgnoreCase(method) || !requestParameters.isEmpty()) {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String username = ((principal instanceof UserDetails) ? ((UserDetails) principal).getUsername() : (String) principal);
+            String role = String.valueOf(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+            StringBuilder sb = new StringBuilder();
+            sb.append("user: ").append(username);
+            sb.append(" | role: ").append(role);
+            sb.append(" | servlet path: ").append(cachedWrappedRequest.getServletPath());
+            sb.append(" | method: ").append(method);
+            if (!requestParameters.isEmpty()) {
+                sb.append(" with param(s):");
+                for (Map.Entry<String, String[]> par : requestParameters.entrySet()) {
+                    if (!"_csrf".equalsIgnoreCase(par.getKey())) {
+                        if (!"password".equalsIgnoreCase(par.getKey())) {
+                            sb.append(" ").append(par.getKey()).append(" = ").append(Arrays.toString(par.getValue()));
+                        }
+                    }
                 }
             }
+            LOGGER.info(sb.toString());
         }
 
         return true;

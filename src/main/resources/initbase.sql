@@ -50,7 +50,7 @@ VALUES ('dbuser', 'ROLE_USER');
 CREATE TABLE public.request_logs
 (
     id        serial       NOT NULL,
-    logd_date date         NULL,
+    log_date date         NULL,
     log_level varchar(5)   NULL,
     message   varchar(255) NULL
 )
