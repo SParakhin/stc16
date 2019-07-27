@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import ru.innopolis.stc16.innobazaar.interceptor.LogInterceptor;
+import ru.innopolis.stc16.innobazaar.interceptor.MenuInterceptor;
 
 @Configuration
 @EnableWebMvc
@@ -20,6 +21,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LogInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new MenuInterceptor()).addPathPatterns("/**");
     }
 
     @Override
@@ -38,4 +40,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("/", "/webjars/", "/resources/");
 
     }
+    
 }

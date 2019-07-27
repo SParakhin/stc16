@@ -22,8 +22,9 @@
                         категории
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">пункт 1</a>
-                        <a class="dropdown-item" href="#">пункт 2</a>
+                        <c:forEach items="${cats}" var="cat">
+                            <a class="dropdown-item" href="${cat.value}">${cat.key}</a>
+                        </c:forEach>
                     </div>
                 </li>
                 <li class="nav-item">
