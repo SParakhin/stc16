@@ -3,10 +3,12 @@ package ru.innopolis.stc16.innobazaar.interceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import ru.innopolis.stc16.innobazaar.entity.Category;
 import ru.innopolis.stc16.innobazaar.service.CategoryService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -22,14 +24,18 @@ public class MenuInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        Map<String, String> catsMap = new TreeMap<>();
+        Map<String, String> catsContainer = new TreeMap<>();
+        List<Category> catsList = categoryService.getAllCategories();
 
-        System.out.println("===================================>>>>>>>>>>>>>>>>>>>" + categoryService.getAllCategories());
+        if (catsList == null || catsList.isEmpty()) {
+            catsContainer.put("категорий нет", "#");
+        } else {
+            for (Category cat : catsList) {
+                catsContainer.put(cat.getName(), "#");
+            }
+        }
 
-        catsMap.put("catMock1", "#");
-        catsMap.put("catMock2", "#");
-
-        modelAndView.addObject("cats", catsMap);
+        modelAndView.addObject("cats", catsContainer);
     }
 
     @Override
