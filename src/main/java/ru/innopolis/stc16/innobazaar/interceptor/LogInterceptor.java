@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class LogInterceptor implements HandlerInterceptor {
 
-    private static final Logger LOGGER = Logger.getRootLogger();
+    private static final Logger LOGGER = Logger.getLogger("requestLogger");
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
