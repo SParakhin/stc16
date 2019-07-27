@@ -1,7 +1,6 @@
 package ru.innopolis.stc16.innobazaar.interceptor;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -11,9 +10,11 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.Map;
 
+/**
+ * Класс-перехватчик, который записывает все POST запросы или запросы с параметрами в отдельную таблицу в БД приложения.
+ */
 public class LogInterceptor implements HandlerInterceptor {
 
     private static final Logger LOGGER = Logger.getLogger("requestLogger");
