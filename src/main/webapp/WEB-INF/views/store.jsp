@@ -9,19 +9,37 @@
     <jsp:attribute name="metaDescription">Профиль пользователя</jsp:attribute>
 
     <jsp:body>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-                <div class="form-group">
-                    <div class="col-md-auto">
-                        <a href="${pageContext.request.contextPath}/product/addProductForm" class="btn btn-primary" role="button">Добавить товар</a>
+                <div class="col-md-2">
+                        <%--<div class="card">--%>
+                        <%--<div class="card-body">--%>
+                    <form:form modelAttribute="user">
+                        <address>
+                            <strong>${user.firstName}</strong><br>
+                                ${user.lastName}<br>
+                                ${user.email}<br>
+                        </address>
+                    </form:form>
+                        <%--</div>--%>
+                        <%--</div>--%>
+                </div>
+                    <%--</div>--%>
+                    <%--<div class="row">--%>
+                    <%--<div class="form-group">--%>
+                <div class="col-md-10">
+                    <a href="${pageContext.request.contextPath}/product/addProductForm" class="btn btn-primary"
+                       role="button">Добавить товар</a>
 
-                            <%--<form:hidden path="id"></form:hidden>--%>
-                            <%--<button type="button" class="btn btn-info">Button</button>--%>
+                        <%--<form:hidden path="id"></form:hidden>--%>
+                        <%--<button type="button" class="btn btn-info">Button</button>--%>
                         <%--<input type="button" class="btn btn-info" value="Input Button">--%>
                         <%--<input type="submit" class="btn btn-info" value="Submit Button">--%>
-                    </div>
                 </div>
             </div>
+                <%--</div>--%>
+                <%--</div>--%>
+
         </div>
 
 

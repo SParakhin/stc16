@@ -154,8 +154,10 @@ public class StoreController {
     public String showStore(@RequestParam("id") Long id,
                             Model model,
                             HttpServletRequest request) {
+        User user = userService.getAuthenticatedUser();
         Store store = storeService.getStore(id);
         model.addAttribute("store", store);
+        model.addAttribute("user",user);
         session.setAttribute("storeId", store.getId());
         return "store";
     }
