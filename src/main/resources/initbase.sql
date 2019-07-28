@@ -44,3 +44,16 @@ INSERT INTO public.authorities (username, authority)
 VALUES ('dbmaster', 'ROLE_ADMIN');
 INSERT INTO public.authorities (username, authority)
 VALUES ('dbuser', 'ROLE_USER');
+
+-------------------------------------------------
+-- Создание таблицы логирования запросов
+CREATE TABLE public.request_logs
+(
+    id        serial       NOT NULL,
+    log_date date         NULL,
+    log_level varchar(5)   NULL,
+    message   varchar(255) NULL
+)
+    WITH (
+        OIDS= FALSE
+    );
