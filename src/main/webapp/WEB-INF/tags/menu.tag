@@ -39,21 +39,33 @@
                     </span>
                 </security:authorize>
                 <security:authorize access="isAuthenticated()">
+
                 <ul class="navbar-nav ml-auto">
                     <li class="navbar-item mt-1 mr-3">вы вошли как:
-                        <a href="#">
-                            <security:authentication property="principal.username"/>
-                        </a>
-                    </li>
-                    <li class="navbar-item">
-                        <form:form cssClass="form-inline" action="${pageContext.request.contextPath}/logout"
-                                   method="POST">
-                            <input class="btn btn-warning" type="submit" value="Выйти">
-                        </form:form>
-                    </li>
-                </ul>
+
+                        <!-- Example split danger button -->
+<li class="btn-group">
+  <button type="button" class="btn btn-success"> <security:authentication property="principal.username"/></button>
+  <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="/user/updateUserForm">Мои профиль</a>
+    <a class="dropdown-item" href="/store/listStore">Мои магазины</a>
+    <a class="dropdown-item" href="#">Мои заказы</a>
+    <a class="dropdown-item" href="/address/listAddress">Мои адреса доставки</a>
+  </div>
+</li>
+             <li class="navbar-item">
+            <form:form cssClass="form-inline" action="${pageContext.request.contextPath}/logout"
+                       method="POST">
+                <input class="btn btn-warning" type="submit" value="Выйти">
+            </form:form>
+        </li>
+        </ul>
                 </security:authorize>
-            </span>
+        </span>
 
         </div>
 

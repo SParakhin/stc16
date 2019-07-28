@@ -25,28 +25,28 @@
                             </tr>
 
                             <!-- loop over and print our users -->
-                            <c:forEach var="user" items="${users}">
+                            <c:forEach var="username" items="${users}">
 
-                                <!-- construct an "update" link with user id -->
+                                <!-- construct an "update" link with username id -->
                                 <c:url var="updateLink" value="/user/updateUserForm">
-                                    <c:param name="id" value="${user.id}"/>
+                                    <c:param name="id" value="${username.id}"/>
                                 </c:url>
 
 
-                                <!-- construct an "delete" link with user id -->
-                                <c:url var="deleteLink" value="/user/deleteUser">
-                                    <c:param name="id" value="${user.id}"/>
+                                <!-- construct an "delete" link with username id -->
+                                <c:url var="deleteLink" value="/user/deleteUserFromList">
+                                    <c:param name="id" value="${username.id}"/>
                                 </c:url>
 
                                 <c:url var="addressLink" value="/address/addAddressForm">
-                                    <c:param name="id" value="${user.id}"/>
+                                    <c:param name="id" value="${username.id}"/>
                                 </c:url>
 
 
                                 <tr>
-                                    <td>${user.firstName}</td>
-                                    <td>${user.lastName}</td>
-                                    <td>${user.email}</td>
+                                    <td>${username.firstName}</td>
+                                    <td>${username.lastName}</td>
+                                    <td>${username.email}</td>
 
                                     <td>
                                         <a href="${updateLink}">Изменить</a>

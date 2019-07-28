@@ -7,29 +7,18 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
-
-import javax.sql.DataSource;
+import ru.innopolis.stc16.innobazaar.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final DataSource securityDataSource;
-
     @Autowired
-    public AppSecurityConfig(DataSource securityDataSource) {
-        this.securityDataSource = securityDataSource;
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(securityDataSource);
-    }
+    private UserDetailsServiceImpl authenticationService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -47,8 +36,23 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/listUsers").hasRole("ADMIN")
                 .and()
-                .formLogin().loginPage("/login").loginProcessingUrl("/authenticateTheUser").permitAll()
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/authenticateTheUser")
+                .permitAll()
                 .and()
                 .logout().permitAll();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        //The name of the configureGlobal method is not important. However,
+        // it is important to only configure AuthenticationManagerBuilder in a class annotated with either @EnableWebSecurity
+        auth.userDetailsService(authenticationService);
     }
 }

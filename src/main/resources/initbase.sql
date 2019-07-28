@@ -14,22 +14,11 @@ CREATE DATABASE innobazaar
 
 -----------------------------------------------------
 -- Настройка таблиц для безопасности
-CREATE TABLE users
-(
-    username varchar(50) NOT NULL,
-    password varchar(68) NOT NULL,
-    enabled  smallint    NOT NULL,
-    PRIMARY KEY (username)
-);
 
-CREATE TABLE authorities
-(
-    username  varchar(50) NOT NULL,
-    authority varchar(50) NOT NULL,
-    CONSTRAINT authorities_idx_1 UNIQUE (username, authority),
-    CONSTRAINT authorities_ibsk_1 FOREIGN KEY (username) REFERENCES users (username)
-);
-
+INSERT INTO public.role (name)
+VALUES ('ROLE_ADMIN');
+INSERT INTO public.role (name)
+VALUES ('ROLE_USER');
 -- пример записи с обычным паролем
 INSERT INTO public.users (username, password, enabled)
 VALUES ('dbmaster', '{noop}qweqwe', 1);

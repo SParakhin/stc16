@@ -104,7 +104,7 @@ public class Address implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return id.equals(address.id);
+        return id.longValue() == address.id.longValue();
     }
 
     @Override

@@ -1,9 +1,13 @@
 package ru.innopolis.stc16.innobazaar.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "stores")
@@ -18,6 +22,12 @@ public class Store implements Serializable {
     private String description;
     @ManyToOne
     private User user;
+    @OneToMany(mappedBy = "store",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true)
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Merchandise> merchandiseList = new ArrayList<>();
 
     public Store() {
     }
@@ -52,6 +62,19 @@ public class Store implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Merchandise> getMerchandiseList() {
+        return merchandiseList;
+    }
+
+    public void setMerchandiseList(List<Merchandise> merchandiseList) {
+        this.merchandiseList = merchandiseList;
+    }
+
+    public boolean addMerchandiseToStore(Merchandise merchandise) {
+        merchandise.setStore(this);
+        return getMerchandiseList().add(merchandise);
     }
 
     @Override
