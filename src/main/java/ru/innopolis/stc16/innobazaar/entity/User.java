@@ -30,6 +30,9 @@ public class User implements Serializable {
     private String login;
     @NotEmpty
     private String password;
+    @OneToOne(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Basket basket;
 
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
@@ -116,6 +119,14 @@ public class User implements Serializable {
 
     public void setStoreList(List<Store> storeList) {
         this.storeList = storeList;
+    }
+
+    public Basket getBasket() {
+        return basket;
+    }
+
+    public void setBasket(Basket basket) {
+        this.basket = basket;
     }
 
     public boolean addAddressToUser(Address address) {

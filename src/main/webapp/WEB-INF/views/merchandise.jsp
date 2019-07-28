@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Рамиль
-  Date: 18.07.2019
-  Time: 20:36
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -22,12 +15,16 @@
             <div class="row">
                 <div class="col-9">
                     <div class="product-item">
-                            <img src=${merchandiseObject.imageURL}>
+                            <img src=${merchandiseObject.pictureUrl}>
                             <div class="product-list">
                                 <h3>${merchandiseObject.name}</h3>
                                 <span class="price">${merchandiseObject.price} руб.</span>
                                 <br>
-                                <a href="" class="button">Добавить в корзину</a>
+                                <form action="${pageContext.request.contextPath}/merchandise/add", method="post" >
+                                <input type="hidden" name="merchandiseId" value="${merchandiseObject.id}">
+                                    <input type="submit" class="button" value="Добавить в корзину"/>
+                                </form>
+
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,7 @@
 package ru.innopolis.stc16.innobazaar.service;
 
 import ru.innopolis.stc16.innobazaar.entity.Basket;
+import ru.innopolis.stc16.innobazaar.entity.Merchandise;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface BasketService {
     void deleteBasket(Long id);
 
     void updateBasket(Basket basket);
+
+    public void addMerchandise(Long basketId, Merchandise merchandise);
 }

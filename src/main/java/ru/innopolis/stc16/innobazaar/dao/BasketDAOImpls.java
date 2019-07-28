@@ -3,6 +3,7 @@ package ru.innopolis.stc16.innobazaar.dao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.innopolis.stc16.innobazaar.entity.Basket;
+import ru.innopolis.stc16.innobazaar.entity.Merchandise;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -42,5 +43,12 @@ public class BasketDAOImpls implements BasketDAO {
     @Override
     public Basket getBasket(Long id) {
         return entityManager.find(Basket.class, id);
+    }
+
+    @Override
+    public void addMerchandise(Long basketId, Merchandise merchandise) {
+        Basket basket = entityManager.find(Basket.class, basketId);
+        basket.addMerchandise(merchandise);
+entityManager.persist(basket);
     }
 }
