@@ -3,11 +3,10 @@ package ru.innopolis.stc16.innobazaar.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.innopolis.stc16.innobazaar.entity.Store;
 import ru.innopolis.stc16.innobazaar.entity.User;
+import ru.innopolis.stc16.innobazaar.service.StoreService;
 import ru.innopolis.stc16.innobazaar.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +22,12 @@ public class StoreController {
 
     private final HttpSession session;
 
-    public StoreController(UserService userService, HttpSession session) {
+    private final StoreService storeService;
+
+    public StoreController(UserService userService, HttpSession session, StoreService storeService) {
         this.userService = userService;
         this.session = session;
+        this.storeService = storeService;
     }
 
     /**
@@ -146,5 +148,15 @@ public class StoreController {
         }
         userService.updateUserRelation(user);
         return "redirect:/store/listStore";
+    }
+
+    @GetMapping("/store")
+    public String showStore(@RequestParam("id") Long id,
+                            Model model,
+                            HttpServletRequest request) {
+        Store store = storeService.getStore(id);
+        model.addAttribute("store", store);
+        session.setAttribute("storeId", store.getId());
+        return "store";
     }
 }

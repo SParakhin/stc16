@@ -24,7 +24,7 @@ public class Merchandise implements Serializable {
     private Store store;
     //TODO private String department;
     //TODO private String productDetail;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne
     private Category category;
     private BigDecimal price;
     private String pictureUrl;
@@ -36,5 +36,13 @@ public class Merchandise implements Serializable {
         this.category = category;
         this.price = price;
         this.pictureUrl = pictureUrl;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
     }
 }

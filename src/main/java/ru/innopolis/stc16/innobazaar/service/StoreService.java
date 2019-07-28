@@ -1,11 +1,10 @@
-package ru.innopolis.stc16.innobazaar.dao;
+package ru.innopolis.stc16.innobazaar.service;
 
 import ru.innopolis.stc16.innobazaar.entity.Store;
 
 import java.util.List;
 
-public interface StoreDAO {
-
+public interface StoreService {
     List<Store> getAllStore();
 
     void saveStore(Store store);

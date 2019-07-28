@@ -35,6 +35,10 @@
                                     <c:param name="id" value="${store.id}"/>
                                 </c:url>
 
+                                <c:url var="Link" value="/store">
+                                    <c:param name="id" value="${store.id}"/>
+                                </c:url>
+
                                 <tr>
                                     <td>${store.name}</td>
                                     <td>${store.description}</td>
@@ -42,6 +46,7 @@
                                         <a href="${updateLink}">Изменить</a>
                                         | <a href="${deleteLink}"
                                              onclick="if (!(confirm('Вы хотите удалить магазин ?'))) return false">Удалить</a>
+                                        | <a href="${Link}">Перейти в магазин</a>
                                     </td>
                                 </tr>
                             </c:forEach>
