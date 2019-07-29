@@ -54,7 +54,7 @@
 
                         <form class="form-inline">
                             <button type="submit" class="btn btn-primary" formmethod="get"
-                                    formaction="/store/addStoreForm" name="edit">Добавить магазин
+                                    formaction="${pageContext.request.contextPath}/store/addStoreForm" name="edit">Добавить магазин
                             </button>
                         </form>
                     </div>

@@ -56,7 +56,7 @@
 
                         <form class="form-inline">
                             <button type="submit" class="btn btn-primary" formmethod="get"
-                                    formaction="/address/addAddressForm" name="edit">Добавить адрес
+                                    formaction="${pageContext.request.contextPath}/address/addAddressForm" name="edit">Добавить адрес
                             </button>
                         </form>
                     </div>
