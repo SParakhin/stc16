@@ -37,8 +37,9 @@
 
                                 <c:url var="Link" value="/store">
                                     <c:param name="id" value="${store.id}"/>
+                                    <%--${pageContext.session.setAttribute("storeId",store.id)}--%>
                                 </c:url>
-
+                                ${pageContext.session.setAttribute("storeId",store.id)}
                                 <tr>
                                     <td>${store.name}</td>
                                     <td>${store.description}</td>

@@ -1,9 +1,11 @@
 package ru.innopolis.stc16.innobazaar.controller;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.innopolis.stc16.innobazaar.entity.Merchandise;
 import ru.innopolis.stc16.innobazaar.entity.Store;
 import ru.innopolis.stc16.innobazaar.entity.User;
 import ru.innopolis.stc16.innobazaar.service.StoreService;
@@ -150,15 +152,37 @@ public class StoreController {
         return "redirect:/store/listStore";
     }
 
+    /**
+     * Метод отображения главной страницы магазина. Выводит:
+     * контакты магазина
+     * список товаров магазина
+     * список заказов магазина
+     *
+     * @param model
+     * @return
+     */
     @GetMapping("/store")
     public String showStore(@RequestParam("id") Long id,
-                            Model model,
-                            HttpServletRequest request) {
+                            Model model) {
         User user = userService.getAuthenticatedUser();
         Store store = storeService.getStore(id);
-        model.addAttribute("store", store);
-        model.addAttribute("user",user);
         session.setAttribute("storeId", store.getId());
+        List<Merchandise> products = store.getMerchandiseList();
+        model.addAttribute("store", store);
+        model.addAttribute("user", user);
+        model.addAttribute("products", products);
         return "store";
     }
+
+//    @GetMapping("/store/listProduct")
+//    public String listProduct(Model model){
+//        Object storeId = session.getAttribute("storeId");
+////        User user = userService.getAuthenticatedUser();
+//        Store store = storeService.getStore((Long) storeId);
+//        List<Merchandise> products = store.getMerchandiseList();
+////        model.addAttribute("store", store);
+////        model.addAttribute("user", user);
+//        model.addAttribute("products", products);
+//        return "listProduct";
+//    }
 }
