@@ -87,7 +87,41 @@
                    role="button">Добавить товар</a>
             </div>
             <div class="tab-pane container-fluid fade" id="orders">
-                ...
+		    <div class="row justify-content-center">
+                    <div class="col-md-9">
+                        <c:forEach var="booking" items="${bookings}">
+                            <br>
+                            <div class="row">
+                                <div class="card w-100">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-9">
+                                                Заказ <a href="#"> ${booking.merchandise.name} </a>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button onclick="window.location.href='/bookings/${booking.id}'">Перейти к
+                                                    заказу ${product.store.name}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 card-body">
+                                        <h5> Покупатель: ${booking.buyer.firstName} ${booking.buyer.lastName}</h5>
+                                        <h5> Адрес: ${booking.address.country} ${booking.address.city} ${booking.address.address}</h5>
+                                        <h5> Количество: ${booking.count}</h5>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h5> Стоимость: ${booking.count * booking.merchandise.price}</h5>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="font-weight-bold">Заказ ${booking.bookingStatus.status}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
             </div>
         </div>
 

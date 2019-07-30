@@ -2,6 +2,8 @@ package ru.innopolis.stc16.innobazaar.entity;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -28,6 +30,10 @@ public class Store implements Serializable {
             orphanRemoval = true)
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Merchandise> merchandiseList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "store", fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Booking> bookings;
 
     public Store() {
     }
@@ -75,6 +81,14 @@ public class Store implements Serializable {
     public boolean addMerchandiseToStore(Merchandise merchandise) {
         merchandise.setStore(this);
         return getMerchandiseList().add(merchandise);
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     @Override
