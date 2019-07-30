@@ -51,10 +51,10 @@
     <span class="sr-only">Toggle Dropdown</span>
   </button>
   <div class="dropdown-menu">
-    <a class="dropdown-item" href="/user/updateUserForm">Мои профиль</a>
-    <a class="dropdown-item" href="/store/listStore">Мои магазины</a>
+    <a class="dropdown-item" href="${pageContext.request.contextPath}/user/updateUserForm">Мои профиль</a>
+    <a class="dropdown-item" href="${pageContext.request.contextPath}/store/listStore">Мои магазины</a>
     <a class="dropdown-item" href="#">Мои заказы</a>
-    <a class="dropdown-item" href="/address/listAddress">Мои адреса доставки</a>
+    <a class="dropdown-item" href="${pageContext.request.contextPath}/address/listAddress">Мои адреса доставки</a>
   </div>
 </li>
              <li class="navbar-item">
