@@ -11,62 +11,20 @@
 
 
     <jsp:body>
-        <%--<head>--%>
-
-
-        <%--</head>--%>
-        <%--<div>--%>
-
-        <%--<!-- Nav tabs -->--%>
-        <%--<ul class="nav nav-tabs" role="tablist" id="myTab">--%>
-        <%--<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>--%>
-        <%--<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>--%>
-        <%--<li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>--%>
-        <%--<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>--%>
-        <%--</ul>--%>
-
-        <%--<!-- Tab panes -->--%>
-        <%--<div class="tab-content">--%>
-        <%--<div role="tabpanel" class="tab-pane active" id="home">Content Home</div>--%>
-        <%--<div role="tabpanel" class="tab-pane" id="profile">--%>
-        <%--<div class="container-fluid">--%>
-        <%--<div class="row">--%>
-        <%--<div class="col-md-2">--%>
-        <%--<form:form modelAttribute="user">--%>
-        <%--<address>--%>
-        <%--<strong>${user.firstName}</strong><br>--%>
-        <%--${user.lastName}<br>--%>
-        <%--${user.email}<br>--%>
-        <%--</address>--%>
-        <%--</form:form>--%>
-        <%--</div>--%>
-
-        <%--<div class="col-md-10">--%>
-        <%--<a href="${pageContext.request.contextPath}/product/addProductForm" class="btn btn-primary"--%>
-        <%--role="button">Добавить товар</a>--%>
-        <%--</div>--%>
-        <%--</div>--%>
-        <%--</div>--%>
-        <%--</div>--%>
-        <%--<div role="tabpanel" class="tab-pane" id="messages">Content Messages</div>--%>
-        <%--<div role="tabpanel" class="tab-pane" id="settings">Content Settings</div>--%>
-        <%--</div>--%>
-
-
-        <ul class="nav nav-tabs" id="myTab">
+        <ul class="nav nav-pills" id="myTab">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#about">О магазине</a>
+                <a class="nav-link active" data-toggle="pill" href="#about">О магазине</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#products">Товары</a>
+                <a class="nav-link" data-toggle="pill" href="#products">Товары</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#orders">Заказы</a>
+                <a class="nav-link" data-toggle="pill" href="#orders">Заказы</a>
             </li>
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane container active" id="about">
+            <div class="tab-pane container-fluid active" id="about">
                 <form:form modelAttribute="user">
                     <address>
                         <h3>Добро пожаловать в наш магазин ${store.name}</h3>
@@ -83,7 +41,7 @@
                 </form:form>
             </div>
 
-            <div class="tab-pane container fade" id="products">
+            <div class="tab-pane container-fluid fade" id="products">
                 <table class="table table-striped table-bordered">
                     <tr>
                         <th>Название</th>
@@ -91,19 +49,20 @@
                         <th>Категория</th>
                         <th>Цена</th>
                         <th>Изображение</th>
+                        <th>Действие</th>
                     </tr>
 
                     <!-- loop over and print our users -->
                     <c:forEach var="product" items="${products}">
 
                         <!-- construct an "update" link with username id -->
-                        <c:url var="updateLink" value="/store/updateStoreForm">
+                        <c:url var="updateLink" value="/product/updateProductForm">
                             <c:param name="id" value="${product.id}"/>
                         </c:url>
 
 
                         <!-- construct an "delete" link with username id -->
-                        <c:url var="deleteLink" value="/store/deleteStore">
+                        <c:url var="deleteLink" value="/product/deleteProduct">
                             <c:param name="id" value="${product.id}"/>
                         </c:url>
 
@@ -127,7 +86,7 @@
                    class="btn btn-primary"
                    role="button">Добавить товар</a>
             </div>
-            <div class="tab-pane container fade" id="orders">
+            <div class="tab-pane container-fluid fade" id="orders">
                 ...
             </div>
         </div>
@@ -148,13 +107,8 @@
             });
         </script>
 
-        <%--</div>--%>
-
-
-        <%--<======================================================>--%>
-
-
     </jsp:body>
+
 </t:page-template>
 <%--</body>--%>
 <%--</html>--%>

@@ -96,9 +96,10 @@ public class StoreController {
         User user = userService.getAuthenticatedUser();
         List<Store> stores = user.getStoreList();
         for (Store store : stores) {
-            if (store.getId().equals(id)) ;
-            model.addAttribute("store", store);
-            return "storeForm";
+            if (store.getId().equals(id)) {
+                model.addAttribute("store", store);
+                return "storeForm";
+            }
         }
         return "redirect:/store/listStore";
     }
@@ -165,12 +166,21 @@ public class StoreController {
     public String showStore(@RequestParam(value = "id", required = false) Long id,
                             Model model) {
         User user = userService.getAuthenticatedUser();
+        List<Store> stores = user.getStoreList();
         Store store = null;
         if (id == null) {
             Object storeId = session.getAttribute("storeId");
-            store = storeService.getStore((Long) storeId);
+            for (Store s : stores) {
+                if (s.getId().equals(storeId)) {
+                    store = storeService.getStore((Long) storeId);
+                }
+            }
         } else {
-            store = storeService.getStore(id);
+            for (Store s : stores) {
+                if (s.getId().equals(id)) {
+                    store = storeService.getStore(id);
+                }
+            }
         }
         session.setAttribute("storeId", store.getId());
         List<Merchandise> products = store.getMerchandiseList();
