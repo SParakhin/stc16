@@ -162,10 +162,16 @@ public class StoreController {
      * @return
      */
     @GetMapping("/store")
-    public String showStore(@RequestParam("id") Long id,
+    public String showStore(@RequestParam(value = "id", required = false) Long id,
                             Model model) {
         User user = userService.getAuthenticatedUser();
-        Store store = storeService.getStore(id);
+        Store store = null;
+        if (id == null) {
+            Object storeId = session.getAttribute("storeId");
+            store = storeService.getStore((Long) storeId);
+        } else {
+            store = storeService.getStore(id);
+        }
         session.setAttribute("storeId", store.getId());
         List<Merchandise> products = store.getMerchandiseList();
         model.addAttribute("store", store);
@@ -173,16 +179,4 @@ public class StoreController {
         model.addAttribute("products", products);
         return "store";
     }
-
-//    @GetMapping("/store/listProduct")
-//    public String listProduct(Model model){
-//        Object storeId = session.getAttribute("storeId");
-////        User user = userService.getAuthenticatedUser();
-//        Store store = storeService.getStore((Long) storeId);
-//        List<Merchandise> products = store.getMerchandiseList();
-////        model.addAttribute("store", store);
-////        model.addAttribute("user", user);
-//        model.addAttribute("products", products);
-//        return "listProduct";
-//    }
 }
