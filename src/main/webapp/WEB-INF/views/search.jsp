@@ -48,9 +48,12 @@
                                                     <a href="#">Перейти к товару</a>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <a href="#">Перейти к магазину ${product.store.name}</a>
+                                                    <a href="/store?id=${product.store.id}">Перейти к магазину ${product.store.name}</a>
                                                 </div>
-                                            </div>
+                                                <div class="col-md-6">
+                                                    <a href="#">Добавить в корзину</a>
+                                                </div>
+                                                                                            </div>
                                         </div>
                                     </div>
                                 </div>
