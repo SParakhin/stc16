@@ -1,19 +1,28 @@
 package ru.innopolis.stc16.innobazaar.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.innopolis.stc16.innobazaar.dao.RoleDao;
 import ru.innopolis.stc16.innobazaar.dao.UserDAO;
 import ru.innopolis.stc16.innobazaar.entity.User;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserDAO userDAO;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
+    @Autowired
+    private UserDAO userDAO;
+
+    @Autowired
+    private RoleDao roleDao;
 
     @Override
     public List<User> getAllUser() {
@@ -22,6 +31,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setEnabled(true);
+        user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_ADMIN")));
         userDAO.saveUser(user);
     }
 
@@ -31,12 +43,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByUsername(String username) {
+        return userDAO.getUserByUsername(username);
+    }
+
+    @Override
     public void deleteUser(Long id) {
         userDAO.deleteUser(id);
     }
 
     @Override
     public void updateUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setEnabled(true);
+        user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_ADMIN")));
         userDAO.updateUser(user);
+    }
+
+    @Override
+    public void updateUserRelation(User user) {
+        userDAO.updateUserRelation(user);
+    }
+
+    @Override
+    public User getAuthenticatedUser() {
+        Authentication userAuth = SecurityContextHolder.getContext().getAuthentication();
+        String username = userAuth.getName();
+        User user = userDAO.getUserByUsername(username);
+        return user;
     }
 }
