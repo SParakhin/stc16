@@ -69,12 +69,16 @@
             <div class="tab-pane container active" id="about">
                 <form:form modelAttribute="user">
                     <address>
+                        <h3>Добро пожаловать в наш магазин ${store.name}</h3>
                         <h3>Свяжитесь с нами :</h3><br>
                         <strong>${user.firstName}</strong><br>
                             ${user.lastName}<br>
                             ${user.email}<br>
                             ${user.phone}<br>
+
                     </address>
+                </form:form>
+                <form:form modelAttribute="store">
                     ${pageContext.session.setAttribute("storeId",store.id)}
                 </form:form>
             </div>
@@ -122,8 +126,6 @@
                 <a href="${pageContext.request.contextPath}/product/addProductForm"
                    class="btn btn-primary"
                    role="button">Добавить товар</a>
-
-
             </div>
             <div class="tab-pane container fade" id="orders">
                 ...

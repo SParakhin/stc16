@@ -37,12 +37,12 @@
 
                                 <c:url var="Link" value="/store">
                                     <c:param name="id" value="${store.id}"/>
-                                    <%--${pageContext.session.setAttribute("storeId",store.id)}--%>
+                                    ${pageContext.session.setAttribute("storeId",store.id)}
                                 </c:url>
-                                ${pageContext.session.setAttribute("storeId",store.id)}
                                 <tr>
                                     <td>${store.name}</td>
                                     <td>${store.description}</td>
+                                        <%--${pageContext.session.setAttribute("storeId",store.id)}--%>
                                     <td>
                                         <a href="${updateLink}">Изменить</a>
                                         | <a href="${deleteLink}"
@@ -55,7 +55,8 @@
 
                         <form class="form-inline">
                             <button type="submit" class="btn btn-primary" formmethod="get"
-                                    formaction="/store/addStoreForm" name="edit">Добавить магазин
+                                    formaction="${pageContext.request.contextPath}/store/addStoreForm" name="edit">
+                                Добавить магазин
                             </button>
                         </form>
                     </div>

@@ -27,9 +27,9 @@ public class MerchandiseController {
     @GetMapping("/product/addProductForm")
     public String showFormAddProduct(Model model) {
         Merchandise merchandise = new Merchandise();
-//        Long storeId = (Long) session.getAttribute("storeId");
+        Long storeId = (Long) session.getAttribute("storeId");
         model.addAttribute("merchandise", merchandise);
-//        model.addAttribute("storeId", storeId);
+        model.addAttribute("storeId", storeId);
         return "merchandiseForm";
     }
 
