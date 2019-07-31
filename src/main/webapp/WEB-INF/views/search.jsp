@@ -48,12 +48,14 @@
                                                     <a href="#">Перейти к товару</a>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <a href="/store?id=${product.store.id}">Перейти к магазину ${product.store.name}</a>
+                                                    <a href="/store?id=${product.store.id}">Перейти к
+                                                        магазину ${product.store.name}</a>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <a href="#">Добавить в корзину</a>
+                                                    <a href="${pageContext.request.contextPath}/merchandise">Добавить
+                                                        в корзину</a>
                                                 </div>
-                                                                                            </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
