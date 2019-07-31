@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -22,6 +24,13 @@ public class Basket {
 
     public Basket(List<Merchandise> merchandise) {
         this.merchandise = merchandise;
+    }
+
+    public void addMerchandise(Merchandise merchandiseItem) {
+        if (merchandise == null) {
+            merchandise = new LinkedList<>();
+            merchandise.add(merchandiseItem);
+        }
     }
 }
 

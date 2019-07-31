@@ -1,15 +1,16 @@
 package ru.innopolis.stc16.innobazaar.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.innopolis.stc16.innobazaar.entity.Merchandise;
 import ru.innopolis.stc16.innobazaar.entity.Store;
-import ru.innopolis.stc16.innobazaar.entity.User;
+import ru.innopolis.stc16.innobazaar.service.BasketService;
+import ru.innopolis.stc16.innobazaar.service.MerchandiseService;
 import ru.innopolis.stc16.innobazaar.service.StoreService;
+import ru.innopolis.stc16.innobazaar.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,13 +21,34 @@ import java.util.List;
 @Controller
 public class MerchandiseController {
 
+    private final MerchandiseService merchandiseService;
+    private final UserService userService;
+    private final BasketService basketService;
     private final StoreService storeService;
-
     private final HttpSession session;
 
-    public MerchandiseController(StoreService storeService, HttpSession session) {
+    @Autowired
+    public MerchandiseController(MerchandiseService merchandiseService, UserService userService, BasketService basketService, StoreService storeService, HttpSession session) {
+        this.merchandiseService = merchandiseService;
+        this.userService = userService;
+        this.basketService = basketService;
         this.storeService = storeService;
         this.session = session;
+    }
+
+    @RequestMapping(value = "/merchandise", method = RequestMethod.GET)
+    public String getMerchandise(Model model, @RequestParam(required = false, name = "merchandiseId") String merchandiseId) {
+        model.addAttribute("merchandiseObject", merchandiseService.getMerchandise(Long.valueOf(merchandiseId)));
+        return "merchandise";
+    }
+
+    @RequestMapping(value = "/merchandise/add", method = RequestMethod.POST)
+    public String addMerchandiseToBasket(Model model, @RequestParam(name = "merchandiseId") String merchandiseId,
+                                         HttpSession session) {
+        Merchandise merchandise = merchandiseService.getMerchandise(Long.valueOf(merchandiseId));
+        Long userId = (Long) session.getAttribute("id");
+        basketService.addMerchandise(userService.getUser(userId).getBasket().getId(), merchandise);
+        return "basket";
     }
 
     /**

@@ -26,6 +26,7 @@ public class Merchandise implements Serializable {
     //TODO private String productDetail;
     @ManyToOne
     private Category category;
+    private String productDetail;
     private BigDecimal price;
     private String pictureUrl;
 
