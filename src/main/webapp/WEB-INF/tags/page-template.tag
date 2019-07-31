@@ -14,10 +14,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">    <!-- Custom styles -->
     <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../../resources/styles/bootstrap4/bootstrap.min.css">
-    <link href="../../resources/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="../../resources/css/cart.css">
-    <link rel="stylesheet" type="text/css" href="../../resources/css/cart_responsive.css">
+    <%--<link rel="stylesheet" type="text/css" href="../../resources/styles/bootstrap4/bootstrap.min.css">--%>
+    <%--<link href="../../resources/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">--%>
+    <%--<link rel="stylesheet" type="text/css" href="../../resources/css/cart.css">--%>
+    <%--<link rel="stylesheet" type="text/css" href="../../resources/css/cart_responsive.css">--%>
 
     <meta name="description" content="<jsp:invoke fragment="metaDescription"/>">
 
