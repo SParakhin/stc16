@@ -22,11 +22,11 @@ public class StoreDAOImpl implements StoreDAO {
     @Transactional(readOnly = true)
 
     public List<Store> getAllStore() {
-        return entityManager.createNativeQuery("select * from stores", Store.class).getResultList();
+        return entityManager.createQuery("From Store").getResultList();
     }
 
     @Override
-    public void deleteStore(int id) {
+    public void deleteStore(Long id) {
         Store store = entityManager.find(Store.class, id);
         entityManager.remove(store);
     }
@@ -43,7 +43,7 @@ public class StoreDAOImpl implements StoreDAO {
     }
 
     @Override
-    public Store getStore(int id) {
+    public Store getStore(Long id) {
         return entityManager.find(Store.class, id);
     }
 }
