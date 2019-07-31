@@ -24,9 +24,9 @@
                                 <label for="description">Описание</label>
                                 <form:input path="description" cssClass="form-control"/>
                                 <form:errors path="description" cssClass="alert"/>
-                                <label for="category">Категория товара</label>
-                                <form:input path="category" cssClass="form-control"/>
-                                <form:errors path="category" cssClass="alert"/>
+                                <%--<label for="category">Категория товара</label>--%>
+                                <%--<form:input path="category" cssClass="form-control"/>--%>
+                                <%--<form:errors path="category" cssClass="alert"/>--%>
                                 <label for="price">Цена</label>
                                 <form:input path="price" cssClass="form-control"/>
                                 <form:errors path="price" cssClass="alert"/>

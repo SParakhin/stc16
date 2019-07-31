@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.innopolis.stc16.innobazaar.entity.Merchandise;
 import ru.innopolis.stc16.innobazaar.entity.Store;
+import ru.innopolis.stc16.innobazaar.entity.User;
 import ru.innopolis.stc16.innobazaar.service.BasketService;
 import ru.innopolis.stc16.innobazaar.service.MerchandiseService;
 import ru.innopolis.stc16.innobazaar.service.StoreService;
@@ -145,17 +146,17 @@ public class MerchandiseController {
     }
 
     @GetMapping("/product/deleteProduct")
-    public String deleteProductFromStore(Merchandise merchandise) {
+    public String deleteProductFromStore(@RequestParam Long id) {
         Object storeId = session.getAttribute("storeId");
         Store store = storeService.getStore((Long) storeId);
         List<Merchandise> products = store.getMerchandiseList();
         List<Merchandise> temp = new ArrayList<>();
         for (Merchandise m : products) {
-            if (!m.getId().equals(merchandise.getId())) {
+            if (!m.getId().equals(id)) {
                 temp.add(m);
             }
-            store.setMerchandiseList(temp);
         }
+        store.setMerchandiseList(temp);
         storeService.updateStore(store);
         return "redirect:/store#products";
     }
