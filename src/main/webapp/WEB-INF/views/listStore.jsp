@@ -54,7 +54,7 @@
                         </table>
 
                         <form class="form-inline">
-                            <button type="submit" class="btn btn-primary" formmethod="get"
+                            <button type="submit" class="btn btn-success" formmethod="get"
                                     formaction="${pageContext.request.contextPath}/store/addStoreForm" name="edit">
                                 Добавить магазин
                             </button>

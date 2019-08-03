@@ -73,7 +73,7 @@
                                     <!-- Button -->
                                     <div class="col-md-offset-3 col-md-9">
                                         <c:if test="${pageContext.request.getAttribute('newProduct')!=null}">
-                                            <form:button cssClass="btn btn-primary">Сохранить</form:button>
+                                            <form:button class="btn btn-success">Сохранить</form:button>
                                         </c:if>
                                     </div>
                                 </div>
@@ -82,7 +82,7 @@
                                 <c:if test="${pageContext.request.getAttribute('newProduct')==null}">
                                     <form class="form-inline">
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                        <button type="submit" id="updateButton" class="btn btn-primary"
+                                        <button type="submit" id="updateButton" class="btn btn-success"
                                                 formmethod="POST"
                                                 formaction="${pageContext.request.contextPath}/product/updateProduct"
                                                 name="edit">

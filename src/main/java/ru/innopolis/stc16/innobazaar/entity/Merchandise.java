@@ -26,14 +26,6 @@ public class Merchandise implements Serializable {
     private Store store;
     //TODO private String department;
     //TODO private String productDetail;
-
-//    @ManyToMany(fetch = FetchType.LAZY,
-//            cascade = CascadeType.ALL,
-//            targetEntity = Category.class)
-//    @JoinTable(name = "categories_merchandises",
-//            joinColumns = @JoinColumn(name = "merchandise_id"),
-//            inverseJoinColumns = @JoinColumn(name = "category_id"))
-//    private List<Category> categories = new ArrayList<>();
     @OneToOne(targetEntity = Category.class)
     @JoinTable(name = "categories_merchandises",
             joinColumns = @JoinColumn(name = "merchandise_id"),
@@ -53,10 +45,6 @@ public class Merchandise implements Serializable {
         this.pictureUrl = pictureUrl;
     }
 
-//    public void addCategory(Category category) {
-//        categories.add(category);
-//    }
-
     public Store getStore() {
         return store;
     }
@@ -64,5 +52,4 @@ public class Merchandise implements Serializable {
     public void setStore(Store store) {
         this.store = store;
     }
-
 }

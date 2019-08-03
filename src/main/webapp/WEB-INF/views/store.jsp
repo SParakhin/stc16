@@ -82,7 +82,7 @@
 
 
             <a href="${pageContext.request.contextPath}/product/addProductForm"
-               class="btn btn-primary"
+               class="btn btn-success"
                role="button">Добавить товар</a>
         </div>
         <div class="tab-pane container-fluid fade" id="orders">

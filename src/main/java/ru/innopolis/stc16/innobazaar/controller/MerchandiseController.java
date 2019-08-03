@@ -165,8 +165,8 @@ public class MerchandiseController {
             if (!m.getId().equals(id)) {
                 temp.add(m);
             }
-            store.setMerchandiseList(products);
         }
+        store.setMerchandiseList(temp);
         storeService.updateStore(store);
         return "redirect:/store#products";
     }
