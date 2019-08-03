@@ -25,7 +25,7 @@ public class MenuInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         Map<String, String> catsContainer = new TreeMap<>();
-        List<Category> catsList = categoryService.getAllCategories();
+        List<Category> catsList =(categoryService != null) ? categoryService.getAllCategories() : null;
 
         if (catsList == null || catsList.isEmpty()) {
             catsContainer.put("категорий нет", "#");

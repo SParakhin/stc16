@@ -19,10 +19,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired
     private ApplicationContext applicationContext;
 
+    private MenuInterceptor menuInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LogInterceptor()).addPathPatterns("/**");
-        registry.addInterceptor(new MenuInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(menuInterceptor);
     }
 
     @Override
@@ -42,10 +44,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     }
 
-    @Bean
-    public MenuInterceptor menuInterceptor() {
-        return new MenuInterceptor();
+    @Autowired
+    private void setMenuInterceptor(MenuInterceptor menuInterceptor) {
+        this.menuInterceptor = menuInterceptor;
     }
 
-    
 }
