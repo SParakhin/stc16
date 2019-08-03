@@ -19,7 +19,7 @@
                                placeholder="Название товара">
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-lg btn-success" type="submit">Search</button>
+                        <button class="btn btn-lg btn-success" type="submit">Найти</button>
                     </div>
                 </div>
                 <br>
@@ -45,7 +45,8 @@
                                             <h6> Цена: ${product.price}</h6>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <a href="#">Перейти к товару</a>
+                                                    <a href="${pageContext.request.contextPath}/merchandise?id=${product.id}">Перейти
+                                                        к товару</a>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <a href="/store?id=${product.store.id}">Перейти к

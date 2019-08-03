@@ -5,13 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.innopolis.stc16.innobazaar.entity.Category;
 import ru.innopolis.stc16.innobazaar.entity.Merchandise;
 import ru.innopolis.stc16.innobazaar.entity.Store;
-import ru.innopolis.stc16.innobazaar.entity.User;
-import ru.innopolis.stc16.innobazaar.service.BasketService;
-import ru.innopolis.stc16.innobazaar.service.MerchandiseService;
-import ru.innopolis.stc16.innobazaar.service.StoreService;
-import ru.innopolis.stc16.innobazaar.service.UserService;
+import ru.innopolis.stc16.innobazaar.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,26 +24,30 @@ public class MerchandiseController {
     private final BasketService basketService;
     private final StoreService storeService;
     private final HttpSession session;
+    private final CategoryService categoryService;
 
     @Autowired
-    public MerchandiseController(MerchandiseService merchandiseService, UserService userService, BasketService basketService, StoreService storeService, HttpSession session) {
+    public MerchandiseController(MerchandiseService merchandiseService, UserService userService, BasketService basketService, StoreService storeService, HttpSession session, CategoryService categoryService) {
         this.merchandiseService = merchandiseService;
         this.userService = userService;
         this.basketService = basketService;
         this.storeService = storeService;
         this.session = session;
+        this.categoryService = categoryService;
     }
 
     @RequestMapping(value = "/merchandise", method = RequestMethod.GET)
-    public String getMerchandise(Model model, @RequestParam(required = false, name = "merchandiseId") String merchandiseId) {
-        model.addAttribute("merchandiseObject", merchandiseService.getMerchandise(Long.valueOf(merchandiseId)));
+//    public String getMerchandise(Model model, @RequestParam(required = false, name = "merchandiseId") String merchandiseId) {
+    public String getMerchandise(Model model, @RequestParam Long id) {
+        model.addAttribute("merchandiseObject", merchandiseService.getMerchandise(Long.valueOf(id)));
         return "merchandise";
     }
 
     @RequestMapping(value = "/merchandise/add", method = RequestMethod.POST)
-    public String addMerchandiseToBasket(Model model, @RequestParam(name = "merchandiseId") String merchandiseId,
-                                         HttpSession session) {
-        Merchandise merchandise = merchandiseService.getMerchandise(Long.valueOf(merchandiseId));
+    public String addMerchandiseToBasket(@RequestParam(name = "merchandiseId", required = false) String merchandiseId) {
+        Object productId = session.getAttribute("merchandiseId");
+//        Merchandise merchandise = merchandiseService.getMerchandise(Long.valueOf(merchandiseId));
+        Merchandise merchandise = merchandiseService.getMerchandise((Long) productId);
         Long userId = (Long) session.getAttribute("id");
         basketService.addMerchandise(userService.getUser(userId).getBasket().getId(), merchandise);
         return "basket";
@@ -65,6 +66,7 @@ public class MerchandiseController {
         Long storeId = (Long) session.getAttribute("storeId");
         model.addAttribute("merchandise", merchandise);
         model.addAttribute("storeId", storeId);
+        model.addAttribute("categories", categoryService.getAllCategories());
         request.setAttribute("newProduct", merchandise);
         return "merchandiseForm";
     }
@@ -84,6 +86,8 @@ public class MerchandiseController {
         }
         Object storeId = session.getAttribute("storeId");
         Store store = storeService.getStore((Long) storeId);
+        Category category = categoryService.findCategoryByName(merchandise.getCategoryName());
+        merchandise.setCategory(category);
         store.addMerchandiseToStore(merchandise);
         storeService.updateStore(store);
         return "redirect:/store#products";
@@ -145,6 +149,12 @@ public class MerchandiseController {
         return "redirect:/store#products";
     }
 
+    /**
+     * Метод удаления товара из магазина
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/product/deleteProduct")
     public String deleteProductFromStore(@RequestParam Long id) {
         Object storeId = session.getAttribute("storeId");
@@ -155,7 +165,7 @@ public class MerchandiseController {
             if (!m.getId().equals(id)) {
                 temp.add(m);
             }
-            store.setMerchandiseList(temp);
+            store.setMerchandiseList(products);
         }
         storeService.updateStore(store);
         return "redirect:/store#products";

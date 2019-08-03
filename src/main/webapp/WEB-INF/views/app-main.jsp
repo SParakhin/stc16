@@ -19,7 +19,7 @@
                                placeholder="Название товара"/>
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-lg btn-success" type="submit">Search</button>
+                        <button class="btn btn-lg btn-success" type="submit">Поиск</button>
                     </div>
                 </div>
                 <br>

@@ -24,9 +24,44 @@
                                 <label for="description">Описание</label>
                                 <form:input path="description" cssClass="form-control"/>
                                 <form:errors path="description" cssClass="alert"/>
-                                <%--<label for="category">Категория товара</label>--%>
-                                <%--<form:input path="category" cssClass="form-control"/>--%>
-                                <%--<form:errors path="category" cssClass="alert"/>--%>
+                                    <%--<label for="category">Категория товара</label>--%>
+                                    <%--<form:input path="category" cssClass="form-control"/>--%>
+                                    <%--<form:errors path="category" cssClass="alert"/>--%>
+                                    <%--<div class="form-group">--%>
+
+                                <%--<label for="categoryName">Выберите категорию:</label>--%>
+                                <%--<select class="form-control" id="categoryName">--%>
+                                    <%--<option>--------------</option>--%>
+                                    <%--<c:forEach var="category" items="${categories}">--%>
+                                        <%--<option>${category.name}</option>--%>
+
+                                        <%--&lt;%&ndash;${pageContext.session.setAttribute("categoryName",category.name)}&ndash;%&gt;--%>
+                                        <%--&lt;%&ndash;<c:if test="${category.name eq pageContext.getAttribute(category)}">&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;${pageContext.session.setAttribute("categoryName",category.name)}&ndash;%&gt;--%>
+                                        <%--&lt;%&ndash;</c:if>&ndash;%&gt;--%>
+                                    <%--</c:forEach>--%>
+
+                                <%--</select>--%>
+
+
+                                    <%--</div>--%>
+                                    <label for="categoryName">Выберите категорию:</label>
+                                <form:select path="categoryName" cssClass="form-control">
+                                    <form:option value="-" label="--Please Select--"/>
+                                    <c:forEach var="category" items="${categories}">
+                                        <option>${category.name}</option>
+                                    </c:forEach>
+                                    <%--<form:options items="${category.name}" />--%>
+                                </form:select>
+
+                                    <%--<form:select path="categoryName">--%>
+                                    <%--<form:option value="-" label="--Please Select--"/>--%>
+                                    <%--&lt;%&ndash;<form:options items="${categories}"/>&ndash;%&gt;--%>
+                                    <%--<c:forEach var="category" items="${categories}">--%>
+                                    <%--<form:options items="${category.name}"/>--%>
+                                    <%--</c:forEach>--%>
+                                    <%--</form:select>--%>
+
                                 <label for="price">Цена</label>
                                 <form:input path="price" cssClass="form-control"/>
                                 <form:errors path="price" cssClass="alert"/>
