@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="col-md-9">
                         <c:forEach var="product" items="${merchandisesPage.content}">
-                            <div class="row product">
+                            <div class="row">
                                 <div class="card w-100">
                                     <div class="card-header">
                                         <a href="#"> ${product.name} </a>

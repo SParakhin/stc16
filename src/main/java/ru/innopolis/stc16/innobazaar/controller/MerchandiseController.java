@@ -105,6 +105,7 @@ public class MerchandiseController {
                                         Model model) {
         Object storeId = session.getAttribute("storeId");
         Store store = storeService.getStore((Long) storeId);
+        model.addAttribute("categories", categoryService.getAllCategories());
         List<Merchandise> merchandises = store.getMerchandiseList();
         for (Merchandise merchandise : merchandises) {
             if (merchandise.getId().equals(id)) {
@@ -138,7 +139,7 @@ public class MerchandiseController {
             if (product.getId().equals(merchandise.getId())) {
                 product.setId(merchandise.getId());
                 product.setName(merchandise.getName());
-                product.setCategory(merchandise.getCategory());
+                product.setCategory(categoryService.findCategoryByName(merchandise.getCategoryName()));
                 product.setDescription(merchandise.getDescription());
                 product.setPictureUrl(merchandise.getPictureUrl());
                 product.setPrice(merchandise.getPrice());
