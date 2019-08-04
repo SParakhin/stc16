@@ -31,7 +31,7 @@
                     </div>
                     <div class="row justify-content-center">
                         <c:forEach var="merch" items="${goods}">
-                            <div class="col-4 my-1">
+                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-10 col-xs-10 my-2">
                                 <div id="test" class="card" >
                                     <img class="card-img-top" src="${merch.pictureUrl}"
                                          alt="изображение товара ${merch.name}">
