@@ -6,12 +6,8 @@
     <jsp:attribute name="titleText">Карточка товара</jsp:attribute>
     <jsp:attribute name="metaDescription">Просмотр товара</jsp:attribute>
     <jsp:body>
-        <html>
-        <head>
-            <title>Карточка товара</title>
-        </head>
-        <body>
-        <div class="row">
+
+        <div class="row my-4">
             <div class="col-12 col-sm-12 col-md-6 col-lg-7">
                 <div class="product-item">
                     <img class="img-fluid" src=${merchandiseObject.pictureUrl}>
@@ -33,10 +29,6 @@
                 <span class="product">${merchandiseObject.productDetail}</span>
             </div>
         </div>
-        <div>
-        </div>
-        </div>
-        </body>
-        </html>
+
     </jsp:body>
 </t:page-template>
