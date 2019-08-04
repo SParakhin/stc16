@@ -142,6 +142,7 @@ public class MerchandiseController {
                 product.setId(merchandise.getId());
                 product.setName(merchandise.getName());
                 product.setCategory(categoryService.findCategoryByName(merchandise.getCategoryName()));
+                product.setCategoryName(merchandise.getCategoryName());
                 product.setDescription(merchandise.getDescription());
                 product.setPictureUrl(merchandise.getPictureUrl());
                 product.setPrice(merchandise.getPrice());

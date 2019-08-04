@@ -26,10 +26,7 @@ public class Merchandise implements Serializable {
     private Store store;
     //TODO private String department;
     //TODO private String productDetail;
-    @OneToOne(targetEntity = Category.class)
-    @JoinTable(name = "categories_merchandises",
-            joinColumns = @JoinColumn(name = "merchandise_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    @ManyToOne
     private Category category;
     private String categoryName;
     private String productDetail;
