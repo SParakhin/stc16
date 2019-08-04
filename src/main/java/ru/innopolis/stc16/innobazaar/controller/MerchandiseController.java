@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.innopolis.stc16.innobazaar.entity.Category;
 import ru.innopolis.stc16.innobazaar.entity.Merchandise;
 import ru.innopolis.stc16.innobazaar.entity.Store;
+import ru.innopolis.stc16.innobazaar.entity.User;
 import ru.innopolis.stc16.innobazaar.service.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,13 +44,14 @@ public class MerchandiseController {
         return "merchandise";
     }
 
-    @RequestMapping(value = "/merchandise/add", method = RequestMethod.POST)
-    public String addMerchandiseToBasket(@RequestParam(name = "merchandiseId", required = false) String merchandiseId) {
-        Object productId = session.getAttribute("merchandiseId");
+    @RequestMapping(value = "/merchandise/add", method = RequestMethod.GET)
+    public String addMerchandiseToBasket(@RequestParam Long id) {
+//        Object productId = session.getAttribute("merchandiseId");
 //        Merchandise merchandise = merchandiseService.getMerchandise(Long.valueOf(merchandiseId));
-        Merchandise merchandise = merchandiseService.getMerchandise((Long) productId);
-        Long userId = (Long) session.getAttribute("id");
-        basketService.addMerchandise(userService.getUser(userId).getBasket().getId(), merchandise);
+        Merchandise merchandise = merchandiseService.getMerchandise(id);
+//        Long userId = (Long) session.getAttribute("id");
+        User user = userService.getAuthenticatedUser();
+        basketService.addMerchandise(user.getBasket().getId(), merchandise);
         return "basket";
     }
 

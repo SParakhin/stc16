@@ -81,7 +81,7 @@
             </table>
 
 
-            <a href="${pageContext.request.contextPath}/product/addProductForm"
+            <a href="${pageContext.request.contextPath}/product/addProductForm?id=${store.id}"
                class="btn btn-success"
                role="button">Добавить товар</a>
         </div>
