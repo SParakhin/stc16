@@ -10,22 +10,54 @@ import ru.innopolis.stc16.innobazaar.entity.Merchandise;
 import ru.innopolis.stc16.innobazaar.service.CategoryService;
 import ru.innopolis.stc16.innobazaar.service.MerchandiseService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/cat")
 public class CategoryController {
 
+    /**
+     * Количество отображаемых на странице товаров
+     */
+    private static int GOODS_ON_PAGE = 9;
+
     @Autowired
     private MerchandiseService merchandiseService;
 
     @GetMapping("/openWithGoods")
-    public String showCategoryWithGoods(@RequestParam("catName") String theName, Model theModel) {
-
+    public String showCategoryWithGoods(
+            @RequestParam("catName") String theName,
+            @RequestParam("pageNumber") int pageNumber,
+            Model theModel
+    ) {
         List<Merchandise> goodsList = merchandiseService.getMerchandiseByCategory(theName);
 
+        int listLength = goodsList.size();
+        int numberOfPages = (listLength % GOODS_ON_PAGE == 0)
+                ? listLength / GOODS_ON_PAGE
+                : listLength / GOODS_ON_PAGE + 1;
+
+        List<Integer> pageNumbers = new ArrayList<>();
+        for (int i = 0; i < numberOfPages; i++) {
+            pageNumbers.add(i + 1);
+        }
+
+        List<Merchandise> goodsListToSend;
+        if (numberOfPages > 1) {
+            goodsListToSend = goodsList.stream()
+                    .skip(GOODS_ON_PAGE * (pageNumber - 1))
+                    .limit(GOODS_ON_PAGE)
+                    .collect(Collectors.toList());
+        } else {
+            goodsListToSend = goodsList;
+        }
+
         theModel.addAttribute("catName", theName);
-        theModel.addAttribute("goods", goodsList);
+        theModel.addAttribute("goods", goodsListToSend);
+        theModel.addAttribute("currentPageNumber", pageNumber);
+        theModel.addAttribute("pageNumbers", pageNumbers);
 
         return "categoryWithGoods";
     }

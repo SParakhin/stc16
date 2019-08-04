@@ -25,6 +25,7 @@
                         <c:forEach items="${cats}" var="cat">
                             <c:url var="openCatPage" value="/cat/openWithGoods">
                                 <c:param name="catName" value="${cat.value}"/>
+                                <c:param name="pageNumber" value="1"/>
                             </c:url>
                             <a class="dropdown-item" href="${openCatPage}">${cat.key}</a>
                         </c:forEach>

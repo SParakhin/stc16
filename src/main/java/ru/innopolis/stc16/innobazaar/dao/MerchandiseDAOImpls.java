@@ -78,7 +78,9 @@ public class MerchandiseDAOImpls implements MerchandiseDAO {
     public List<Merchandise> getMerchandiseByCategory(String catName) {
 
         return entityManager.createNativeQuery(
-                "select * from merchandise where category_id = (select distinct category.id from category where category.name = :catName)",
+                "select * from merchandise " +
+                        "where category_id = (select distinct category.id from category where category.name = :catName) " +
+                        "order by merchandise.name",
                 Merchandise.class
         )
                 .setParameter("catName", catName)

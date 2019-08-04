@@ -32,7 +32,7 @@
                     <div class="row justify-content-center">
                         <c:forEach var="merch" items="${goods}">
                             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-10 col-xs-10 my-2">
-                                <div id="test" class="card" >
+                                <div id="test" class="card">
                                     <img class="card-img-top" src="${merch.pictureUrl}"
                                          alt="изображение товара ${merch.name}">
                                     <div class="card-body">
@@ -48,11 +48,24 @@
                         <div class="col">
                             <nav aria-label="goods pagination">
                                 <ul class="pagination pagination-lg justify-content-center">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1">1</a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <c:forEach var="pageNumber" items="${pageNumbers}">
+                                        <c:choose>
+                                            <c:when test="${currentPageNumber == pageNumber}">
+                                                <li class="page-item disabled">
+                                                    <a class="page-link" href="#" tabindex="-1">${pageNumber}</a>
+                                                </li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:url var="openCatPage" value="/cat/openWithGoods">
+                                                    <c:param name="catName" value="${catName}"/>
+                                                    <c:param name="pageNumber" value="${pageNumber}"/>
+                                                </c:url>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="${openCatPage}">${pageNumber}</a>
+                                                </li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
                                 </ul>
                             </nav>
                         </div>
