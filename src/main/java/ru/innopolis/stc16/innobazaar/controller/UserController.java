@@ -56,7 +56,7 @@ public class UserController {
             return "userForm";
         }
         userService.saveUser(user);
-        return "redirect:/listUsers";
+        return "redirect:/login";
     }
 
     /**
@@ -73,7 +73,7 @@ public class UserController {
             model.addAttribute("user", user);
             return "userForm";
         }
-        return "redirect:/listUsers";
+        return "redirect:/addUserForm";
     }
 
     /**
