@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.innopolis.stc16.innobazaar.dao.BasketDAO;
 import ru.innopolis.stc16.innobazaar.entity.Basket;
+import ru.innopolis.stc16.innobazaar.entity.Merchandise;
 
 import java.util.List;
 
@@ -39,6 +40,10 @@ public class BasketServiceImpl implements BasketService {
     @Override
     public void updateBasket(Basket basket) {
         basketDAO.updateBasket(basket);
+    }
+
+    public void addMerchandise(Long basketId, Merchandise merchandise) {
+        basketDAO.addMerchandise(basketId, merchandise);
     }
 }
 

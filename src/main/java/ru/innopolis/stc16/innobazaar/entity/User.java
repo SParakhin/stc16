@@ -35,6 +35,9 @@ public class User implements UserDetails {
     private String username;
     @NotEmpty
     private String password;
+    @OneToOne(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Basket basket;
 
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
@@ -203,6 +206,14 @@ public class User implements UserDetails {
         return enabled;
     }
 
+    public Basket getBasket() {
+        return basket;
+    }
+
+    public void setBasket(Basket basket) {
+        this.basket = basket;
+    }
+
     public boolean addAddressToUser(Address address) {
         address.setUser(this);
         return getAddressList().add(address);
@@ -218,7 +229,7 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id.longValue() == user.id.longValue();
+        return id == user.id;
     }
 
     @Override

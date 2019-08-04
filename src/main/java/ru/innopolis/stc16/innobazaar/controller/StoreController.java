@@ -1,9 +1,11 @@
 package ru.innopolis.stc16.innobazaar.controller;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.innopolis.stc16.innobazaar.entity.Merchandise;
 import ru.innopolis.stc16.innobazaar.entity.Store;
 import ru.innopolis.stc16.innobazaar.entity.User;
 import ru.innopolis.stc16.innobazaar.service.StoreService;
@@ -94,9 +96,10 @@ public class StoreController {
         User user = userService.getAuthenticatedUser();
         List<Store> stores = user.getStoreList();
         for (Store store : stores) {
-            if (store.getId().equals(id)) ;
-            model.addAttribute("store", store);
-            return "storeForm";
+            if (store.getId().equals(id)) {
+                model.addAttribute("store", store);
+                return "storeForm";
+            }
         }
         return "redirect:/store/listStore";
     }
@@ -150,15 +153,42 @@ public class StoreController {
         return "redirect:/store/listStore";
     }
 
+    /**
+     * Метод отображения главной страницы магазина. Выводит:
+     * контакты магазина
+     * список товаров магазина
+     * список заказов магазина
+     *
+     * @param model
+     * @return
+     */
     @GetMapping("/store")
-    public String showStore(@RequestParam("id") Long id,
-                            Model model,
-                            HttpServletRequest request) {
+    public String showStore(@RequestParam(value = "id", required = false) Long id,
+                            Model model) {
         User user = userService.getAuthenticatedUser();
-        Store store = storeService.getStore(id);
-        model.addAttribute("store", store);
-        model.addAttribute("user",user);
+        List<Store> stores = user.getStoreList();
+        Store store = null;
+        if (id == null) {
+            Object storeId = session.getAttribute("storeId");
+            for (Store s : stores) {
+                if (s.getId().equals(storeId)) {
+                    store = storeService.getStore((Long) storeId);
+                }
+            }
+        } else {
+            for (Store s : stores) {
+                if (s.getId().equals(id)) {
+                    store = storeService.getStore(id);
+                }
+            }
+        }
         session.setAttribute("storeId", store.getId());
+        List<Merchandise> products = store.getMerchandiseList();
+        model.addAttribute("store", store);
+        model.addAttribute("user", user);
+        model.addAttribute("products", products);
+        model.addAttribute("bookings", store.getBookings());
         return "store";
     }
+
 }

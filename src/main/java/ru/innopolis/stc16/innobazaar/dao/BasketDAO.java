@@ -1,6 +1,7 @@
 package ru.innopolis.stc16.innobazaar.dao;
 
 import ru.innopolis.stc16.innobazaar.entity.Basket;
+import ru.innopolis.stc16.innobazaar.entity.Merchandise;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface BasketDAO {
     void updateBasket(Basket basket);
 
     Basket getBasket(Long id);
+
+    void addMerchandise(Long basketId, Merchandise merchandise);
 }
