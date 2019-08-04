@@ -24,6 +24,7 @@ public class CategoryController {
 
         List<Merchandise> goodsList = merchandiseService.getMerchandiseByCategory(theName);
 
+        theModel.addAttribute("catName", theName);
         theModel.addAttribute("goods", goodsList);
 
         return "categoryWithGoods";
