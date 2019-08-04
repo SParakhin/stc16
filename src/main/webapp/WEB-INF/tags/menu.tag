@@ -23,7 +23,10 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <c:forEach items="${cats}" var="cat">
-                            <a class="dropdown-item" href="${cat.value}">${cat.key}</a>
+                            <c:url var="openCatPage" value="/cat/openWithGoods">
+                                <c:param name="catName" value="${cat.value}"/>
+                            </c:url>
+                            <a class="dropdown-item" href="${openCatPage}">${cat.key}</a>
                         </c:forEach>
                     </div>
                 </li>

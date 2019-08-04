@@ -74,6 +74,17 @@ public class MerchandiseDAOImpls implements MerchandiseDAO {
                 .getResultList();
     }
 
+    @Override
+    public List<Merchandise> getMerchandiseByCategory(String catName) {
+
+        return entityManager.createNativeQuery(
+                "select * from merchandise where category_id = (select distinct category.id from category where category.name = :catName)",
+                Merchandise.class
+        )
+                .setParameter("catName", catName)
+                .getResultList();
+    }
+
     private void addSorting(ProductsSearchCriteria criteria, CriteriaBuilder builder, CriteriaQuery<Merchandise> query, Root<Merchandise> merchandiseRoot) {
         Path<Object> sortFiled = merchandiseRoot.get(criteria.getPageSort());
         if (sortFiled == null) {
@@ -96,7 +107,7 @@ public class MerchandiseDAOImpls implements MerchandiseDAO {
         if (!searchQuery.equals("")) {
             return builder
                     .like(builder.lower(merchandiseRoot.get("name")),
-                            "%" + searchQuery.toLowerCase() +"%");
+                            "%" + searchQuery.toLowerCase() + "%");
         } else {
             return null;
         }

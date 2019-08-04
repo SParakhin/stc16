@@ -31,7 +31,7 @@ public class MenuInterceptor implements HandlerInterceptor {
             catsContainer.put("категорий нет", "#");
         } else {
             for (Category cat : catsList) {
-                catsContainer.put(cat.getName(), "#");
+                catsContainer.put(cat.getName(), cat.getName());
             }
         }
 
