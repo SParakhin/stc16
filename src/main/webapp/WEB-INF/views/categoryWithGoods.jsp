@@ -33,12 +33,19 @@
                         <c:forEach var="merch" items="${goods}">
                             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-10 col-xs-10 my-2">
                                 <div id="test" class="card">
-                                    <img class="card-img-top" src="${merch.pictureUrl}"
-                                         alt="изображение товара ${merch.name}">
+                                    <c:url var="openMerch" value="/merchandise">
+                                        <c:param name="id" value="${merch.id}"/>
+                                    </c:url>
+                                    <a href="${openMerch}">
+                                        <img class="card-img-top" src="${merch.pictureUrl}"
+                                             alt="изображение товара ${merch.name}">
+                                    </a>
                                     <div class="card-body">
-                                        <h5 class="card-title">${merch.name}</h5>
+                                        <h5 class="card-title">
+                                            <a href="${openMerch}">${merch.name}</a>
+                                        </h5>
                                         <p class="card-text">${merch.description}</p>
-                                        <p class="card-text">цена: ${merch.price}</p>
+                                        <p class="card-text font-weight-bold">цена: ${merch.price}</p>
                                     </div>
                                 </div>
                             </div>
