@@ -40,20 +40,20 @@ public class MerchandiseController {
     @RequestMapping(value = "/merchandise", method = RequestMethod.GET)
 //    public String getMerchandise(Model model, @RequestParam(required = false, name = "merchandiseId") String merchandiseId) {
     public String getMerchandise(Model model, @RequestParam Long id) {
-        model.addAttribute("merchandiseObject", merchandiseService.getMerchandise(Long.valueOf(id)));
-        return "merchandise";
+    model.addAttribute("merchandiseObject", merchandiseService.getMerchandise(Long.valueOf(id)));
+    return "merchandise";
     }
 
-    @RequestMapping(value = "/merchandise/add", method = RequestMethod.GET)
-    public String addMerchandiseToBasket(@RequestParam Long id) {
-//        Object productId = session.getAttribute("merchandiseId");
-//        Merchandise merchandise = merchandiseService.getMerchandise(Long.valueOf(merchandiseId));
-        Merchandise merchandise = merchandiseService.getMerchandise(id);
-//        Long userId = (Long) session.getAttribute("id");
-        User user = userService.getAuthenticatedUser();
-        basketService.addMerchandise(user.getBasket().getId(), merchandise);
-        return "basket";
-    }
+//    @RequestMapping(value = "/merchandise/add", method = RequestMethod.GET)
+//    public String addMerchandiseToBasket(@RequestParam Long id) {
+////        Object productId = session.getAttribute("merchandiseId");
+////        Merchandise merchandise = merchandiseService.getMerchandise(Long.valueOf(merchandiseId));
+//        Merchandise merchandise = merchandiseService.getMerchandise(id);
+////        Long userId = (Long) session.getAttribute("id");
+//        User user = userService.getAuthenticatedUser();
+//        basketService.addMerchandise(user.getBasket().getId(), merchandise);
+//        return "basket";
+//    }
 
     /**
      * Форма добавления товара в магазин

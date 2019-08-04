@@ -22,7 +22,7 @@
                     <div class="col">
 
                         <!-- Cart Item -->
-                        <c:forEach var="merchandise" items="${merchandises}">
+                        <c:forEach var="merchandise" items="${basket}">
                             <div class="cart_item d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
                                 <!-- Name -->
                                 <div class="cart_item_product d-flex flex-row align-items-center justify-content-start">
@@ -46,7 +46,7 @@
                         <div class="section_subtitle">Final info</div>
                         <div class="cart_total_container">
                             <ul>
-                                <c:forEach var="merchandise" items="${merchandises}">
+                                <c:forEach var="merchandise" items="${basket}">
                                     <li class="d-flex flex-row align-items-center justify-content-start">
                                         <div class="cart_total_title">Subtotal</div>
                                         <div class="cart_total_value ml-auto">${merchandise.price}</div>
@@ -54,7 +54,7 @@
                                 </c:forEach>
                                 <li class="d-flex flex-row align-items-center justify-content-start">
                                     <div class="cart_total_title">Total</div>
-                                    <div class="cart_total_value ml-auto">${totalSum}</div>
+                                    <%--<div class="cart_total_value ml-auto">${totalSum}</div>--%>
                                 </li>
                             </ul>
                             <button class="newsletter_button">Оплатить</button>
