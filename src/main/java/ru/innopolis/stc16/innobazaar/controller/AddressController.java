@@ -91,9 +91,10 @@ public class AddressController {
         User user = userService.getAuthenticatedUser();
         List<Address> addresses = user.getAddressList();
         for (Address address : addresses) {
-            if (address.getId().equals(id)) ;
-            model.addAttribute("address", address);
-            return "addressForm";
+            if (address.getId().equals(id)) {
+                model.addAttribute("address", address);
+                return "addressForm";
+            }
         }
         return "redirect:/address/listAddress";
     }

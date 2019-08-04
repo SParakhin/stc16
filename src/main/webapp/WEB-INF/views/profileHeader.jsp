@@ -20,5 +20,6 @@
         <a href="${pageContext.request.contextPath}/store/listStore">Мои магазины</a>
     </div>
 </div>
+
 </body>
 </html>
