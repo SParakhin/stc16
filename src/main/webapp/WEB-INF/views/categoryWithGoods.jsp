@@ -29,21 +29,32 @@
                             </p>
                         </div>
                     </div>
+                    <div class="row justify-content-center">
+                        <c:forEach var="merch" items="${goods}">
+                            <div class="col-4 my-1">
+                                <div id="test" class="card" >
+                                    <img class="card-img-top" src="${merch.pictureUrl}"
+                                         alt="изображение товара ${merch.name}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${merch.name}</h5>
+                                        <p class="card-text">${merch.description}</p>
+                                        <p class="card-text">цена: ${merch.price}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
                     <div class="row">
                         <div class="col">
-                            <div class="card-deck my-2">
-                                <c:forEach var="merch" items="${goods}">
-                                    <div id="test" class="card">
-                                        <img class="card-img-top" src="${merch.pictureUrl}"
-                                             alt="изображение товара ${merch.name}">
-                                        <div class="card-body">
-                                            <h5 class="card-title">${merch.name}</h5>
-                                            <p class="card-text">${merch.description}</p>
-                                            <p class="card-text">цена: ${merch.price}</p>
-                                        </div>
-                                    </div>
-                                </c:forEach>
-                            </div>
+                            <nav aria-label="goods pagination">
+                                <ul class="pagination pagination-lg justify-content-center">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1">1</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </c:otherwise>
