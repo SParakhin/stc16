@@ -9,6 +9,12 @@
     <jsp:attribute name="titleText">Главная страница</jsp:attribute>
     <jsp:attribute name="metaDescription">Сервис для приёма платежей</jsp:attribute>
     <jsp:body>
-        Главная страница
+        <form method="GET" action="${pageContext.request.contextPath}/registration/registerStore">
+            <div class="form-group">
+                <label for="storeName">Название магазина</label>
+                <input type="text" class="form-control" id="storeName" name="storeName"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Зарегистрировать</button>
+        </form>
     </jsp:body>
 </t:page-template>

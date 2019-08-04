@@ -24,7 +24,7 @@ import java.util.Properties;
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
 @ComponentScan(basePackages = {"ru.innopolis.stc16.innopay"})
-@EnableJpaRepositories(basePackages = {"ru.innopolis.stc16.innopay.repository"})
+@EnableJpaRepositories(basePackages = {"ru.innopolis.stc16.innopay.dao"})
 public class AppContext {
 
     private final Environment environment;
