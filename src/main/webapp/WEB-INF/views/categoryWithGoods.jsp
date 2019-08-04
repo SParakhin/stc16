@@ -45,7 +45,16 @@
                                             <a href="${openMerch}">${merch.name}</a>
                                         </h5>
                                         <p class="card-text">${merch.description}</p>
-                                        <p class="card-text font-weight-bold">цена: ${merch.price}</p>
+                                        <p class="card-text font-weight-bold">
+                                            цена: ${merch.price}
+                                            <c:url var="addToOrder" value="/merchandise/add">
+                                                <c:param name="id" value="${merch.id}"/>
+                                            </c:url>
+                                            <span class="text-lowercase">
+                                                <a class="btn btn-success btn-sm mx-2"
+                                                   href="${addToOrder}">в корзину</a>
+                                            </span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
