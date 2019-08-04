@@ -42,7 +42,7 @@
                                     ${merchandise.category.name}<br>
                                 <label for="categoryName">Выберите категорию:</label>
                                 <form:select path="categoryName" cssClass="form-control">
-                                    <form:option value="${merchandise.category.name}"/>
+                                    <%--<form:option value="${merchandise.category.name}"/>--%>
                                 <c:forEach var="category" items="${categories}">
                                 <option>${category.name}</option>
                                 </c:forEach>
