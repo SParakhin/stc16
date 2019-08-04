@@ -41,6 +41,10 @@
                 <security:authorize access="isAuthenticated()">
 
                 <ul class="navbar-nav ml-auto">
+                       <%--<button type="button" class="btn btn-success"><a href="${pageContext.request.contextPath}/basket"></a>Корзина</button>--%>
+                    <button type="submit" class="btn btn-success" formmethod="get"
+                            formaction="${pageContext.request.contextPath}/basket" name="edit">Корзина
+                    </button>
                     <li class="navbar-item mt-1 mr-3">вы вошли как:
 
                         <!-- Example split danger button -->

@@ -10,6 +10,7 @@ import ru.innopolis.stc16.innobazaar.service.BasketService;
 import ru.innopolis.stc16.innobazaar.service.MerchandiseService;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,14 @@ public class BasketController {
         } else {
             basket.add(merchandise);
         }
+        BigDecimal totalSum = BigDecimal.ZERO;
+        if (!basket.isEmpty()) {
+            for (Merchandise m : basket) {
+                totalSum.add(m.getPrice());
+            }
+        }
         session.setAttribute("basket", basket);
+        session.setAttribute("totalSum", totalSum);
         return "redirect:/store/listStore";
     }
 
@@ -64,7 +72,9 @@ public class BasketController {
     public String showBasket(Model model) {
         //TODO Если корзина пустая, добавить атрибут запроса newBasket и в jsp вывод сообщения
         List<Merchandise> basket = (List<Merchandise>) session.getAttribute("basket");
+        BigDecimal totalSum = (BigDecimal) session.getAttribute("totalSum");
         model.addAttribute("basket", basket);
+        model.addAttribute("totalSum", totalSum);
         return "basket";
     }
 

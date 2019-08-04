@@ -30,7 +30,9 @@
                                         <div><img src=${merchandise.pictureUrl} alt="нет картинки"></div>
                                     </div>
                                     <div class="cart_item_name_container">
-                                        <div class="cart_item_name"><a href="${pageContext.request.contextPath}/merchandise">${merchandise.name}</a></div>
+                                        <div class="cart_item_name"><a
+                                                href="${pageContext.request.contextPath}/merchandise">${merchandise.name}</a>
+                                        </div>
                                         <input type="hidden" name="id" value="${merchandise.id}">
                                     </div>
                                 </div>
@@ -43,19 +45,19 @@
 
                 <div class="col-lg-6 offset-lg-2">
                     <div class="cart_total">
-                        <%--<div class="section_title">Cart total</div>--%>
-                        <%--<div class="section_subtitle">Final info</div>--%>
+                            <%--<div class="section_title">Cart total</div>--%>
+                            <%--<div class="section_subtitle">Final info</div>--%>
                         <div class="cart_total_container">
                             <ul>
                                 <c:forEach var="merchandise" items="${basket}">
                                     <li class="d-flex flex-row align-items-center justify-content-start">
-                                        <%--<div class="cart_total_title">Subtotal</div>--%>
-                                        <%--<div class="cart_total_value ml-auto">${merchandise.price}</div>--%>
+                                            <%--<div class="cart_total_title">Subtotal</div>--%>
+                                            <%--<div class="cart_total_value ml-auto">${merchandise.price}</div>--%>
                                     </li>
                                 </c:forEach>
                                 <li class="d-flex flex-row align-items-center justify-content-start">
                                     <div class="cart_total_title">Всего</div>
-                                    <%--<div class="cart_total_value ml-auto">${totalSum}</div>--%>
+                                        <div class="cart_total_value ml-auto">${totalSum}</div>
                                 </li>
                             </ul>
                             <button class="newsletter_button">Оплатить</button>
