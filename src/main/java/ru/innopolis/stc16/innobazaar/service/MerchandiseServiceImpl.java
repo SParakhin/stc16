@@ -56,5 +56,10 @@ public class MerchandiseServiceImpl implements MerchandiseService {
                 .totalElementsNumber(merchandises.size())
                 .build();
     }
+
+    @Override
+    public List<Merchandise> getMerchandiseByCategory(String catName) {
+        return merchandiseDAO.getMerchandiseByCategory(catName);
+    }
 }
 

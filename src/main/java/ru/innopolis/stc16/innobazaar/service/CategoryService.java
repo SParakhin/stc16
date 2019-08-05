@@ -5,7 +5,10 @@ import ru.innopolis.stc16.innobazaar.entity.Category;
 import java.util.List;
 
 public interface CategoryService {
-    List<Category> getAllCategories();
+
+   List<Category> getAllCategories();
+
+    public Category findCategoryByName(String categoryName);
 
 
 }

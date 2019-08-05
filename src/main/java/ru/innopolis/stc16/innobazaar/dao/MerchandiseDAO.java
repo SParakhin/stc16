@@ -21,4 +21,6 @@ public interface MerchandiseDAO {
     Merchandise getMerchandise(Long id);
 
     List<Merchandise> getBySearchCriteria(ProductsSearchCriteria criteria);
+
+    List<Merchandise> getMerchandiseByCategory(String catName);
 }

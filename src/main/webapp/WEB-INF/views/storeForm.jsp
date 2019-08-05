@@ -40,7 +40,7 @@
                             <!-- Button -->
                             <div class="col-md-offset-3 col-md-9">
                                 <c:if test="${pageContext.request.getAttribute('newStore')!=null}">
-                                    <form:button cssClass="btn btn-primary"
+                                    <form:button cssClass="btn btn-success"
                                                  name="saveButton">Сохранить данные</form:button>
                                 </c:if>
                             </div>
@@ -50,7 +50,7 @@
                     <c:if test="${pageContext.request.getAttribute('newStore')==null}">
                         <form class="form-inline">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                            <button type="submit" id="updateButton" class="btn btn-primary" formmethod="POST"
+                            <button type="submit" id="updateButton" class="btn btn-success" formmethod="POST"
                                     formaction="${pageContext.request.contextPath}/store/updateStore" name="edit">
                                 Сохранить изменения
                             </button>

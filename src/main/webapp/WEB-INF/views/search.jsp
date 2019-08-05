@@ -19,7 +19,7 @@
                                placeholder="Название товара">
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-lg btn-success" type="submit">Search</button>
+                        <button class="btn btn-lg btn-success" type="submit">Найти</button>
                     </div>
                 </div>
                 <br>
@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="col-md-9">
                         <c:forEach var="product" items="${merchandisesPage.content}">
-                            <div class="row product">
+                            <div class="row">
                                 <div class="card w-100">
                                     <div class="card-header">
                                         <a href="#"> ${product.name} </a>
@@ -45,10 +45,16 @@
                                             <h6> Цена: ${product.price}</h6>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <a href="#">Перейти к товару</a>
+                                                    <a href="${pageContext.request.contextPath}/merchandise?id=${product.id}">Перейти
+                                                        к товару</a>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <a href="#">Перейти к магазину ${product.store.name}</a>
+                                                    <a href="/store?id=${product.store.id}">Перейти к
+                                                        магазину ${product.store.name}</a>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <a href="${pageContext.request.contextPath}/merchandise/add?id=${product.id}">Добавить
+                                                        в корзину</a>
                                                 </div>
                                             </div>
                                         </div>
