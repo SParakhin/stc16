@@ -51,19 +51,22 @@ public class BasketController {
         Merchandise merchandise = merchandiseService.getMerchandise(id);
         if (basket == null) {
             basket = new ArrayList<>();
+            basket.add(merchandise);
         } else {
             basket.add(merchandise);
         }
+        session.setAttribute("basket", basket);
         BigDecimal totalSum = BigDecimal.ZERO;
         if (!basket.isEmpty()) {
             for (Merchandise m : basket) {
-                totalSum.add(m.getPrice());
+                totalSum = totalSum.add(m.getPrice());
             }
+            session.setAttribute("totalSum", totalSum);
+            session.setAttribute("basketSize",basket.size());
         }
-        session.setAttribute("basket", basket);
-        session.setAttribute("totalSum", totalSum);
-        return "redirect:/store/listStore";
+        return "redirect:/basket";
     }
+
 
     /**
      * Страница корзины
