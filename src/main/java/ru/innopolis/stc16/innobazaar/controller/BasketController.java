@@ -27,18 +27,6 @@ public class BasketController {
         this.merchandiseService = merchandiseService;
     }
 
-
-//    @RequestMapping(value = "/basket", method = RequestMethod.GET)
-//    public String getBasket(Model model, @RequestParam(required = false, name = "basketID") String basketID) {
-//        Basket basket = basketService.getBasket(Long.valueOf(basketID));
-//        List<Merchandise> merchandises = basket.getMerchandise();
-//        BigDecimal totalSum = merchandises.stream().map(merchandise -> merchandise.getPrice())
-//                .reduce(BigDecimal.ZERO, BigDecimal::add);
-//        model.addAttribute("merchandises", merchandises);
-//        model.addAttribute("totalSum", totalSum);
-//        return "basket";
-//    }
-
     /**
      * Метод добавления товара в корзину. Сохранение корзины в сессии
      *
@@ -62,7 +50,7 @@ public class BasketController {
                 totalSum = totalSum.add(m.getPrice());
             }
             session.setAttribute("totalSum", totalSum);
-            session.setAttribute("basketSize",basket.size());
+            session.setAttribute("basketSize", basket.size());
         }
         return "redirect:/basket";
     }
@@ -81,5 +69,29 @@ public class BasketController {
         return "basket";
     }
 
-
+    /**
+     * Метод удаления товара из корзинв
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/deleteFromBasket")
+    public String deleteProductFromBasket(@RequestParam Long id) {
+        List<Merchandise> basket = (List<Merchandise>) session.getAttribute("basket");
+        List<Merchandise> tempBasket = new ArrayList<>();
+        BigDecimal newTotalSum = BigDecimal.ZERO;
+        for (Merchandise m : basket) {
+            if (!(m.getId().equals(id))) {
+                tempBasket.add(m);
+                newTotalSum = newTotalSum.add(m.getPrice());
+            }
+        }
+        session.removeAttribute("totalSum");
+        session.removeAttribute("basketSize");
+        session.removeAttribute("basket");
+        session.setAttribute("totalSum", newTotalSum);
+        session.setAttribute("basketSize", tempBasket.size());
+        session.setAttribute("basket", tempBasket);
+        return "redirect:/basket";
+    }
 }
