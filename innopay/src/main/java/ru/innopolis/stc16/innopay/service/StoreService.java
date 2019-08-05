@@ -10,5 +10,4 @@ public interface StoreService {
 
     boolean authorize(String storeName, String secretKey);
 
-    Store authorizeGet(String storeName, String secretKey);
 }

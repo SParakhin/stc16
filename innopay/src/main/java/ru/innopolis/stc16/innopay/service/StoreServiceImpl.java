@@ -51,12 +51,4 @@ public class StoreServiceImpl implements StoreService {
         }
     }
 
-    @Override
-    public Store authorizeGet(String storeName, String secretKey) {
-        try {
-            return storeRepository.getStoreByNameAndSecretKey(storeName, secretKey);
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }

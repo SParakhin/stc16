@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.innopolis.stc16.innopay.dto.Payment;
-import ru.innopolis.stc16.innopay.dto.Store;
+import ru.innopolis.stc16.innopay.dto.*;
 import ru.innopolis.stc16.innopay.service.PaymentService;
 import ru.innopolis.stc16.innopay.service.StoreService;
 
@@ -37,17 +37,41 @@ public class PaymentController {
         return new ResponseEntity<>(payment, HttpStatus.OK);
     }
 
-    @PostMapping(path = "/createPayment", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    ResponseEntity<Payment> createPayment(@RequestParam("id") Long paymentId, @RequestBody Store store) {
-        ru.innopolis.stc16.innopay.entity.Store authorizedStore = storeService.authorizeGet(store.getName(), store.getSecretKey());
-        if (authorizedStore == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    @PostMapping(path = "/createPayment")
+    public String createPayment(@RequestBody PaymentRequest paymentRequest, Model model) {
+        if (!storeService.authorize(paymentRequest.getStoreName(), paymentRequest.getSecretKey())) {
+            throw new NotAuthorizedException();
         }
-        Payment payment = paymentService.createPayment(authorizedStore, paymentId);
+        Payment payment = paymentService.getPayment(paymentRequest.getStoreName(), paymentRequest.getCustomPaymentId());
+        if (payment != null) {
+            PaymentResult paymentResult = new PaymentResult();
+            paymentResult.setReturnPage(paymentRequest.getReturnPage());
+            paymentResult.setResult(PaymentResultMessage.ALREADY_PAYED.getText());
+            model.addAttribute("paymentResult", paymentResult);
+            return "paymentResult";
+        }
+        model.addAttribute("payment", paymentRequest);
+        return "processCard";
+    }
+
+    @PostMapping(path = "/processPayment")
+    public String processPayment(@RequestBody ProcessCardRequest processRequest, Model model) {
+        if (!storeService.authorize(processRequest.getStoreName(), processRequest.getSecretKey())) {
+            throw new NotAuthorizedException();
+        }
+        PaymentResult paymentResult = new PaymentResult();
+        paymentResult.setReturnPage(processRequest.getReturnPage());
+        Payment payment = paymentService.createPayment(processRequest);
         if (payment == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            paymentResult.setResult(PaymentResultMessage.ERROR_PAYED.getText());
+        } else {
+            paymentResult.setResult(PaymentResultMessage.SUCCESS_PAYED.getText());
         }
-        return new ResponseEntity<>(payment, HttpStatus.OK);
+        model.addAttribute("payment", payment);
+        return "paymentResult";
+    }
+
+    @GetMapping String returnToStore(@RequestParam("returnPage") String returnPage) {
+        return "redirect:" + returnPage;
     }
 }

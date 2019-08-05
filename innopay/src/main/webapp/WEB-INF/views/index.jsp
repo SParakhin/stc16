@@ -6,7 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <t:page-template>
-    <jsp:attribute name="titleText">Главная страница</jsp:attribute>
+    <jsp:attribute name="titleText">Регистрация магазина</jsp:attribute>
     <jsp:attribute name="metaDescription">Сервис для приёма платежей</jsp:attribute>
     <jsp:body>
         <form method="GET" action="${pageContext.request.contextPath}/registration/registerStore">

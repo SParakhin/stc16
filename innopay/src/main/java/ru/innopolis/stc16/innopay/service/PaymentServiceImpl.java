@@ -3,18 +3,21 @@ package ru.innopolis.stc16.innopay.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.innopolis.stc16.innopay.dao.PaymentRepository;
+import ru.innopolis.stc16.innopay.dao.StoreRepository;
 import ru.innopolis.stc16.innopay.dto.Payment;
-import ru.innopolis.stc16.innopay.entity.Store;
+import ru.innopolis.stc16.innopay.dto.ProcessCardRequest;
 
 import java.util.Date;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
 
+    private final StoreRepository storeRepository;
     private final PaymentRepository paymentRepository;
 
     @Autowired
-    public PaymentServiceImpl(PaymentRepository paymentRepository) {
+    public PaymentServiceImpl(StoreRepository storeRepository, PaymentRepository paymentRepository) {
+        this.storeRepository = storeRepository;
         this.paymentRepository = paymentRepository;
     }
 
@@ -33,23 +36,21 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment createPayment(Store store, Long paymentId) {
-        ru.innopolis.stc16.innopay.dto.Payment oldPayment = getPayment(store.getName(), paymentId);
-        if (oldPayment != null) {
-            return oldPayment;
-        }
+    public Payment createPayment(ProcessCardRequest processRequest) {
         ru.innopolis.stc16.innopay.entity.Payment payment = null;
         if (Math.random() > 0.5) {
             try {
                 payment = new ru.innopolis.stc16.innopay.entity.Payment();
-                payment.setStore(store);
-                payment.setCustomPaymentId(paymentId);
+                payment.setStore(storeRepository.getStoreByName(processRequest.getStoreName()));
+                payment.setCustomPaymentId(processRequest.getCustomPaymentId());
                 payment.setDate(new Date());
-                payment.setCardNumber("XXXXXXXXXXXXXXXX");
+                String cardNumber = processRequest.getCardNumber();
+                String securedCardNumber = cardNumber.substring(0, 6) + "XXXXXX" + cardNumber.substring(12);
+                payment.setCardNumber(securedCardNumber);
+                payment.setAmount(processRequest.getAmount());
                 payment = paymentRepository.save(payment);
             } catch (Exception e) {
                 payment = null;
-                e.printStackTrace();
             }
         }
         if (payment != null) {
