@@ -17,7 +17,7 @@
                         <br>
                         <form action="${pageContext.request.contextPath}/addBasket" method="post">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                            <input type="hidden" name="merchandiseId" value="${merchandiseObject.id}">
+                            <input type="hidden" name="id" value="${merchandiseObject.id}">
                             <input type="submit" class="button" value="Добавить в корзину"/>
                         </form>
 
