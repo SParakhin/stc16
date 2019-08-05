@@ -14,6 +14,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import ru.innopolis.stc16.innobazaar.interceptor.MenuInterceptor;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -74,6 +75,11 @@ public class AppContext {
         em.setJpaProperties(hibernateProperties());
 
         return em;
+    }
+
+    @Bean
+    public MenuInterceptor menuInterceptor() {
+        return new MenuInterceptor();
     }
 
 }

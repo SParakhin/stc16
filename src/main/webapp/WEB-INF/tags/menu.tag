@@ -22,8 +22,13 @@
                         категории
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">пункт 1</a>
-                        <a class="dropdown-item" href="#">пункт 2</a>
+                        <c:forEach items="${cats}" var="cat">
+                            <c:url var="openCatPage" value="/cat/openWithGoods">
+                                <c:param name="catName" value="${cat.value}"/>
+                                <c:param name="pageNumber" value="1"/>
+                            </c:url>
+                            <a class="dropdown-item" href="${openCatPage}">${cat.key}</a>
+                        </c:forEach>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -34,8 +39,8 @@
             <span class="navbar-text">
                 <security:authorize access="isAnonymous()">
                     <span class=" mb-0 h6">
-                        <input class="btn btn-success my-2 my-sm-0" type="button" value="Войти"
-                               onclick="window.location.href='login'; return false;"/>
+                        <a class="btn btn-success mx-2 text-white"
+                           href="${pageContext.request.contextPath}/login">Войти</a>
                     </span>
                 </security:authorize>
                 <security:authorize access="isAuthenticated()">
@@ -44,19 +49,20 @@
                     <li class="navbar-item mt-1 mr-3">вы вошли как:
 
                         <!-- Example split danger button -->
-<li class="btn-group">
-  <button type="button" class="btn btn-success"> <security:authentication property="principal.username"/></button>
-  <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="${pageContext.request.contextPath}/user/updateUserForm">Мои профиль</a>
-    <a class="dropdown-item" href="${pageContext.request.contextPath}/store/listStore">Мои магазины</a>
-    <a class="dropdown-item" href="#">Мои заказы</a>
-    <a class="dropdown-item" href="${pageContext.request.contextPath}/address/listAddress">Мои адреса доставки</a>
-  </div>
-</li>
+            <li class="btn-group mx-1">
+              <button type="button" class="btn btn-success"> <security:authentication
+                      property="principal.username"/></button>
+              <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="${pageContext.request.contextPath}/user/updateUserForm">Мои профиль</a>
+                <a class="dropdown-item" href="${pageContext.request.contextPath}/store/listStore">Мои магазины</a>
+                <a class="dropdown-item" href="#">Мои заказы</a>
+                <a class="dropdown-item" href="${pageContext.request.contextPath}/address/listAddress">Мои адреса доставки</a>
+              </div>
+            </li>
              <li class="navbar-item">
             <form:form cssClass="form-inline" action="${pageContext.request.contextPath}/logout"
                        method="POST">

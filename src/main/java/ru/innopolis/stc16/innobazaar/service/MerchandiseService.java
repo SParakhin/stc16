@@ -22,4 +22,6 @@ public interface MerchandiseService {
     void updateMerchandise(Merchandise merchandise);
 
     MerchandisePage getBySearchCriteria(ProductsSearchCriteria criteria);
+
+    List<Merchandise> getMerchandiseByCategory(String catName);
 }
