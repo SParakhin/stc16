@@ -8,7 +8,7 @@
 <t:page-template>
     <jsp:attribute name="titleText">Результат оплаты</jsp:attribute>
     <jsp:body><%--@elvariable id="paymentResult" type="ru.innopolis.stc16.innopay.dto.PaymentResult"--%>
-        <form method="GET" action="${pageContext.request.contextPath}/payments/returnToStore">
+        <form method="POST" action="${pageContext.request.contextPath}/payments/returnToStore">
             <div class="form-group">
                 <label>${paymentResult.result}</label>
             </div>

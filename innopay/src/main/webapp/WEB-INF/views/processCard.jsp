@@ -10,13 +10,15 @@
     <jsp:body><%--@elvariable id="payment" type="ru.innopolis.stc16.innopay.dto.PaymentRequest"--%>
         <div class="creditCardForm">
             <div class="heading">
-                <h1>Подтвердите покупку</h1>
+                <h1>Введите данные карты</h1>
             </div>
             <div class="payment">
                 <form method="POST" action="${pageContext.request.contextPath}/payments/processPayment">
-                    <input hidden id="store" name="store" value="${payment.storeName}"/>
-                    <input hidden id="id" name="id" value="${payment.customPaymentId}"/>
+                    <input hidden id="storeName" name="storeName" value="${payment.storeName}"/>
+                    <input hidden id="secretKey" name="secretKey" value="${payment.secretKey}"/>
+                    <input hidden id="customPaymentId" name="customPaymentId" value="${payment.customPaymentId}"/>
                     <input hidden id="amount" name="amount" value="${payment.amount}"/>
+                    <input hidden id="returnPage" name="returnPage" value="${payment.returnPage}"/>
                     <div class="form-group store">
                         <label>Магазин: ${payment.storeName}</label>
                     </div>
@@ -69,7 +71,7 @@
                         <img src="${pageContext.request.contextPath}/resources/img/amex.jpg" id="amex">
                     </div>
                     <div class="form-group" id="pay-now">
-                        <button type="submit" class="btn btn-default" id="confirm-purchase">Подтвердить</button>
+                        <button type="submit" class="btn btn-default" id="confirm-purchase">Оплатить</button>
                     </div>
                 </form>
             </div>

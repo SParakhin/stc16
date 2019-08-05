@@ -38,7 +38,7 @@ public class PaymentController {
     }
 
     @PostMapping(path = "/createPayment")
-    public String createPayment(@RequestBody PaymentRequest paymentRequest, Model model) {
+    public String createPayment(PaymentRequest paymentRequest, Model model) {
         if (!storeService.authorize(paymentRequest.getStoreName(), paymentRequest.getSecretKey())) {
             throw new NotAuthorizedException();
         }
@@ -55,7 +55,7 @@ public class PaymentController {
     }
 
     @PostMapping(path = "/processPayment")
-    public String processPayment(@RequestBody ProcessCardRequest processRequest, Model model) {
+    public String processPayment(ProcessCardRequest processRequest, Model model) {
         if (!storeService.authorize(processRequest.getStoreName(), processRequest.getSecretKey())) {
             throw new NotAuthorizedException();
         }
@@ -67,11 +67,12 @@ public class PaymentController {
         } else {
             paymentResult.setResult(PaymentResultMessage.SUCCESS_PAYED.getText());
         }
-        model.addAttribute("payment", payment);
+        model.addAttribute("paymentResult", paymentResult);
         return "paymentResult";
     }
 
-    @GetMapping String returnToStore(@RequestParam("returnPage") String returnPage) {
+    @PostMapping(path = "/returnToStore")
+    public String returnToStore(String returnPage) {
         return "redirect:" + returnPage;
     }
 }
