@@ -31,9 +31,10 @@
                                     </div>
                                     <div class="cart_item_name_container">
                                         <div class="cart_item_name"><a
-                                                href="${pageContext.request.contextPath}/merchandise">${merchandise.name}</a>
+                                                href="${pageContext.request.contextPath}/merchandise?id=${merchandise.id}">${merchandise.name}</a>
+                                            <input type="hidden" name="id" value="${merchandise.id}">
                                         </div>
-                                        <input type="hidden" name="id" value="${merchandise.id}">
+
                                     </div>
                                 </div>
                                 <!-- Price -->
