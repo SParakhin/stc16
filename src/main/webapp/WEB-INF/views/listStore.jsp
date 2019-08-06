@@ -12,7 +12,7 @@
         <div class="container-fluid">
             <jsp:include page="profileHeader.jsp"></jsp:include>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-auto">
                     <div class="panel-body">
                         <table class="table table-striped table-bordered">
                             <tr>

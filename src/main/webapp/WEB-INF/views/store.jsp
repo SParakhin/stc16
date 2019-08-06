@@ -69,7 +69,12 @@
                         <td>${product.description}</td>
                         <td>${product.category.name}</td>
                         <td>${product.price}</td>
-                        <td>${product.pictureUrl}</td>
+                        <td>
+                            <div class="media">
+                                <img src="${product.pictureUrl}" alt="изображение" class="mr-3 mt-3 rounded-circle"
+                                     style="width:120px;">
+                            </div>
+                        </td>
                         <td>
                             <a href="${updateLink}">Изменить</a>
                             | <a href="${deleteLink}"
