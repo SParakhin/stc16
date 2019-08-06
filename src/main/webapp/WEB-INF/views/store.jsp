@@ -20,9 +20,9 @@
             </li>
             <security:authentication var="principal" property="principal"/>
             <c:if test="${pageContext.request.userPrincipal.name eq store.user.username}">
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="pill" href="#orders">Заказы</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="#orders">Заказы</a>
+                </li>
             </c:if>
         </ul>
 
@@ -32,10 +32,9 @@
                 <address>
                     <h3>Добро пожаловать в наш магазин ${store.name}</h3>
                     <h3>Свяжитесь с нами :</h3><br>
-                    <strong>${user.firstName}</strong><br>
-                        ${user.lastName}<br>
-                        ${user.email}<br>
-                        ${user.phone}<br>
+                    <strong>${store.user.firstName} ${store.user.lastName}</strong><br>
+                        ${store.user.email}<br>
+                        ${store.user.phone}<br>
 
                 </address>
             </form:form>
@@ -44,57 +43,92 @@
             </form:form>
         </div>
 
-
-        <div class="tab-pane container-fluid fade" id="products">
-            <table class="table table-striped table-bordered">
-                <tr>
-                    <th>Название</th>
-                    <th>Описание</th>
-                    <th>Категория</th>
-                    <th>Цена</th>
-                    <th>Изображение</th>
-                    <th>Действие</th>
-                </tr>
-
-                <!-- loop over and print our users -->
-                <c:forEach var="product" items="${products}">
-                    <!-- construct an "update" link with username id -->
-                    <c:url var="updateLink" value="/product/updateProductForm">
-                        <c:param name="id" value="${product.id}"/>
-                    </c:url>
-
-
-                    <!-- construct an "delete" link with username id -->
-                    <c:url var="deleteLink" value="/product/deleteProduct">
-                        <c:param name="id" value="${product.id}"/>
-                    </c:url>
-
-                    <tr>
-                        <td>${product.name}</td>
-                        <td>${product.description}</td>
-                        <td>${product.category.name}</td>
-                        <td>${product.price}</td>
-                        <td>
-                            <div class="media">
-                                <img src="${product.pictureUrl}" alt="изображение" class="mr-3 mt-3 rounded-circle"
-                                     style="width:120px;">
+        <!-- Вкладка "Товары" для покупателя (витрина магазина)-->
+        <c:if test="${pageContext.request.userPrincipal.name ne store.user.username}">
+            <div class="tab-pane container-fluid fade" id="products">
+                <div class="row justify-content-center">
+                    <c:forEach var="merch" items="${products}">
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-10 col-xs-10 my-2">
+                            <div id="test" class="card">
+                                <c:url var="openMerch" value="/merchandise">
+                                    <c:param name="id" value="${merch.id}"/>
+                                </c:url>
+                                <a href="${openMerch}">
+                                    <img class="card-img-top" src="${merch.pictureUrl}"
+                                         alt="изображение товара ${merch.name}">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <a href="${openMerch}">${merch.name}</a>
+                                    </h5>
+                                    <p class="card-text">${merch.description}</p>
+                                    <p class="card-text font-weight-bold">
+                                        цена: ${merch.price}
+                                        <c:url var="addToOrder" value="/addBasket">
+                                            <c:param name="id" value="${merch.id}"/>
+                                        </c:url>
+                                        <span class="text-lowercase">
+                                                <a class="btn btn-success btn-sm mx-2"
+                                                   href="${addToOrder}">в корзину</a>
+                                            </span>
+                                    </p>
+                                </div>
                             </div>
-                        </td>
-                        <td>
-                            <a href="${updateLink}">Изменить</a>
-                            | <a href="${deleteLink}"
-                                 onclick="if (!(confirm('Вы хотите удалить товар ?'))) return false">Удалить</a>
-                        </td>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
+        </c:if>
+
+        <c:if test="${pageContext.request.userPrincipal.name eq store.user.username}">
+            <div class="tab-pane container-fluid fade" id="products">
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>Название</th>
+                        <th>Описание</th>
+                        <th>Категория</th>
+                        <th>Цена</th>
+                        <th>Изображение</th>
+                        <th>Действие</th>
                     </tr>
-                </c:forEach>
-            </table>
+
+                    <!-- loop over and print our users -->
+                    <c:forEach var="product" items="${products}">
+                        <!-- construct an "update" link with username id -->
+                        <c:url var="updateLink" value="/product/updateProductForm">
+                            <c:param name="id" value="${product.id}"/>
+                        </c:url>
 
 
-            <a href="${pageContext.request.contextPath}/product/addProductForm?id=${store.id}"
-               class="btn btn-success"
-               role="button">Добавить товар</a>
-        </div>
+                        <!-- construct an "delete" link with username id -->
+                        <c:url var="deleteLink" value="/product/deleteProduct">
+                            <c:param name="id" value="${product.id}"/>
+                        </c:url>
 
+                        <tr>
+                            <td>${product.name}</td>
+                            <td>${product.description}</td>
+                            <td>${product.category.name}</td>
+                            <td>${product.price}</td>
+                            <td>
+                                <div class="media">
+                                    <img src="${product.pictureUrl}" alt="изображение" class="img-thumbnail"
+                                         style="width:60px;">
+                                </div>
+                            </td>
+                            <td>
+                                <a href="${updateLink}">Изменить</a>
+                                | <a href="${deleteLink}"
+                                     onclick="if (!(confirm('Вы хотите удалить товар ?'))) return false">Удалить</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+                <a href="${pageContext.request.contextPath}/product/addProductForm?id=${store.id}"
+                   class="btn btn-success"
+                   role="button">Добавить товар</a>
+            </div>
+        </c:if>
 
         <div class="tab-pane container-fluid fade" id="orders">
             <div class="row justify-content-center">

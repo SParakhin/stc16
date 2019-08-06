@@ -7,30 +7,45 @@
     <jsp:attribute name="titleText">Корзина</jsp:attribute>
     <jsp:attribute name="metaDescription">Просмотр корзины</jsp:attribute>
     <jsp:body>
+
         <div class="container-fluid">
+            <h2>Корзина товаров</h2>
             <div class="row justify-content-center">
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <c:forEach var="merchandise" items="${basket}">
                         <br>
                         <div class="row">
                             <div class="card w-100">
-                                <div class="card-header">
+
+                                    <%--<div class="card-header">--%>
+                                    <%--<div class="col-md-auto">--%>
+                                    <%--<a href="#"> ${product.name} </a>--%>
+
+                                    <%--</div>--%>
+
+                                    <%--</div>--%>
+
+                                <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <img src="${merchandise.pictureUrl}" alt="Нет картинки">
+                                            <img src="${merchandise.pictureUrl}" alt="Нет картинки"
+                                                 style="width: 60px;">
                                         </div>
-                                        <div class="col-md-6">
-                                            <a Название товара></a>
+                                        <div class="col-md-4">
                                             <a href="${pageContext.request.contextPath}/merchandise?id=${merchandise.id}"> ${merchandise.name} </a>
                                         </div>
-                                        <div class="col-md-2">
-                                                ${merchandise.price} </a>
+                                        <div class="col-md-4">
+                                            <strong>${merchandise.price} руб.</strong>
                                         </div>
                                         <c:url var="deleteLink" value="/deleteFromBasket">
                                             <c:param name="id" value="${merchandise.id}"/>
                                         </c:url>
                                         <div class="col-md-2">
-                                            <a href="${deleteLink}">Удалить</a>
+                                            <button class="btn btn-danger btn-sm"
+                                                    onclick="window.location.href='${deleteLink}'">Удалить
+                                            </button>
+                                                <%--<a href="${deleteLink}">Удалить</a>--%>
+
                                         </div>
                                     </div>
                                 </div>
@@ -39,8 +54,10 @@
                         </div>
                     </c:forEach>
                     <div class="row">
-                        <h5> Всего к оплате: ${totalSum}</h5>
+                        <h5> Всего к оплате: ${totalSum} руб.</h5>
                     </div>
+
+                    <div class="row">
                     <div class="col-md-auto">
                         <button class="btn btn-success">Оплатить</button>
                     </div>
@@ -48,6 +65,7 @@
                     <div class="col-md-auto">
                         <button class="btn btn-success">Оформить заказ</button>
                     </div>
+                </div>
                 </div>
 
             </div>
