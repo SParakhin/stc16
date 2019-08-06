@@ -192,13 +192,16 @@ public class StoreController {
     }
 
     /**
-     * Методо отображения магазина для покупателя (витрина магазина)
+     * Метод для отображения магазина для покупателя (витрина магазина). Скрывает кнопки владельца магазина
      */
     @GetMapping("/store/{id}")
     public String showStoreForCustomer(@PathVariable("id") Long id,
                                        Model model) {
         Store store = storeService.getStore(id);
+        List<Merchandise> products = store.getMerchandiseList();
         model.addAttribute("store", store);
+        model.addAttribute("products", products);
+        model.addAttribute("bookings", store.getBookings());
         return "store";
     }
 

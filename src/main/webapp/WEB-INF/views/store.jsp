@@ -2,6 +2,7 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <t:page-template>
     <jsp:attribute name="titleText">Профиль пользователя</jsp:attribute>
@@ -17,9 +18,12 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="pill" href="#products">Товары</a>
             </li>
+            <security:authentication var="principal" property="principal"/>
+            <c:if test="${pageContext.request.userPrincipal.name eq store.user.username}">
             <li class="nav-item">
                 <a class="nav-link" data-toggle="pill" href="#orders">Заказы</a>
             </li>
+            </c:if>
         </ul>
 
         <div class="tab-content">
@@ -39,6 +43,7 @@
                 ${pageContext.session.setAttribute("storeId",store.id)}
             </form:form>
         </div>
+
 
         <div class="tab-pane container-fluid fade" id="products">
             <table class="table table-striped table-bordered">
@@ -89,6 +94,8 @@
                class="btn btn-success"
                role="button">Добавить товар</a>
         </div>
+
+
         <div class="tab-pane container-fluid fade" id="orders">
             <div class="row justify-content-center">
                 <div class="col-md-9">
