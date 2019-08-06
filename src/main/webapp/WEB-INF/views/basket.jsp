@@ -9,9 +9,22 @@
     <jsp:body>
 
         <div class="container-fluid">
-            <h2>Корзина товаров</h2>
-            <div class="row justify-content-center">
+
+            <c class="row justify-content-center">
+                <c:if test="${empty basket}">
+                <div class="row">
+                    <div class="col text-center">
+                        <p class="h3">
+                            К сожалению, в корзине ещё нет товаров.
+                        </p>
+                    </div>
+                </div>
+                </c:if>
+
+                <c:if test="${not empty basket}">
+                    <h2>Корзина товаров</h2>
                 <div class="col-md-12">
+
                     <c:forEach var="merchandise" items="${basket}">
                         <br>
                         <div class="row">
@@ -58,17 +71,17 @@
                     </div>
 
                     <div class="row">
-                    <div class="col-md-auto">
-                        <button class="btn btn-success">Оплатить</button>
-                    </div>
-                    <br>
-                    <div class="col-md-auto">
-                        <button class="btn btn-success">Оформить заказ</button>
+                        <div class="col-md-auto">
+                            <button class="btn btn-success">Оплатить</button>
+                        </div>
+                        <br>
+                        <div class="col-md-auto">
+                            <button class="btn btn-success">Оформить заказ</button>
+                        </div>
                     </div>
                 </div>
-                </div>
-
-            </div>
+                </c:if>
+        </div>
         </div>
 
     </jsp:body>
