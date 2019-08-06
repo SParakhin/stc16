@@ -20,17 +20,15 @@ public class Basket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Merchandise> merchandise;
+    private List<Merchandise> merchandise = new ArrayList<>();
 
     public Basket(List<Merchandise> merchandise) {
         this.merchandise = merchandise;
     }
 
-    public void addMerchandise(Merchandise merchandiseItem) {
-        if (merchandise == null) {
-            merchandise = new LinkedList<>();
-            merchandise.add(merchandiseItem);
-        }
+    public boolean addMerchandiseToBasket(Merchandise merchandise) {
+        merchandise.setBasket(this);
+        return getMerchandise().add(merchandise);
     }
 }
 

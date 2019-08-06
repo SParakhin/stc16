@@ -33,6 +33,8 @@ public class Merchandise implements Serializable {
     private String productDetail;
     private BigDecimal price=BigDecimal.ZERO;
     private String pictureUrl;
+    @ManyToOne
+    private Basket basket;
 
     public Merchandise(String name, String description, Store store, Category category, BigDecimal price, String pictureUrl) {
         this.name = name;
