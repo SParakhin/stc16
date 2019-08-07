@@ -53,7 +53,7 @@
                                                         магазину ${product.store.name}</a>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <a href="${pageContext.request.contextPath}/merchandise/add?id=${product.id}">Добавить
+                                                    <a href="${pageContext.request.contextPath}/addBasket?id=${product.id}">Добавить
                                                         в корзину</a>
                                                 </div>
                                             </div>

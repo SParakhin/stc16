@@ -15,9 +15,9 @@
                         <h3>${merchandiseObject.name}</h3>
                         <span class="price">${merchandiseObject.price} руб.</span>
                         <br>
-                        <form action="${pageContext.request.contextPath}/merchandise/add" method="post">
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                            <input type="hidden" name="merchandiseId" value="${merchandiseObject.id}">
+                        <form action="${pageContext.request.contextPath}/addBasket" method="get">
+                            <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+                            <input type="hidden" name="id" value="${merchandiseObject.id}">
                             <input type="submit" class="button" value="Добавить в корзину"/>
                         </form>
 

@@ -47,7 +47,7 @@
                                         <p class="card-text">${merch.description}</p>
                                         <p class="card-text font-weight-bold">
                                             цена: ${merch.price}
-                                            <c:url var="addToOrder" value="/merchandise/add">
+                                            <c:url var="addToOrder" value="/addBasket">
                                                 <c:param name="id" value="${merch.id}"/>
                                             </c:url>
                                             <span class="text-lowercase">

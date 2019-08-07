@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     public void updateUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
-        user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_ADMIN")));
+        user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_USER")));
         userDAO.updateUser(user);
     }
 

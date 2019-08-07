@@ -31,7 +31,7 @@ public class Merchandise implements Serializable {
     @Transient
     private String categoryName;
     private String productDetail;
-    private BigDecimal price;
+    private BigDecimal price=BigDecimal.ZERO;
     private String pictureUrl;
 
     public Merchandise(String name, String description, Store store, Category category, BigDecimal price, String pictureUrl) {
