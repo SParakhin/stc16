@@ -2,6 +2,8 @@ package ru.innopolis.stc16.innobazaar.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,16 +21,22 @@ public class Basket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Merchandise> merchandise = new ArrayList<>();
+    @OneToMany(mappedBy = "basket",
+            cascade = CascadeType.MERGE,
+            targetEntity = Merchandise.class,
+            fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Merchandise> merchandises = new ArrayList<>();
+    @OneToOne(mappedBy = "basket")
+    private User user;
 
-    public Basket(List<Merchandise> merchandise) {
-        this.merchandise = merchandise;
+    public Basket(List<Merchandise> merchandises) {
+        this.merchandises = merchandises;
     }
 
     public boolean addMerchandiseToBasket(Merchandise merchandise) {
         merchandise.setBasket(this);
-        return getMerchandise().add(merchandise);
+        return getMerchandises().add(merchandise);
     }
 }
 

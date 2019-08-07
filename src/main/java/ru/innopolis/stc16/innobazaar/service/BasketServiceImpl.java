@@ -42,9 +42,9 @@ public class BasketServiceImpl implements BasketService {
         basketDAO.updateBasket(basket);
     }
 
-    public void addMerchandise(Long basketId, Merchandise merchandise) {
-        basketDAO.addMerchandise(basketId, merchandise);
-    }
+//    public void addMerchandise(Long basketId, Merchandise merchandise) {
+//        basketDAO.addMerchandise(basketId, merchandise);
+//    }
 }
 
 

@@ -20,5 +20,5 @@ public interface BasketService {
 
     void updateBasket(Basket basket);
 
-    public void addMerchandise(Long basketId, Merchandise merchandise);
+//    public void addMerchandise(Long basketId, Merchandise merchandise);
 }
