@@ -2,8 +2,6 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
 
 <t:page-template>
     <jsp:attribute name="titleText">Профиль пользователя</jsp:attribute>
@@ -11,6 +9,7 @@
 
 
     <jsp:body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <ul class="nav nav-pills" id="myTab">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="pill" href="#about">О магазине</a>
