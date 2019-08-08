@@ -22,12 +22,26 @@
                 </c:if>
 
                 <c:if test="${not empty basket}">
-                <h2>Корзина товаров</h2>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="alert alert-success text-center" role="alert">
+                            <h2>Корзина товаров</h2>
+                        </div>
+
+                    </div>
+                </div>
+                    <%--<h2>Корзина товаров</h2>--%>
+
                 <div class="col-md-12">
+
                     <c:forEach var="merchandise" items="${basket}">
+
                         <br>
                         <div class="row">
                             <div class="card w-100">
+                                <div class="card-header">
+                                    <a href="${pageContext.request.contextPath}/store/${merchandise.store.id}">${merchandise.store.name} </a>
+                                </div>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-2">
@@ -54,6 +68,7 @@
                             </div>
                         </div>
                     </c:forEach>
+
                     <div class="row">
                         <h5> Всего к оплате: ${totalSum} руб.</h5>
                     </div>

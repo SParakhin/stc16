@@ -90,6 +90,7 @@ public class BasketController {
         } else {
             basket = userBasket.getMerchandises();
             model.addAttribute("basketSize", basket.size());
+            session.setAttribute("basketSize", basket.size());
         }
         BigDecimal totalSum = (BigDecimal) session.getAttribute("totalSum");
         model.addAttribute("basket", basket);

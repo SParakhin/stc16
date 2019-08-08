@@ -8,9 +8,17 @@
     <jsp:attribute name="titleText">Профиль пользователя</jsp:attribute>
     <jsp:attribute name="metaDescription">Профиль пользователя</jsp:attribute>
 
-
     <jsp:body>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="alert alert-success text-center" role="alert">
+                    <h2> ${store.name}</h2>
+                </div>
+
+            </div>
+        </div>
+        <br>
         <ul class="nav nav-pills" id="myTab">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="pill" href="#about">О магазине</a>
@@ -30,7 +38,7 @@
         <div class="tab-pane container-fluid active" id="about">
             <form:form modelAttribute="user">
                 <address>
-                    <h3>Добро пожаловать в наш магазин ${store.name}</h3>
+                    <h3>Добро пожаловать в наш магазин</h3>
                     <h3>Свяжитесь с нами :</h3><br>
                     <strong>${store.user.firstName} ${store.user.lastName}</strong><br>
                         ${store.user.email}<br>
