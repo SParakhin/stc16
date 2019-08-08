@@ -55,7 +55,7 @@
                                 <label for="pictureUrl">Изображение</label>
                                     <form:input path="pictureUrl" cssClass="form-control"/>
                                     <form:errors path="pictureUrl" cssClass="alert"/>
-
+<br>
                                 <div class="form-group">
                                     <!-- Button -->
                                     <div class="col-md-offset-3 col-md-9">

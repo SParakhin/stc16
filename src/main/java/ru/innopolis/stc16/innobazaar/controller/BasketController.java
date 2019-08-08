@@ -33,34 +33,6 @@ public class BasketController {
     }
 
     /**
-     * Метод добавления товара в корзину. Сохранение корзины в сессии
-     *
-     * @param id
-     * @return
-     */
-//    @GetMapping("/addBasket")
-//    public String addBasket(@RequestParam Long id) {
-//        List<Merchandise> basket = (List<Merchandise>) session.getAttribute("basket");
-//        Merchandise merchandise = merchandiseService.getMerchandise(id);
-//        if (basket == null) {
-//            basket = new ArrayList<>();
-//            basket.add(merchandise);
-//        } else {
-//            basket.add(merchandise);
-//        }
-//        session.setAttribute("basket", basket);
-//        BigDecimal totalSum = BigDecimal.ZERO;
-//        if (!basket.isEmpty()) {
-//            for (Merchandise m : basket) {
-//                totalSum = totalSum.add(m.getPrice());
-//            }
-//            session.setAttribute("totalSum", totalSum);
-//            session.setAttribute("basketSize", basket.size());
-//        }
-//        return "redirect:/basket";
-//    }
-
-    /**
      * Метод добавления товара в корзину с хранением в БД
      *
      * @param id
@@ -70,25 +42,16 @@ public class BasketController {
     @GetMapping("/addBasket")
     public String addBasket(@RequestParam Long id) {
         User user = userService.getAuthenticatedUser();
-//        Basket userBasket = user.getBasket();
-//        if (userBasket == null) {
-//            userBasket = new Basket();
-//            userBasket.setUser(user);
-////            user.setBasket(userBasket);
-//        } else {
-//            userBasket = user.getBasket();
-//        }
-
-        Basket userBasket = new Basket();
+        Basket userBasket = user.getBasket();
+        if (userBasket == null) {
+            userBasket = getNewBasket(user);
+        }
         Merchandise merchandise = merchandiseService.getMerchandise(id);
-        userBasket.addMerchandiseToBasket(merchandise);
-        List<Merchandise> basket = userBasket.getMerchandises();
-//        user.setBasket(userBasket);
-//        userService.updateUser(user);
-//        userBasket.setUser(user);
+        userBasket.getMerchandises().add(merchandise);
+        merchandise.getBasketList().add(userBasket);
         user.setBasket(userBasket);
         userService.updateUserRelation(user);
-//        basketService.saveBasket(userBasket);
+        List<Merchandise> basket = userBasket.getMerchandises();
         session.setAttribute("basket", basket);
         BigDecimal totalSum = BigDecimal.ZERO;
         for (Merchandise m : basket) {
@@ -96,9 +59,22 @@ public class BasketController {
         }
         session.setAttribute("totalSum", totalSum);
         session.setAttribute("basketSize", basket.size());
-//        basketService.saveBasket(userBasket);
-//        return "redirect:/basket";
-        return "redirect:/";
+        return "redirect:/basket";
+    }
+
+    /**
+     * Метод создания корзины при прямом обращении к корзине после авторизации пользователя
+     *
+     * @param user
+     * @return
+     */
+    private Basket getNewBasket(User user) {
+        Basket userBasket = new Basket();
+        userBasket.setUser(user);
+        basketService.saveBasket(userBasket);
+        user.setBasket(userBasket);
+        userService.updateUser(user);
+        return userBasket;
     }
 
     /**
@@ -106,7 +82,15 @@ public class BasketController {
      */
     @GetMapping("/basket")
     public String showBasket(Model model) {
-        List<Merchandise> basket = (List<Merchandise>) session.getAttribute("basket");
+        User user = userService.getAuthenticatedUser();
+        Basket userBasket = user.getBasket();
+        List<Merchandise> basket;
+        if (userBasket == null) {
+            basket = getNewBasket(user).getMerchandises();
+        } else {
+            basket = userBasket.getMerchandises();
+            model.addAttribute("basketSize", basket.size());
+        }
         BigDecimal totalSum = (BigDecimal) session.getAttribute("totalSum");
         model.addAttribute("basket", basket);
         model.addAttribute("totalSum", totalSum);
@@ -121,7 +105,9 @@ public class BasketController {
      */
     @GetMapping("/deleteFromBasket")
     public String deleteProductFromBasket(@RequestParam Long id) {
-        List<Merchandise> basket = (List<Merchandise>) session.getAttribute("basket");
+        User user = userService.getAuthenticatedUser();
+        Basket userBasket = user.getBasket();
+        List<Merchandise> basket = userBasket.getMerchandises();
         List<Merchandise> tempBasket = new ArrayList<>();
         BigDecimal newTotalSum = BigDecimal.ZERO;
         for (Merchandise m : basket) {
@@ -133,6 +119,9 @@ public class BasketController {
         session.removeAttribute("totalSum");
         session.removeAttribute("basketSize");
         session.removeAttribute("basket");
+        userBasket.setMerchandises(tempBasket);
+        user.setBasket(userBasket);
+        userService.updateUserRelation(user);
         session.setAttribute("totalSum", newTotalSum);
         session.setAttribute("basketSize", tempBasket.size());
         session.setAttribute("basket", tempBasket);

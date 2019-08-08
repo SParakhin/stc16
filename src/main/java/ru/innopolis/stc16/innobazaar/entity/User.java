@@ -35,7 +35,7 @@ public class User implements UserDetails {
     private String username;
     @NotEmpty
     private String password;
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn (name="basket_id")
     private Basket basket;
 

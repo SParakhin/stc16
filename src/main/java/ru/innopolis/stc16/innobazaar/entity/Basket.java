@@ -2,12 +2,11 @@ package ru.innopolis.stc16.innobazaar.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -16,27 +15,26 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@ToString
 @Table(name = "basket")
 public class Basket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(mappedBy = "basket",
-            cascade = CascadeType.MERGE,
-            targetEntity = Merchandise.class,
-            fetch = FetchType.EAGER)
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "basket_merchandise",
+            joinColumns = @JoinColumn(name = "basket_id"),
+            inverseJoinColumns = @JoinColumn(name = "merchandise_id"))
     @Fetch(value = FetchMode.SUBSELECT)
-    private List<Merchandise> merchandises = new ArrayList<>();
-    @OneToOne(mappedBy = "basket")
+    private List<Merchandise> merchandises;
+
+    @OneToOne
+    @JoinColumn(name="user_id")
     private User user;
 
     public Basket(List<Merchandise> merchandises) {
         this.merchandises = merchandises;
-    }
-
-    public boolean addMerchandiseToBasket(Merchandise merchandise) {
-        merchandise.setBasket(this);
-        return getMerchandises().add(merchandise);
     }
 }
 

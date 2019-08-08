@@ -2,6 +2,8 @@ package ru.innopolis.stc16.innobazaar.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -31,10 +33,14 @@ public class Merchandise implements Serializable {
     @Transient
     private String categoryName;
     private String productDetail;
-    private BigDecimal price=BigDecimal.ZERO;
+    private BigDecimal price = BigDecimal.ZERO;
     private String pictureUrl;
-    @ManyToOne
-    private Basket basket;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "basket_merchandise",
+            joinColumns = @JoinColumn(name = "merchandise_id"),
+            inverseJoinColumns = @JoinColumn(name = "basket_id"))
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Basket> basketList;
 
     public Merchandise(String name, String description, Store store, Category category, BigDecimal price, String pictureUrl) {
         this.name = name;
