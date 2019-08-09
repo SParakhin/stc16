@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -8,7 +8,7 @@
     <jsp:attribute name="metaDescription">Профиль пользователя</jsp:attribute>
 
 
-    <jsp:body>
+    <jsp:body><%--@elvariable id="store" type="ru.innopolis.stc16.innobazaar.entity.Store"--%>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <ul class="nav nav-pills" id="myTab">
             <li class="nav-item">
@@ -24,7 +24,8 @@
 
         <div class="tab-content">
         <div class="tab-pane container-fluid active" id="about">
-            <form:form modelAttribute="user">
+            <form:form modelAttribute="user"><%--@elvariable id="user" type="ru.innopolis.stc16.innobazaar.entity.User"--%>
+            <%--@elvariable id="store" type="ru.innopolis.stc16.innobazaar.entity.Store"--%>
                 <address>
                     <h3>Добро пожаловать в наш магазин ${store.name}</h3>
                     <h3>Свяжитесь с нами :</h3><br>
@@ -35,7 +36,7 @@
 
                 </address>
             </form:form>
-            <form:form modelAttribute="store">
+            <form:form modelAttribute="store"><%--@elvariable id="store" type="ru.innopolis.stc16.innobazaar.entity.Store"--%>
                 ${pageContext.session.setAttribute("storeId",store.id)}
             </form:form>
         </div>
@@ -52,6 +53,7 @@
                 </tr>
 
                 <!-- loop over and print our users -->
+                <%--@elvariable id="products" type="java.util.List"--%>
                 <c:forEach var="product" items="${products}">
                     <!-- construct an "update" link with username id -->
                     <c:url var="updateLink" value="/product/updateProductForm">
@@ -87,6 +89,7 @@
         <div class="tab-pane container-fluid fade" id="orders">
             <div class="row justify-content-center">
                 <div class="col-md-9">
+                    <%--@elvariable id="bookings" type="java.util.List"--%>
                     <c:forEach var="booking" items="${bookings}">
                         <br>
                         <div class="row">
@@ -94,11 +97,10 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-md-9">
-                                            Заказ <a href="#"> ${booking.merchandise.name} </a>
+                                            Заказ <a href="${pageContext.request.contextPath}/merchandise?id=${booking.merchandise.id}"> ${booking.merchandise.name} </a>
                                         </div>
                                         <div class="col-md-3">
-                                            <button onclick="window.location.href='/bookings/${booking.id}'">Перейти к
-                                                заказу ${product.store.name}</button>
+                                            <button onclick="window.location.href='/bookings/${booking.id}'">Перейти к заказу</button>
                                         </div>
                                     </div>
                                 </div>
@@ -113,7 +115,10 @@
                                             <h5> Стоимость: ${booking.count * booking.merchandise.price}</h5>
                                         </div>
                                         <div class="col-md-6">
-                                            <h5 class="font-weight-bold">Заказ ${booking.bookingStatus.status}</h5>
+                                            <h5 class="font-weight-bold">Заказ ${booking.bookingStatus.status}
+                                                <c:if test = "${booking.paid}">оплачен</c:if>
+                                                <c:if test = "${!booking.paid}">не оплачен</c:if>
+                                            </h5>
                                         </div>
                                     </div>
                                 </div>
@@ -123,7 +128,7 @@
                 </div>
             </div>
         </div>
-
+        </div>
 
         <script>
             $(document).ready(function () {
@@ -143,5 +148,3 @@
     </jsp:body>
 
 </t:page-template>
-<%--</body>--%>
-<%--</html>--%>
