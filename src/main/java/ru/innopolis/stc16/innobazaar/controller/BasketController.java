@@ -11,10 +11,14 @@ import ru.innopolis.stc16.innobazaar.entity.Store;
 import ru.innopolis.stc16.innobazaar.entity.User;
 import ru.innopolis.stc16.innobazaar.service.BasketService;
 import ru.innopolis.stc16.innobazaar.service.MerchandiseService;
-import ru.innopolis.stc16.innobazaar.service.StoreService;
 import ru.innopolis.stc16.innobazaar.service.UserService;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -24,15 +28,13 @@ public class BasketController {
     private final HttpSession session;
     private final MerchandiseService merchandiseService;
     private final UserService userService;
-    private final StoreService storeService;
 
     @Autowired
-    public BasketController(BasketService basketService, HttpSession session, MerchandiseService merchandiseService, UserService userService, StoreService storeService) {
+    public BasketController(BasketService basketService, HttpSession session, MerchandiseService merchandiseService, UserService userService) {
         this.basketService = basketService;
         this.session = session;
         this.merchandiseService = merchandiseService;
         this.userService = userService;
-        this.storeService = storeService;
     }
 
     /**
@@ -43,25 +45,33 @@ public class BasketController {
      */
 
     @GetMapping("/addBasket")
-    public String addBasket(@RequestParam Long id) {
+    public String addBasket(@RequestParam Long id,
+                            HttpServletResponse response,
+                            HttpServletRequest request) throws IOException, ServletException {
         User user = userService.getAuthenticatedUser();
-        Basket userBasket = user.getBasket();
-        if (userBasket == null) {
-            userBasket = getNewBasket(user);
+        Basket userBasket;
+        if (user != null) {
+            userBasket = user.getBasket();
+            if (userBasket == null) {
+                userBasket = getNewBasket(user);
+            }
+            Merchandise merchandise = merchandiseService.getMerchandise(id);
+            userBasket.getMerchandises().add(merchandise);
+            merchandise.getBasketList().add(userBasket);
+            user.setBasket(userBasket);
+            userService.updateUserRelation(user);
+            List<Merchandise> basket = userBasket.getMerchandises();
+            session.setAttribute("basket", basket);
+            BigDecimal totalSum = BigDecimal.ZERO;
+            for (Merchandise m : basket) {
+                totalSum = totalSum.add(m.getPrice());
+            }
+            session.setAttribute("totalSum", totalSum);
+            session.setAttribute("basketSize", basket.size());
+        } else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
+            dispatcher.forward(request, response);
         }
-        Merchandise merchandise = merchandiseService.getMerchandise(id);
-        userBasket.getMerchandises().add(merchandise);
-        merchandise.getBasketList().add(userBasket);
-        user.setBasket(userBasket);
-        userService.updateUserRelation(user);
-        List<Merchandise> basket = userBasket.getMerchandises();
-        session.setAttribute("basket", basket);
-        BigDecimal totalSum = BigDecimal.ZERO;
-        for (Merchandise m : basket) {
-            totalSum = totalSum.add(m.getPrice());
-        }
-        session.setAttribute("totalSum", totalSum);
-        session.setAttribute("basketSize", basket.size());
         return "redirect:/basket";
     }
 
@@ -73,10 +83,12 @@ public class BasketController {
      */
     private Basket getNewBasket(User user) {
         Basket userBasket = new Basket();
-        userBasket.setUser(user);
-        basketService.saveBasket(userBasket);
-        user.setBasket(userBasket);
-        userService.updateUser(user);
+        if (user != null) {
+            userBasket.setUser(user);
+            basketService.saveBasket(userBasket);
+            user.setBasket(userBasket);
+            userService.updateUser(user);
+        }
         return userBasket;
     }
 
@@ -84,8 +96,14 @@ public class BasketController {
      * Страница корзины
      */
     @GetMapping("/basket")
-    public String showBasket(Model model) {
+    public String showBasket(Model model,
+                             HttpServletResponse response,
+                             HttpServletRequest request) throws IOException, ServletException {
         User user = userService.getAuthenticatedUser();
+        if (user == null) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
+            dispatcher.forward(request, response);
+        }
         Basket userBasket = user.getBasket();
         List<Merchandise> basket;
         if (userBasket == null) {
