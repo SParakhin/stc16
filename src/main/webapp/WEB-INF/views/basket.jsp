@@ -34,37 +34,39 @@
 
                 <div class="col-md-12">
 
-                    <c:forEach var="merchandise" items="${basket}">
+                    <c:forEach var="store" items="${basketStoreMap}">
 
                         <br>
                         <div class="row">
                             <div class="card w-100">
                                 <div class="card-header">
-                                    <a href="${pageContext.request.contextPath}/store/${merchandise.store.id}">${merchandise.store.name} </a>
+                                    <a href="${pageContext.request.contextPath}/store/${store.key.id}">${store.key.name} </a>
                                 </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <img src="${merchandise.pictureUrl}" alt="Нет картинки"
-                                                 style="width: 60px;">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <a href="${pageContext.request.contextPath}/merchandise?id=${merchandise.id}"> ${merchandise.name} </a>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <strong>${merchandise.price} руб.</strong>
-                                        </div>
-                                        <c:url var="deleteLink" value="/deleteFromBasket">
-                                            <c:param name="id" value="${merchandise.id}"/>
-                                        </c:url>
-                                        <div class="col-md-2">
-                                            <button class="btn btn-danger btn-sm"
-                                                    onclick="window.location.href='${deleteLink}'">Удалить
-                                            </button>
+                                <c:forEach var="merchandise" items="${store.value}">
+                                    <div class="card-body">
+
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <img class="img-fluid" src="${merchandise.pictureUrl}" alt="Нет картинки"
+                                                     style="width: 60px;">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <a href="${pageContext.request.contextPath}/merchandise?id=${merchandise.id}"> ${merchandise.name} </a>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <strong>${merchandise.price} руб.</strong>
+                                            </div>
+                                            <c:url var="deleteLink" value="/deleteFromBasket">
+                                                <c:param name="id" value="${merchandise.id}"/>
+                                            </c:url>
+                                            <div class="col-md-2">
+                                                <button class="btn btn-danger btn-sm"
+                                                        onclick="window.location.href='${deleteLink}'">Удалить
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-
+                                </c:forEach>
                             </div>
                         </div>
                     </c:forEach>

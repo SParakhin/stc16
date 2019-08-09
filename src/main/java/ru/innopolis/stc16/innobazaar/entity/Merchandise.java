@@ -8,7 +8,6 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,5 +56,20 @@ public class Merchandise implements Serializable {
 
     public void setStore(Store store) {
         this.store = store;
+    }
+
+    @Override
+    public String toString() {
+        return "Merchandise{" +
+                "category=" + category +
+                ", categoryName='" + categoryName + '\'' +
+                ", description='" + description + '\'' +
+                ", id=" + id +
+                ", name='" + name + '\'' +
+                ", pictureUrl='" + pictureUrl + '\'' +
+                ", price=" + price +
+                ", productDetail='" + productDetail + '\'' +
+                ", store=" + store +
+                '}';
     }
 }
