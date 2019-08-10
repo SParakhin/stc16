@@ -30,19 +30,18 @@ public class BookingController {
     }
 
     @GetMapping("/bookings/{id}/paidStatus")
-    public String refreshPaymentStatus(@PathVariable Long id, @RequestParam("returnPage") String returnPage) {
+    public String refreshPaymentStatus(@PathVariable Long id, @RequestParam("returnPage") String returnPage, Model model) {
         bookingService.refreshPaymentStatus(id);
-        return "redirect:" + returnPage;
+        return getPaymentDetails(id, returnPage, model);
     }
 
     @GetMapping("/bookings/{id}/details")
     public String getPaymentDetails(@PathVariable Long id, @RequestParam("returnPage") String returnPage, Model model) {
         Payment payment = bookingService.getPayment(id);
-        if (payment == null) {
-            return "redirect:" + returnPage;
-        }
         model.addAttribute("payment", payment);
-        model.addAttribute("date", new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(payment.getDate()));
+        if (payment != null) {
+            model.addAttribute("date", new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(payment.getDate()));
+        }
         model.addAttribute("returnPage", returnPage);
         return "paymentDetails";
     }
