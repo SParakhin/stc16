@@ -36,6 +36,12 @@ public class MerchandiseController {
         this.categoryService = categoryService;
     }
 
+    /**
+     * Карточка товара
+     * @param model
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/merchandise", method = RequestMethod.GET)
     public String getMerchandise(Model model, @RequestParam Long id) {
         model.addAttribute("merchandiseObject", merchandiseService.getMerchandise(Long.valueOf(id)));

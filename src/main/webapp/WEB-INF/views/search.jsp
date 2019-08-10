@@ -49,7 +49,7 @@
                                                         к товару</a>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <a href="/store?id=${product.store.id}">Перейти к
+                                                    <a href="/store/${product.store.id}">Перейти к
                                                         магазину ${product.store.name}</a>
                                                 </div>
                                                 <div class="col-md-6">

@@ -154,7 +154,7 @@ public class StoreController {
     }
 
     /**
-     * Метод отображения главной страницы магазина. Выводит:
+     * Метод отображения главной страницы магазина для владельца магазина. Выводит:
      * контакты магазина
      * список товаров магазина
      * список заказов магазина
@@ -186,6 +186,20 @@ public class StoreController {
         List<Merchandise> products = store.getMerchandiseList();
         model.addAttribute("store", store);
         model.addAttribute("user", user);
+        model.addAttribute("products", products);
+        model.addAttribute("bookings", store.getBookings());
+        return "store";
+    }
+
+    /**
+     * Метод для отображения магазина для покупателя (витрина магазина). Скрывает кнопки владельца магазина
+     */
+    @GetMapping("/store/{id}")
+    public String showStoreForCustomer(@PathVariable("id") Long id,
+                                       Model model) {
+        Store store = storeService.getStore(id);
+        List<Merchandise> products = store.getMerchandiseList();
+        model.addAttribute("store", store);
         model.addAttribute("products", products);
         model.addAttribute("bookings", store.getBookings());
         return "store";

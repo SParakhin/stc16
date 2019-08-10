@@ -45,10 +45,10 @@ public class BasketDAOImpls implements BasketDAO {
         return entityManager.find(Basket.class, id);
     }
 
-    @Override
-    public void addMerchandise(Long basketId, Merchandise merchandise) {
-        Basket basket = entityManager.find(Basket.class, basketId);
-        basket.addMerchandise(merchandise);
-        entityManager.persist(basket);
-    }
+//    @Override
+//    public void addMerchandise(Long basketId, Merchandise merchandise) {
+//        Basket basket = entityManager.find(Basket.class, basketId);
+//        basket.addMerchandise(merchandise);
+//        entityManager.persist(basket);
+//    }
 }
