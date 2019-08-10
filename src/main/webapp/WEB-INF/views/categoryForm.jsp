@@ -11,20 +11,40 @@
 
         <div class="row justify-content-center my-3">
             <div class="col col-md-6">
-                <form:form action="save" modelAttribute="cat" method="POST">
-                    <form:hidden path="id"/>
-                    <input type="hidden" name="isEdit" value='${isEdit}'/>
+                <c:choose>
+                    <c:when test="${isEdit = 'true'}">
+                        <form:form action="edit" modelAttribute="cat" method="POST">
+                            <form:hidden path="id"/>
+                            <%--                    <input type="hidden" name="isEdit" value='${isEdit}'/>--%>
 
-                    <form:input class="form-control" path="name"/>
-                    <small><form:errors path="name" cssClass="text-danger"/></small>
+                            <form:input class="form-control" path="name"/>
+                            <small><form:errors path="name" cssClass="text-danger"/></small>
 
 
-                    <form:input class="form-control" path="pictureUrl"/>
-                    <small><form:errors path="pictureUrl" cssClass="text-danger"/></small>
+                            <form:input class="form-control" path="pictureUrl"/>
+                            <small><form:errors path="pictureUrl" cssClass="text-danger"/></small>
 
-                    <br>
-                    <input class="btn btn-lg btn-primary my-1" type="submit" value="сохранить"/>
-                </form:form>
+                            <br>
+                            <input class="btn btn-lg btn-primary my-1" type="submit" value="сохранить"/>
+                        </form:form>
+                    </c:when>
+                    <c:otherwise>
+                        <form:form action="save" modelAttribute="cat" method="POST">
+                            <form:hidden path="id"/>
+                            <%--                    <input type="hidden" name="isEdit" value='${isEdit}'/>--%>
+
+                            <form:input class="form-control" path="name"/>
+                            <small><form:errors path="name" cssClass="text-danger"/></small>
+
+
+                            <form:input class="form-control" path="pictureUrl"/>
+                            <small><form:errors path="pictureUrl" cssClass="text-danger"/></small>
+
+                            <br>
+                            <input class="btn btn-lg btn-primary my-1" type="submit" value="сохранить"/>
+                        </form:form>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
 

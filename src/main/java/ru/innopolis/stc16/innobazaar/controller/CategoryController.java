@@ -53,17 +53,25 @@ public class CategoryController {
     }
 
     @PostMapping("/save")
-    public String saveCategory(@Valid @ModelAttribute("cat") Category category, @RequestParam("isEdit") String isEdit, BindingResult bindingResult) {
+    public String saveCategory(@Valid @ModelAttribute("cat") Category category, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return "categoryForm";
         }
 
-        if ("true".equalsIgnoreCase(isEdit)) {
-            categoryService.updateCategory(category);
-        } else {
-            categoryService.saveCategory(category);
+        categoryService.saveCategory(category);
+
+        return "categoryList";
+    }
+
+    @PostMapping("/edit")
+    public String editategory(@Valid @ModelAttribute("cat") Category category, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "categoryForm";
         }
+
+        categoryService.updateCategory(category);
 
         return "categoryList";
     }
