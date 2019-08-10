@@ -20,5 +20,5 @@ public interface BasketDAO {
 
     Basket getBasket(Long id);
 
-    void addMerchandise(Long basketId, Merchandise merchandise);
+//    void addMerchandise(Long basketId, Merchandise merchandise);
 }

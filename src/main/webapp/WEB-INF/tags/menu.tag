@@ -47,7 +47,8 @@
 
                 <ul class="navbar-nav ml-auto">
 
-                    <button type="button" class="btn btn-success" onclick="window.location.href='/basket'">Корзина
+
+                    <button type="button" class="btn btn-success"  onclick="window.location.href='/basket'">Корзина
                     <span class="badge badge-light">${basketSize}</span>
                     </button>
 

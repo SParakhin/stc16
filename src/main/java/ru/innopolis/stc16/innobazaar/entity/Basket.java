@@ -2,11 +2,12 @@ package ru.innopolis.stc16.innobazaar.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Сущность "Корзина"
@@ -19,18 +20,28 @@ public class Basket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Merchandise> merchandise;
 
-    public Basket(List<Merchandise> merchandise) {
-        this.merchandise = merchandise;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "basket_merchandise",
+            joinColumns = @JoinColumn(name = "basket_id"),
+            inverseJoinColumns = @JoinColumn(name = "merchandise_id"))
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Merchandise> merchandises = new CopyOnWriteArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
+    public Basket(List<Merchandise> merchandises) {
+        this.merchandises = merchandises;
     }
 
-    public void addMerchandise(Merchandise merchandiseItem) {
-        if (merchandise == null) {
-            merchandise = new LinkedList<>();
-            merchandise.add(merchandiseItem);
-        }
+    @Override
+    public String toString() {
+        return "Basket{" +
+                "id=" + id +
+                ", user=" + user +
+                '}';
     }
 }
 

@@ -35,8 +35,8 @@ public class User implements UserDetails {
     private String username;
     @NotEmpty
     private String password;
-    @OneToOne(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn (name="basket_id")
     private Basket basket;
 
     @OneToMany(mappedBy = "user",
@@ -67,6 +67,7 @@ public class User implements UserDetails {
         setLastName(user.getLastName());
         setEmail(user.getEmail());
         setPhone(user.getPhone());
+        setBasket(user.getBasket());
     }
 
     @Column(name = "enabled", nullable = false)
