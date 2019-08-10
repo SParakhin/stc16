@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -15,7 +15,6 @@
                 <div class="alert alert-success text-center" role="alert">
                     <h2> ${store.name}</h2>
                 </div>
-
             </div>
         </div>
         <br>
@@ -36,8 +35,7 @@
 
         <div class="tab-content">
         <div class="tab-pane container-fluid active" id="about">
-            <form:form modelAttribute="user"><%--@elvariable id="user" type="ru.innopolis.stc16.innobazaar.entity.User"--%>
-            <%--@elvariable id="store" type="ru.innopolis.stc16.innobazaar.entity.Store"--%>
+            <form:form modelAttribute="user">
                 <address>
                     <h3>Добро пожаловать в наш магазин</h3>
                     <h3>Свяжитесь с нами :</h3><br>
@@ -47,7 +45,7 @@
 
                 </address>
             </form:form>
-            <form:form modelAttribute="store"><%--@elvariable id="store" type="ru.innopolis.stc16.innobazaar.entity.Store"--%>
+            <form:form modelAttribute="store">
                 ${pageContext.session.setAttribute("storeId",store.id)}
             </form:form>
         </div>
@@ -56,6 +54,7 @@
         <c:if test="${pageContext.request.userPrincipal.name ne store.user.username}">
             <div class="tab-pane container-fluid fade" id="products">
                 <div class="row justify-content-center">
+                    <%--@elvariable id="products" type="java.util.List"--%>
                     <c:forEach var="merch" items="${products}">
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-10 col-xs-10 my-2">
                             <div id="test" class="card">
@@ -108,7 +107,6 @@
                     <c:url var="updateLink" value="/product/updateProductForm">
                         <c:param name="id" value="${product.id}"/>
                     </c:url>
-
 
                         <!-- construct an "delete" link with username id -->
                         <c:url var="deleteLink" value="/product/deleteProduct">
