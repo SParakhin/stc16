@@ -1,6 +1,7 @@
 package ru.innopolis.stc16.innobazaar.interceptor;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -10,6 +11,7 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -28,10 +30,14 @@ public class LogInterceptor implements HandlerInterceptor {
         if ("post".equalsIgnoreCase(method) || !requestParameters.isEmpty()) {
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             String username = ((principal instanceof UserDetails) ? ((UserDetails) principal).getUsername() : (String) principal);
-            String role = String.valueOf(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
             StringBuilder sb = new StringBuilder();
             sb.append("user: ").append(username);
-            sb.append(" | role: ").append(role);
+            sb.append(" | role(s):");
+            Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)
+                    SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+            for (GrantedAuthority role : authorities) {
+                sb.append(" ").append(role.getAuthority());
+            }
             sb.append(" | servlet path: ").append(cachedWrappedRequest.getServletPath());
             sb.append(" | method: ").append(method);
             if (!requestParameters.isEmpty()) {
@@ -44,7 +50,9 @@ public class LogInterceptor implements HandlerInterceptor {
                     }
                 }
             }
-            LOGGER.info(sb.toString());
+            String msg = sb.toString();
+            msg = (msg.length() > 255) ? msg.substring(0, 255) : msg;
+            LOGGER.info(msg);
         }
 
         return true;

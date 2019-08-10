@@ -9,4 +9,7 @@ public interface CategoryDAO {
     List<Category> getAllCategories();
 
     public Category findCategoryByName(String categoryName);
+
+    void saveCategory(Category category);
+
 }

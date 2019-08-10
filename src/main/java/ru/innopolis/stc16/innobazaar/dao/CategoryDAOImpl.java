@@ -33,4 +33,10 @@ public class CategoryDAOImpl implements CategoryDAO {
         }
         return category;
     }
+
+    @Override
+    public void saveCategory(Category category) {
+        entityManager.persist(category);
+    }
+
 }

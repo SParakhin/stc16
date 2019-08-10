@@ -6,9 +6,10 @@ import java.util.List;
 
 public interface CategoryService {
 
-   List<Category> getAllCategories();
+    List<Category> getAllCategories();
 
     public Category findCategoryByName(String categoryName);
 
+    void saveCategory(Category category);
 
 }
