@@ -6,12 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.innopolis.stc16.innobazaar.entity.Category;
 import ru.innopolis.stc16.innobazaar.entity.Merchandise;
 import ru.innopolis.stc16.innobazaar.service.CategoryService;
 import ru.innopolis.stc16.innobazaar.service.MerchandiseService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 @Controller
@@ -25,6 +28,28 @@ public class CategoryController {
 
     @Autowired
     private MerchandiseService merchandiseService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @GetMapping("/list")
+    public String listCats(Model theModel) {
+
+        Map<String, String> catsContainer = new TreeMap<>();
+        List<Category> catsList =(categoryService != null) ? categoryService.getAllCategories() : null;
+
+        if (catsList == null || catsList.isEmpty()) {
+            catsContainer.put("категорий нет", "#");
+        } else {
+            for (Category cat : catsList) {
+                catsContainer.put(cat.getName(), cat.getName());
+            }
+        }
+
+        theModel.addAttribute("cats", catsContainer);
+
+        return "categoryList";
+    }
 
     @GetMapping("/openWithGoods")
     public String showCategoryWithGoods(
