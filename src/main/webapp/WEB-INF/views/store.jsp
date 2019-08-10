@@ -4,9 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <t:page-template>
-    <jsp:attribute name="titleText">Профиль пользователя</jsp:attribute>
-    <jsp:attribute name="metaDescription">Профиль пользователя</jsp:attribute>
-
+    <jsp:attribute name="titleText">Магазин</jsp:attribute>
+    <jsp:attribute name="metaDescription">Работа с магазином</jsp:attribute>
 
     <jsp:body><%--@elvariable id="store" type="ru.innopolis.stc16.innobazaar.entity.Store"--%>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -116,8 +115,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <h5 class="font-weight-bold">Заказ ${booking.bookingStatus.status}
-                                                <c:if test = "${booking.paid}">оплачен</c:if>
-                                                <c:if test = "${!booking.paid}">не оплачен</c:if>
+                                                <c:if test = "${booking.paid}"><a href="/bookings/${booking.id}/details?returnPage=/store?id=${store.id}%23orders">оплачен</a></c:if>
+                                                <c:if test = "${!booking.paid}"><a href="/bookings/${booking.id}/paidStatus?returnPage=/store?id=${store.id}%23orders">не оплачен</a></c:if>
                                             </h5>
                                         </div>
                                     </div>

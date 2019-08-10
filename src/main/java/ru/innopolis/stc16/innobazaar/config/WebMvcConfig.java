@@ -1,8 +1,6 @@
 package ru.innopolis.stc16.innobazaar.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
@@ -15,9 +13,6 @@ import ru.innopolis.stc16.innobazaar.interceptor.MenuInterceptor;
 @EnableWebMvc
 @ComponentScan(basePackages = {"ru.innopolis.stc16.innobazaar.controller"})
 public class WebMvcConfig implements WebMvcConfigurer {
-
-    @Autowired
-    private ApplicationContext applicationContext;
 
     private MenuInterceptor menuInterceptor;
 

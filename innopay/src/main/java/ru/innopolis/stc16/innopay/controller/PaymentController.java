@@ -24,6 +24,13 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
+    /**
+     * получить информацию об оплате
+     *
+     * @param paymentId идентификатор заказа
+     * @param store     credentials магазина
+     * @return платёж
+     */
     @PostMapping(path = "/getPayment", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity<Payment> getPayment(@RequestParam("id") Long paymentId, @RequestBody Store store) {
@@ -37,6 +44,13 @@ public class PaymentController {
         return new ResponseEntity<>(payment, HttpStatus.OK);
     }
 
+    /**
+     * запрос на проведение платежа
+     *
+     * @param paymentRequest тело запроса
+     * @param model          модель
+     * @return страницу для ввода данных платёжной карты
+     */
     @PostMapping(path = "/createPayment")
     public String createPayment(PaymentRequest paymentRequest, Model model) {
         if (!storeService.authorize(paymentRequest.getStoreName(), paymentRequest.getSecretKey())) {
@@ -54,6 +68,13 @@ public class PaymentController {
         return "processCard";
     }
 
+    /**
+     * обрабатывает платёж по карте
+     *
+     * @param processRequest тело запроса
+     * @param model          модель
+     * @return результат оплаты
+     */
     @PostMapping(path = "/processPayment")
     public String processPayment(ProcessCardRequest processRequest, Model model) {
         if (!storeService.authorize(processRequest.getStoreName(), processRequest.getSecretKey())) {
@@ -71,6 +92,12 @@ public class PaymentController {
         return "paymentResult";
     }
 
+    /**
+     * возврат на торговую площадку
+     *
+     * @param returnPage URL для возврата
+     * @return редирект
+     */
     @PostMapping(path = "/returnToStore")
     public String returnToStore(String returnPage) {
         return "redirect:" + returnPage;

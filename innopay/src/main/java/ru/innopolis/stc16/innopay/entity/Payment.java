@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * сущность "Заказ"
+ * сущность "Оплата"
  */
 @Data
 @NoArgsConstructor

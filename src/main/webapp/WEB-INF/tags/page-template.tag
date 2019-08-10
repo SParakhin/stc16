@@ -12,8 +12,10 @@
     <meta charset="utf-8">
     <!-- Bootstrap CSS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">    <!-- Custom styles -->
+    <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles -->
     <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet">
+    <link rel='shortcut icon' type='image/x-icon' href='${pageContext.request.contextPath}/resources/img/favicon.ico'>
     <meta name="description" content="<jsp:invoke fragment="metaDescription"/>">
 
     <title>

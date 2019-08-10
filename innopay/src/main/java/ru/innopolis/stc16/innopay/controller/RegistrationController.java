@@ -20,6 +20,13 @@ public class RegistrationController {
         this.storeRegistrationService = storeRegistrationService;
     }
 
+    /**
+     * регистрация торговой площадки
+     *
+     * @param storeName наименование площадки
+     * @param model     модель
+     * @return представление
+     */
     @GetMapping("/registerStore")
     public String registerStore(@RequestParam("storeName") String storeName, Model model) {
         if (storeRegistrationService.isStoreExists(storeName)) {

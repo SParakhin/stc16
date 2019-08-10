@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * DTO "Заказ"
+ * DTO "Оплата"
  */
 @Data
 public class Payment {
