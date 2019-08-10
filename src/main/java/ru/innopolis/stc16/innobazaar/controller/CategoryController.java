@@ -42,23 +42,28 @@ public class CategoryController {
         return "categoryForm";
     }
 
-//    @GetMapping("/edit")
-//    public String editForm(@RequestParam("carId") long catId, Model theModel) {
-//
-//        Category category = categoryService.getCategoryById(catId);
-//        theModel.addAttribute("category", category);
-//
-//        return "categoryForm";
-//    }
+    @GetMapping("/edit")
+    public String editForm(@RequestParam("catName") String catName, Model theModel) {
+
+        Category category = categoryService.findCategoryByName(catName);
+        theModel.addAttribute("cat", category);
+        theModel.addAttribute("isEdit", "true");
+
+        return "categoryForm";
+    }
 
     @PostMapping("/save")
-    public String saveCategory(@Valid @ModelAttribute("cat") Category category, BindingResult bindingResult) {
+    public String saveCategory(@Valid @ModelAttribute("cat") Category category, @RequestParam("isEdit") String isEdit, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return "categoryForm";
         }
 
-        categoryService.saveCategory(category);
+        if ("true".equalsIgnoreCase(isEdit)) {
+            categoryService.updateCategory(category);
+        } else {
+            categoryService.saveCategory(category);
+        }
 
         return "categoryList";
     }

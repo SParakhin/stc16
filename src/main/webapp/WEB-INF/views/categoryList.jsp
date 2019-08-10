@@ -23,12 +23,15 @@
                     <c:param name="catName" value="${cat.value}"/>
                     <c:param name="pageNumber" value="1"/>
                 </c:url>
+                <c:url var="editCat" value="${pageContext.request.contextPath}/cat/edit">
+                    <c:param name="catName" value="${cat.value}"/>
+                </c:url>
                 <div class="row justify-content-center my-3">
                     <div class="col">
                         <div class="btn-group shadow" role="group">
                             <button class="btn btn-primary text-uppercase">${cat.key}</button>
                             <a class="btn btn-outline-dark bg-light" href="${openCatPage}">на страницу</a>
-                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/cat/edit">редактировать</a>
+                            <a class="btn btn-warning" href="${editCat}">редактировать</a>
                         </div>
                     </div>
                 </div>

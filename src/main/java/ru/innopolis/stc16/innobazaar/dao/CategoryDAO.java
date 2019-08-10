@@ -12,4 +12,6 @@ public interface CategoryDAO {
 
     void saveCategory(Category category);
 
+    void updateCategory(Category category);
+
 }

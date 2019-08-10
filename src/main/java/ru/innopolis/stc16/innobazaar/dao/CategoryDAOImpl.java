@@ -39,4 +39,9 @@ public class CategoryDAOImpl implements CategoryDAO {
         entityManager.persist(category);
     }
 
+    @Override
+    public void updateCategory(Category category) {
+        entityManager.merge(category);
+    }
+
 }

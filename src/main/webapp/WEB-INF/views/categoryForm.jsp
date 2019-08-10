@@ -13,6 +13,7 @@
             <div class="col col-md-6">
                 <form:form action="save" modelAttribute="cat" method="POST">
                     <form:hidden path="id"/>
+                    <input type="hidden" name="isEdit" value='${isEdit}'/>
 
                     <form:input class="form-control" path="name"/>
                     <small><form:errors path="name" cssClass="text-danger"/></small>
