@@ -27,12 +27,6 @@
                             <!-- loop over and print our users -->
                             <c:forEach var="username" items="${users}">
 
-                                <!-- construct an "update" link with username id -->
-                                <c:url var="updateLink" value="/user/updateUserForm">
-                                    <c:param name="id" value="${username.id}"/>
-                                </c:url>
-
-
                                 <!-- construct an "delete" link with username id -->
                                 <c:url var="deleteLink" value="/user/deleteUserFromList">
                                     <c:param name="id" value="${username.id}"/>
@@ -49,9 +43,8 @@
                                     <td>${username.email}</td>
 
                                     <td>
-                                        <a href="${updateLink}">Изменить</a>
-                                        | <a href="${deleteLink}"
-                                             onclick="if (!(confirm('Вы хотите удалить пользователя?'))) return false">Удалить</a>
+                                        <a href="${deleteLink}"
+                                           onclick="if (!(confirm('Вы хотите удалить пользователя?'))) return false">Удалить</a>
                                     </td>
                                 </tr>
                             </c:forEach>
