@@ -11,7 +11,7 @@ public interface BookingService {
 
     List<Booking> getAllBooking();
 
-    void saveBooking(Booking booking);
+    Booking saveBooking(Booking booking);
 
     Booking getBooking(Long id);
 

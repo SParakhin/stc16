@@ -33,6 +33,8 @@ public class BasketDAOImpls implements BasketDAO {
     public void deleteBasket(Long id) {
         Basket basket = entityManager.find(Basket.class, id);
         entityManager.remove(basket);
+        entityManager.flush();
+        entityManager.clear();
     }
 
     @Override

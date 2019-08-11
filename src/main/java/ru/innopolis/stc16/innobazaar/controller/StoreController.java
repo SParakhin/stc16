@@ -1,13 +1,10 @@
 package ru.innopolis.stc16.innobazaar.controller;
 
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.innopolis.stc16.innobazaar.entity.Merchandise;
-import ru.innopolis.stc16.innobazaar.entity.Store;
-import ru.innopolis.stc16.innobazaar.entity.User;
+import ru.innopolis.stc16.innobazaar.entity.*;
 import ru.innopolis.stc16.innobazaar.service.StoreService;
 import ru.innopolis.stc16.innobazaar.service.UserService;
 
@@ -187,7 +184,7 @@ public class StoreController {
         model.addAttribute("store", store);
         model.addAttribute("user", user);
         model.addAttribute("products", products);
-        model.addAttribute("bookings", store.getBookings());
+        model.addAttribute("bookings", extractStoreMerchandises(store, store.getBookings()));
         return "store";
     }
 
@@ -201,8 +198,28 @@ public class StoreController {
         List<Merchandise> products = store.getMerchandiseList();
         model.addAttribute("store", store);
         model.addAttribute("products", products);
-        model.addAttribute("bookings", store.getBookings());
+        model.addAttribute("bookings", extractStoreMerchandises(store, store.getBookings()));
         return "store";
     }
 
+    private List<StoreBookingAttribute> extractStoreMerchandises(Store store, List<Booking> bookings) {
+        List<StoreBookingAttribute> storeBookingAttributes = new ArrayList<>();
+        for (Booking booking: bookings) {
+            StoreBookingAttribute storeBookingAttribute = new StoreBookingAttribute();
+            storeBookingAttribute.setAddress(booking.getAddress());
+            storeBookingAttribute.setStatus(booking.getBookingStatus());
+            storeBookingAttribute.setBuyer(booking.getBuyer());
+            storeBookingAttribute.setDate(booking.getDate());
+            List<BookedMerchandise> merchandises = booking.getMerchandise();
+            List<BookedMerchandise> merchandisesForStore = new ArrayList<>();
+            for(BookedMerchandise bookedMerchandise: merchandises) {
+                if (bookedMerchandise.getMerchandise().getStore().equals(store)) {
+                    merchandisesForStore.add(bookedMerchandise);
+                }
+            }
+            storeBookingAttribute.setMerchandise(merchandisesForStore);
+            storeBookingAttributes.add(storeBookingAttribute);
+        }
+        return storeBookingAttributes;
+    }
 }

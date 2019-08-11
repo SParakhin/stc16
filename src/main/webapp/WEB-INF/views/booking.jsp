@@ -15,16 +15,6 @@
                role="button">Вернуться к заказам</a>
             <br>
             <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h3>Заказ <a href="#">${booking.merchandise.name}</a></h3>
-                        </div>
-                        <div class="col-md-4">
-                            <img src="${booking.merchandise.pictureUrl}" alt="Not found">
-                        </div>
-                    </div>
-                </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -73,16 +63,9 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <h4 class="font-weight-bold">Статус заказа: ${booking.bookingStatus.status}</h4>
+                                            <h4 class="font-weight-bold">Статус заказа: ${booking.bookingStatus}</h4>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button onclick="window.location.href='/bookings/${booking.id}/cancel'">Отменить
-                                        заказ ${product.store.name}</button>
                                 </div>
                             </div>
                         </div>

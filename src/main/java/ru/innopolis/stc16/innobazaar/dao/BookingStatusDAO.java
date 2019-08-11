@@ -11,7 +11,7 @@ public interface BookingStatusDAO {
 
     List<BookingStatus> getAllBookingStatus();
 
-    void saveBookingStatus(BookingStatus bookingStatus);
+    BookingStatus saveBookingStatus(BookingStatus bookingStatus);
 
     void deleteBookingStatus(Long id);
 

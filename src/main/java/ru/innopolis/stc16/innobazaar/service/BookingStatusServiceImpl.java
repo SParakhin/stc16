@@ -21,8 +21,8 @@ public class BookingStatusServiceImpl implements BookingStatusService{
     }
 
     @Override
-    public void saveBookingStatus(BookingStatus bookingStatus) {
-        bookingStatusDAO.saveBookingStatus(bookingStatus);
+    public BookingStatus saveBookingStatus(BookingStatus bookingStatus) {
+        return bookingStatusDAO.saveBookingStatus(bookingStatus);
     }
 
     @Override

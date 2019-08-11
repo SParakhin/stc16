@@ -1,11 +1,15 @@
 package ru.innopolis.stc16.innobazaar.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Сущность "Заказ"
@@ -14,31 +18,24 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @Table(name = "booking")
+@AllArgsConstructor
 public class Booking implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User buyer;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private BookingStatus bookingStatus;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Store store;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Merchandise merchandise;
+
+    private String bookingStatus;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<BookedMerchandise> merchandise;
+
     private Integer count;
     private Date date;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Address address;
     private String tracking;
 
-    public Booking(User buyer, BookingStatus bookingStatus, Store store, Merchandise merchandise, Date date, Address address, String tracking) {
-        this.buyer = buyer;
-        this.bookingStatus = bookingStatus;
-        this.store = store;
-        this.merchandise = merchandise;
-        this.date = date;
-        this.address = address;
-        this.tracking = tracking;
-    }
 }

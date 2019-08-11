@@ -65,7 +65,7 @@
               <div class="dropdown-menu">
                 <a class="dropdown-item" href="${pageContext.request.contextPath}/user/updateUserForm">Мои профиль</a>
                 <a class="dropdown-item" href="${pageContext.request.contextPath}/store/listStore">Мои магазины</a>
-                <a class="dropdown-item" href="#">Мои заказы</a>
+                <a class="dropdown-item" href="${pageContext.request.contextPath}/bookings">Мои заказы</a>
                 <a class="dropdown-item" href="${pageContext.request.contextPath}/address/listAddress">Мои адреса доставки</a>
               </div>
             </li>

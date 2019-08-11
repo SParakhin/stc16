@@ -11,7 +11,7 @@ public interface BookingStatusService {
 
     List<BookingStatus> getAllBookingStatus();
 
-    void saveBookingStatus(BookingStatus bookingStatus);
+    BookingStatus saveBookingStatus(BookingStatus bookingStatus);
 
     BookingStatus getBookingStatus(Long id);
 

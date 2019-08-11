@@ -145,30 +145,38 @@
                         <br>
                         <div class="row">
                             <div class="card w-100">
-                                <div class="card-header">
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            Заказ <a href="#"> ${booking.merchandise.name} </a>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <button onclick="window.location.href='/bookings/${booking.id}'">Перейти к
-                                                заказу ${product.store.name}</button>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <div class="col-md-12 card-body">
                                     <h5> Покупатель: ${booking.buyer.firstName} ${booking.buyer.lastName}</h5>
                                     <h5>
                                         Адрес: ${booking.address.country} ${booking.address.city} ${booking.address.address}</h5>
-                                    <h5> Количество: ${booking.count}</h5>
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <h5> Стоимость: ${booking.count * booking.merchandise.price}</h5>
+                                        <div class="card w-100">
+                                            <c:forEach var="merchandise" items="${booking.merchandise}">
+                                                <div class="card-body">
+
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <img class="img-fluid"
+                                                                 src="${merchandise.merchandise.pictureUrl}"
+                                                                 alt="Нет картинки"
+                                                                 style="width: 60px;">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <a href="${pageContext.request.contextPath}/merchandise?id=${merchandise.merchandise.id}"> ${merchandise.merchandise.name} </a>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <strong>${merchandise.merchandise.price} руб.</strong>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <strong>${merchandise.count} шт.</strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </c:forEach>
                                         </div>
-                                        <div class="col-md-6">
-                                            <h5 class="font-weight-bold">Заказ ${booking.bookingStatus.status}</h5>
-                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <h4>Статус заказа: <strong>${booking.status}</strong></h4>
                                     </div>
                                 </div>
                             </div>

@@ -24,8 +24,10 @@ public class BookingStatusDAOImpls implements BookingStatusDAO {
     }
 
     @Override
-    public void saveBookingStatus(BookingStatus bookingStatus) {
+    public BookingStatus saveBookingStatus(BookingStatus bookingStatus) {
         entityManager.persist(bookingStatus);
+        entityManager.flush();
+        return bookingStatus;
     }
 
     @Override
