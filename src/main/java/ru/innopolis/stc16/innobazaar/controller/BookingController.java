@@ -142,7 +142,9 @@ public class BookingController {
         booking = bookingService.saveBooking(booking);
         addBookingToUser(booking, user);
         addBookingToStores(booking, stores);
-        basketService.deleteBasket(user.getBasket().getId());
+        Basket basket = user.getBasket();
+        basket.getMerchandises().clear();
+        basketService.updateBasket(basket);
         return "bookingCreated";
     }
 
