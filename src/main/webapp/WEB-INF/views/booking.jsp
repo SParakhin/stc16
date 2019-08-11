@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -7,7 +7,7 @@
 <t:page-template>
     <jsp:attribute name="titleText">Главная страница</jsp:attribute>
     <jsp:attribute name="metaDescription">Сервис для создания личных магазинов</jsp:attribute>
-    <jsp:body>
+    <jsp:body><%--@elvariable id="booking" type="ru.innopolis.stc16.innobazaar.entity.Booking"--%>
         <div class="container justify-content-center">
             <br>
             <a href="${pageContext.request.contextPath}/store?id=${booking.store.id}#orders"
@@ -18,7 +18,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-8">
-                            <h3>Заказ <a href="#">${booking.merchandise.name}</a></h3>
+                            <h3>Заказ <a href="${pageContext.request.contextPath}/merchandise?id=${booking.merchandise.id}">${booking.merchandise.name}</a></h3>
                         </div>
                         <div class="col-md-4">
                             <img src="${booking.merchandise.pictureUrl}" alt="Not found">
@@ -73,7 +73,10 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <h4 class="font-weight-bold">Статус заказа: ${booking.bookingStatus.status}</h4>
+                                            <h4 class="font-weight-bold">Статус заказа: ${booking.bookingStatus.status}
+                                                <c:if test = "${booking.paid}"><a href="/bookings/${booking.id}/details?returnPage=/bookings/${booking.id}">оплачен</a></c:if>
+                                                <c:if test = "${!booking.paid}"><a href="/bookings/${booking.id}/paidStatus?returnPage=/bookings/${booking.id}">не оплачен</a></c:if>
+                                            </h4>
                                         </div>
                                     </div>
                                 </div>
@@ -81,8 +84,7 @@
                             <br>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button onclick="window.location.href='/bookings/${booking.id}/cancel'">Отменить
-                                        заказ ${product.store.name}</button>
+                                    <button onclick="window.location.href='/bookings/${booking.id}/cancel'">Отменить заказ</button>
                                 </div>
                             </div>
                         </div>

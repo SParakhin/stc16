@@ -1,21 +1,20 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <t:page-template>
-    <jsp:attribute name="titleText">Профиль пользователя</jsp:attribute>
-    <jsp:attribute name="metaDescription">Профиль пользователя</jsp:attribute>
+    <jsp:attribute name="titleText">Магазин</jsp:attribute>
+    <jsp:attribute name="metaDescription">Работа с магазином</jsp:attribute>
 
-    <jsp:body>
+    <jsp:body><%--@elvariable id="store" type="ru.innopolis.stc16.innobazaar.entity.Store"--%>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <div class="row">
             <div class="col-md-12 text-center">
                 <div class="alert alert-success text-center" role="alert">
                     <h2> ${store.name}</h2>
                 </div>
-
             </div>
         </div>
         <br>
@@ -55,6 +54,7 @@
         <c:if test="${pageContext.request.userPrincipal.name ne store.user.username}">
             <div class="tab-pane container-fluid fade" id="products">
                 <div class="row justify-content-center">
+                    <%--@elvariable id="products" type="java.util.List"--%>
                     <c:forEach var="merch" items="${products}">
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-10 col-xs-10 my-2">
                             <div id="test" class="card">
@@ -100,13 +100,13 @@
                         <th>Действие</th>
                     </tr>
 
-                    <!-- loop over and print our users -->
-                    <c:forEach var="product" items="${products}">
-                        <!-- construct an "update" link with username id -->
-                        <c:url var="updateLink" value="/product/updateProductForm">
-                            <c:param name="id" value="${product.id}"/>
-                        </c:url>
-
+                <!-- loop over and print our users -->
+                <%--@elvariable id="products" type="java.util.List"--%>
+                <c:forEach var="product" items="${products}">
+                    <!-- construct an "update" link with username id -->
+                    <c:url var="updateLink" value="/product/updateProductForm">
+                        <c:param name="id" value="${product.id}"/>
+                    </c:url>
 
                         <!-- construct an "delete" link with username id -->
                         <c:url var="deleteLink" value="/product/deleteProduct">
@@ -141,6 +141,7 @@
         <div class="tab-pane container-fluid fade" id="orders">
             <div class="row justify-content-center">
                 <div class="col-md-9">
+                    <%--@elvariable id="bookings" type="java.util.List"--%>
                     <c:forEach var="booking" items="${bookings}">
                         <br>
                         <div class="row">
@@ -148,11 +149,10 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-md-9">
-                                            Заказ <a href="#"> ${booking.merchandise.name} </a>
+                                            Заказ <a href="${pageContext.request.contextPath}/merchandise?id=${booking.merchandise.id}"> ${booking.merchandise.name} </a>
                                         </div>
                                         <div class="col-md-3">
-                                            <button onclick="window.location.href='/bookings/${booking.id}'">Перейти к
-                                                заказу ${product.store.name}</button>
+                                            <button onclick="window.location.href='/bookings/${booking.id}'">Перейти к заказу</button>
                                         </div>
                                     </div>
                                 </div>
@@ -167,7 +167,10 @@
                                             <h5> Стоимость: ${booking.count * booking.merchandise.price}</h5>
                                         </div>
                                         <div class="col-md-6">
-                                            <h5 class="font-weight-bold">Заказ ${booking.bookingStatus.status}</h5>
+                                            <h5 class="font-weight-bold">Заказ ${booking.bookingStatus.status}
+                                                <c:if test = "${booking.paid}"><a href="/bookings/${booking.id}/details?returnPage=/store?id=${store.id}%23orders">оплачен</a></c:if>
+                                                <c:if test = "${!booking.paid}"><a href="/bookings/${booking.id}/paidStatus?returnPage=/store?id=${store.id}%23orders">не оплачен</a></c:if>
+                                            </h5>
                                         </div>
                                     </div>
                                 </div>
@@ -177,7 +180,7 @@
                 </div>
             </div>
         </div>
-
+        </div>
 
         <script>
             $(document).ready(function () {
@@ -197,5 +200,3 @@
     </jsp:body>
 
 </t:page-template>
-<%--</body>--%>
-<%--</html>--%>

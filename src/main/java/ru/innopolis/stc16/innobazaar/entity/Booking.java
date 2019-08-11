@@ -31,14 +31,7 @@ public class Booking implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Address address;
     private String tracking;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean paid;
 
-    public Booking(User buyer, BookingStatus bookingStatus, Store store, Merchandise merchandise, Date date, Address address, String tracking) {
-        this.buyer = buyer;
-        this.bookingStatus = bookingStatus;
-        this.store = store;
-        this.merchandise = merchandise;
-        this.date = date;
-        this.address = address;
-        this.tracking = tracking;
-    }
 }
