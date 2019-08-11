@@ -59,7 +59,7 @@ public class BasketController {
             userBasket.getMerchandises().add(merchandise);
             merchandise.getBasketList().add(userBasket);
             user.setBasket(userBasket);
-            userService.updateUserRelation(user);
+            userService.updateUser(user);
             List<Merchandise> basket = userBasket.getMerchandises();
             session.setAttribute("basket", basket);
             BigDecimal totalSum = BigDecimal.ZERO;
@@ -164,7 +164,7 @@ public class BasketController {
         session.removeAttribute("basket");
         userBasket.setMerchandises(basket);
         user.setBasket(userBasket);
-        userService.updateUserRelation(user);
+        userService.updateUser(user);
         session.setAttribute("totalSum", newTotalSum);
         session.setAttribute("basketSize", basket.size());
         session.setAttribute("basket", basket);

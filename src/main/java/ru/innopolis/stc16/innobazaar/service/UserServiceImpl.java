@@ -53,16 +53,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(User user) {
-        //user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setEnabled(true);
-        user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_USER")));
-        userDAO.updateUser(user);
-    }
-
-    @Override
-    public void updateUserRelation(User user) {
-        userDAO.updateUserRelation(user);
+    public User updateUser(User user) {
+        User oldUser = getUserByUsername(user.getUsername());
+        oldUser.setFirstName(user.getFirstName());
+        oldUser.setLastName(user.getLastName());
+        oldUser.setEmail(user.getEmail());
+        oldUser.setPhone(user.getPhone());
+        return userDAO.updateUser(oldUser);
     }
 
     @Override

@@ -90,9 +90,9 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "userForm";
         }
-        session.setAttribute("userId",user.getId());
         user.setUsername(principal.getName());
-        userService.updateUser(user);
+        User newUser = userService.updateUser(user);
+        session.setAttribute("userId",newUser.getId());
         return "redirect:/user/updateUserForm";
     }
 

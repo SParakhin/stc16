@@ -15,7 +15,6 @@ import java.util.List;
 @Transactional
 public class UserDAOImpl implements UserDAO {
 
-
     @Autowired
     @PersistenceContext
     private EntityManager entityManager;
@@ -32,13 +31,9 @@ public class UserDAOImpl implements UserDAO {
         entityManager.remove(user);
     }
 
-    public void updateUser(User user) {
-        entityManager.merge(user);
-    }
-
     @Override
-    public void updateUserRelation(User user) {
-        entityManager.merge(user);
+    public User updateUser(User user) {
+        return entityManager.merge(user);
     }
 
     @Override

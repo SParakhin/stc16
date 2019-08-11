@@ -62,7 +62,7 @@ public class StoreController {
         }
         User user = userService.getAuthenticatedUser();
         user.addStoreToUser(store);
-        userService.updateUserRelation(user);
+        userService.updateUser(user);
         return "redirect:/store/listStore";
     }
 
@@ -125,7 +125,7 @@ public class StoreController {
             }
         }
         user.setStoreList(stores);
-        userService.updateUserRelation(user);
+        userService.updateUser(user);
         return "redirect:/store/listStore";
     }
 
@@ -146,7 +146,7 @@ public class StoreController {
             }
             user.setStoreList(temp);
         }
-        userService.updateUserRelation(user);
+        userService.updateUser(user);
         return "redirect:/store/listStore";
     }
 
