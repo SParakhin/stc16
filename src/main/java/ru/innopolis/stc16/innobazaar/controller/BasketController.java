@@ -103,39 +103,39 @@ public class BasketController {
         if (user == null) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
             dispatcher.forward(request, response);
-        }
-        Basket userBasket = user.getBasket();
-        List<Merchandise> basket;
-        if (userBasket == null) {
-            basket = getNewBasket(user).getMerchandises();
         } else {
+            Basket userBasket = user.getBasket();
+            List<Merchandise> basket;
+            if (userBasket == null) {
+                userBasket = getNewBasket(user);
+            }
             basket = userBasket.getMerchandises();
             model.addAttribute("basketSize", basket.size());
             session.setAttribute("basketSize", basket.size());
-        }
-        BigDecimal totalSum = (BigDecimal) session.getAttribute("totalSum");
-        model.addAttribute("totalSum", totalSum);
-        Set<Store> storeListBasket = new HashSet<>();
-        Map<Store, List<Merchandise>> basketStoreMap = new HashMap<>();
-        for (Merchandise s : userBasket.getMerchandises()) {
-            storeListBasket.add(s.getStore());
-            basketStoreMap.put(s.getStore(), new ArrayList<>());
-        }
-        for (Map.Entry<Store, List<Merchandise>> item : basketStoreMap.entrySet()) {
-            for (Store s : storeListBasket) {
-                if (item.getKey().equals(s)) {
-                    for (Merchandise m : basket) {
-                        if (m.getStore().getId().equals(item.getKey().getId())) {
-                            item.getValue().add(m);
-                            basketStoreMap.put(s, item.getValue());
+            BigDecimal totalSum = (BigDecimal) session.getAttribute("totalSum");
+            model.addAttribute("totalSum", totalSum);
+            Set<Store> storeListBasket = new HashSet<>();
+            Map<Store, List<Merchandise>> basketStoreMap = new HashMap<>();
+            for (Merchandise s : userBasket.getMerchandises()) {
+                storeListBasket.add(s.getStore());
+                basketStoreMap.put(s.getStore(), new ArrayList<>());
+            }
+            for (Map.Entry<Store, List<Merchandise>> item : basketStoreMap.entrySet()) {
+                for (Store s : storeListBasket) {
+                    if (item.getKey().equals(s)) {
+                        for (Merchandise m : basket) {
+                            if (m.getStore().getId().equals(item.getKey().getId())) {
+                                item.getValue().add(m);
+                                basketStoreMap.put(s, item.getValue());
+                            }
                         }
                     }
                 }
             }
+            model.addAttribute("basketStoreMap", basketStoreMap);
+            session.setAttribute("basketStoreMap", basketStoreMap);
+            session.setAttribute("basket", basket);
         }
-        model.addAttribute("basketStoreMap", basketStoreMap);
-        session.setAttribute("basketStoreMap", basketStoreMap);
-        session.setAttribute("basket", basket);
         return "basket";
     }
 
