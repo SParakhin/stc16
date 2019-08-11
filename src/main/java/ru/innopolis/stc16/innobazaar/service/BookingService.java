@@ -1,5 +1,6 @@
 package ru.innopolis.stc16.innobazaar.service;
 
+import ru.innopolis.stc16.innobazaar.dto.Payment;
 import ru.innopolis.stc16.innobazaar.entity.Booking;
 
 import java.util.List;
@@ -18,4 +19,8 @@ public interface BookingService {
     void deleteBooking(Long id);
 
     void updateBooking(Booking booking);
+
+    Payment getPayment(Long id);
+
+    void refreshPaymentStatus(Long id);
 }

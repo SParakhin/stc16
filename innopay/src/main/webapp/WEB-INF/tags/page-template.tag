@@ -1,7 +1,6 @@
 <%@tag description="Page template" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <%@attribute name="titleText" fragment="true" %>
 <%@attribute name="metaDescription" fragment="true" %>
@@ -13,10 +12,8 @@
     <meta charset="utf-8">
     <!-- Bootstrap CSS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles -->
+    <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">    <!-- Custom styles -->
     <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet">
-    <link rel='shortcut icon' type='image/x-icon' href='${pageContext.request.contextPath}/resources/img/favicon.ico'>
     <meta name="description" content="<jsp:invoke fragment="metaDescription"/>">
 
     <title>
@@ -25,7 +22,7 @@
 </head>
 
 <body>
-<t:header-template/>
+<header></header>
 
 <div class="container-fluid">
     <div class="row justify-content-center">
@@ -34,7 +31,7 @@
         </div>
     </div>
 </div>
-<t:footer-template/>
+<footer></footer>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -37,5 +37,7 @@ public class Booking implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Address address;
     private String tracking;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean paid;
 
 }
