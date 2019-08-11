@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -50,6 +51,7 @@ public class BookingController {
         List<Booking> bookings = user.getBookings();
         List<BigDecimal> totalSums = new ArrayList<>();
         List<Pair<Booking, Map<Store, List<BookedMerchandise>>>> bookingsWithStoresSort = new ArrayList<>();
+        List<String> dates = new ArrayList<>();
         for (Booking booking: bookings) {
             BigDecimal totalSum = new BigDecimal(0);
             List<BookedMerchandise> bookedMerchandises = booking.getMerchandise();
@@ -67,9 +69,11 @@ public class BookingController {
             }
             bookingsWithStoresSort.add(new Pair<>(booking, merchandisesByStore));
             totalSums.add(totalSum);
+            dates.add(new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(booking.getDate()));
         }
         model.addAttribute("bookingWithStoresSort", bookingsWithStoresSort);
         model.addAttribute("totalSums", totalSums);
+        model.addAttribute("dates", dates);
         return "mybookings";
     }
 
