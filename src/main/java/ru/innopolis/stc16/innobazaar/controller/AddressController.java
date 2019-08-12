@@ -60,7 +60,7 @@ public class AddressController {
         }
         User user = userService.getAuthenticatedUser();
         user.addAddressToUser(address);
-        userService.updateUser(user);
+        userService.updateUserLinks(user);
         return "redirect:/address/listAddress";
     }
 
@@ -126,7 +126,7 @@ public class AddressController {
             }
         }
         user.setAddressList(addresses);
-        userService.updateUser(user);
+        userService.updateUserLinks(user);
         return "redirect:/address/listAddress";
     }
 
@@ -141,7 +141,7 @@ public class AddressController {
             }
             user.setAddressList(temp);
         }
-        userService.updateUser(user);
+        userService.updateUserLinks(user);
         return "redirect:/address/listAddress";
     }
 }

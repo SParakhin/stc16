@@ -49,7 +49,7 @@ public class BasketController {
             Merchandise merchandise = merchandiseService.getMerchandise(id);
             List<Merchandise> basket = user.getMerchandises();
             basket.add(merchandise);
-            userService.updateUser(user);
+            userService.updateUserLinks(user);
             BigDecimal totalSum = BigDecimal.ZERO;
             for (Merchandise m : basket) {
                 totalSum = totalSum.add(m.getPrice());
@@ -128,7 +128,7 @@ public class BasketController {
         session.removeAttribute("basketSize");
         session.removeAttribute("basket");
         user.setMerchandises(basket);
-        userService.updateUser(user);
+        userService.updateUserLinks(user);
         session.setAttribute("totalSum", newTotalSum);
         session.setAttribute("basketSize", basket.size());
         session.setAttribute("basket", basket);

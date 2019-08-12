@@ -53,12 +53,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User user) {
+    public User updateUserProfile(User user) {
         User oldUser = getUserByUsername(user.getUsername());
         oldUser.setFirstName(user.getFirstName());
         oldUser.setLastName(user.getLastName());
         oldUser.setEmail(user.getEmail());
         oldUser.setPhone(user.getPhone());
+        return userDAO.updateUser(oldUser);
+    }
+
+    @Override
+    public User updateUserLinks(User user) {
+        User oldUser = getUserByUsername(user.getUsername());
         oldUser.setAddressList(user.getAddressList());
         oldUser.setStoreList(user.getStoreList());
         oldUser.setBookings(user.getBookings());

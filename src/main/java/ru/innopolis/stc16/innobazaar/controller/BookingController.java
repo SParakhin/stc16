@@ -166,7 +166,7 @@ public class BookingController {
         addBookingToUser(booking, user);
         addBookingToStores(booking, stores);
         user.getMerchandises().clear();
-        userService.updateUser(user);
+        userService.updateUserLinks(user);
         session.setAttribute("basketSize", 0);
         return "bookingCreated";
     }
