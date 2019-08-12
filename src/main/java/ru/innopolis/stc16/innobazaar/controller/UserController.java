@@ -91,7 +91,7 @@ public class UserController {
             return "userForm";
         }
         user.setUsername(principal.getName());
-        User newUser = userService.updateUser(user);
+        User newUser = userService.updateUserProfile(user);
         session.setAttribute("userId",newUser.getId());
         return "redirect:/user/updateUserForm";
     }

@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -48,14 +49,14 @@ public class User implements UserDetails {
             fetch = FetchType.EAGER,
             orphanRemoval = true)
     @Fetch(value = FetchMode.SUBSELECT)
-    private List<Address> addressList;
+    private List<Address> addressList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
             orphanRemoval = true)
     @Fetch(value = FetchMode.SUBSELECT)
-    private List<Store> storeList;
+    private List<Store> storeList = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = CascadeType.MERGE,
