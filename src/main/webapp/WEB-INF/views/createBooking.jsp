@@ -93,7 +93,7 @@
 
                     <c:if test="${fn:length(user.addressList) == 0}">
                         <strong>Список ваших адресов пуст. Необходимо добавить хотя бы один адрес</strong>
-                        <a href="${pageContext.request.contextPath}/address/listAddress">Добавить адрес</a>
+                        <a href="${pageContext.request.contextPath}/address/listAddress?returnPage=/booking/create">Добавить адрес</a>
                     </c:if>
                     <c:if test="${fn:length(user.addressList) != 0}">
                         <div class="form-group">
