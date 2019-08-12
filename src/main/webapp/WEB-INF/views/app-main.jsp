@@ -26,7 +26,7 @@
                 <c:forEach begin="0" end="${fn:length(categories) > 0 ? fn:length(categories) / 3 - 1 +
                 (fn:length(categories) mod 3 == 0 ? 0 : 1) : 0}" items="${categories}"
                            varStatus="i">
-                    <div class="row" style="height: 100px">
+                    <div class="row">
                         <c:forEach begin="0" end="2" varStatus="j">
                             <c:set var="index" value="${i.index * 3 + j.index}"/>
                             <c:if test="${index < fn:length(categories)}">
@@ -36,7 +36,14 @@
                                             <input type="checkbox" name="categoryIds"
                                                    value="${categories[index].id}">${categories[index].name}<br>
                                         </label>
-                                        <img src="${categories[index].pictureUrl}" alt="">
+                                        <c:url var="openCatPage"
+                                               value="${pageContext.request.contextPath}/cat/openWithGoods">
+                                            <c:param name="catName" value="${categories[index].name}"/>
+                                            <c:param name="pageNumber" value="1"/>
+                                        </c:url>
+                                        <a href="${openCatPage}">
+                                            <img class="card-img-top align-middle" src="${categories[index].pictureUrl}" alt="">
+                                        </a>
                                     </div>
                                 </div>
                             </c:if>

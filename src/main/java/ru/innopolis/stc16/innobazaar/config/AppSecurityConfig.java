@@ -34,7 +34,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         Конфигурирование доступа
          */
         http.authorizeRequests()
-                .antMatchers("/listUsers").hasRole("ADMIN")
+                .antMatchers("/listUsers", "/cat/list").hasRole("ADMIN")
                 .and()
                 .formLogin()
                 .loginPage("/login")

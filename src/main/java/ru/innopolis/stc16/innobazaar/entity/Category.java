@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.Collection;
+import javax.validation.constraints.Size;
 
 /**
  * Сущность "Раздел магазина"
@@ -27,9 +27,12 @@ public class Category {
     @JoinColumn(name = "parent_category_id")
     private Category parentCategory;
 
-    @NotEmpty
+    @NotEmpty(message = "необходимо заполнить")
+    @Size(max = 255, message = "не длиннее 255 символов")
     @Column(unique = true)
     private String name;
 
+    @NotEmpty(message = "необходимо заполнить")
+    @Size(max = 255, message = "не длиннее 255 символов")
     private String pictureUrl;
 }

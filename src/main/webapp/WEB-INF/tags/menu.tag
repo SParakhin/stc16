@@ -31,9 +31,14 @@
                         </c:forEach>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/listUsers">пользователи</a>
-                </li>
+                <security:authorize access="hasRole('ADMIN')">
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/cat/list">управление категориями</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/listUsers">пользователи</a>
+                    </li>
+                </security:authorize>
             </ul>
 
             <span class="navbar-text">
@@ -48,7 +53,7 @@
                 <ul class="navbar-nav ml-auto">
 
 
-                    <button type="button" class="btn btn-success"  onclick="window.location.href='/basket'">Корзина
+                    <button type="button" class="btn btn-success" onclick="window.location.href='/basket'">Корзина
                     <span class="badge badge-light">${basketSize}</span>
                     </button>
 
