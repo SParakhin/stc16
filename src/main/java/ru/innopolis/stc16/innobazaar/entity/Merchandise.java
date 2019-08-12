@@ -22,8 +22,6 @@ public class Merchandise implements Serializable {
     private String description;
     @ManyToOne
     private Store store;
-    //TODO private String department;
-    //TODO private String productDetail;
     @ManyToOne
     private Category category;
     @Transient
