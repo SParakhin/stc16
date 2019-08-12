@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -6,11 +6,10 @@
 <t:page-template>
     <jsp:attribute name="titleText">Адреса доставки</jsp:attribute>
     <jsp:attribute name="metaDescription">Список адресов доставки</jsp:attribute>
-    <jsp:body>
-
+    <jsp:body><%--@elvariable id="returnPage" type="String"--%>
 
         <div class="container-fluid">
-            <jsp:include page="profileHeader.jsp"></jsp:include>
+            <jsp:include page="profileHeader.jsp"/>
             <div class="row">
                 <div class="col-md-auto">
                     <div class="panel-body">
@@ -25,17 +24,24 @@
                             </tr>
 
                             <!-- loop over and print our users -->
+                                <%--@elvariable id="addresses" type="java.util.List"--%>
                             <c:forEach var="address" items="${addresses}">
 
                                 <!-- construct an "update" link with username id -->
                                 <c:url var="updateLink" value="/address/updateAddressForm">
                                     <c:param name="id" value="${address.id}"/>
+                                    <c:if test="${returnPage != null}">
+                                        <c:param name="returnPage" value="${returnPage}"/>
+                                    </c:if>
                                 </c:url>
 
 
                                 <!-- construct an "delete" link with username id -->
                                 <c:url var="deleteLink" value="/address/deleteAddress">
                                     <c:param name="id" value="${address.id}"/>
+                                    <c:if test="${returnPage != null}">
+                                        <c:param name="returnPage" value="${returnPage}"/>
+                                    </c:if>
                                 </c:url>
 
                                 <tr>
@@ -55,9 +61,18 @@
                         </table>
 
                         <form class="form-inline">
-                            <button type="submit" class="btn btn-success" formmethod="get"
-                                    formaction="${pageContext.request.contextPath}/address/addAddressForm" name="edit">Добавить адрес
-                            </button>
+                            <input hidden id="returnPage" name="returnPage" value="${returnPage}"/>
+                            <div class="col-md-auto">
+                                <button type="submit" class="btn btn-success" formmethod="get"
+                                        formaction="${pageContext.request.contextPath}/address/addAddressForm">Добавить
+                                    адрес
+                                </button>
+                                <c:if test="${returnPage != null}">
+                                    <button type="submit" class="btn btn-success" formmethod="get"
+                                            formaction="${pageContext.request.contextPath}${returnPage}">Вернуться
+                                    </button>
+                                </c:if>
+                            </div>
                         </form>
                     </div>
                 </div>

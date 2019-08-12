@@ -35,12 +35,13 @@ public class AddressController {
      * @return
      */
     @GetMapping("/address/addAddressForm")
-    public String showFormAddAddress(Model model,
+    public String showFormAddAddress(@RequestParam(required = false, name = "returnPage") String returnPage, Model model,
                                      HttpServletRequest request) {
         User user = userService.getAuthenticatedUser();
         Address address = new Address();
         model.addAttribute("address", address);
         model.addAttribute("userId", user.getId());
+        model.addAttribute("returnPage", returnPage);
         request.setAttribute("newAddress", address);
         return "addressForm";
     }
@@ -53,7 +54,7 @@ public class AddressController {
      * @return
      */
     @PostMapping("/address/saveAddressToUser")
-    public String saveAddressToUser(@Valid Address address,
+    public String saveAddressToUser(@RequestParam(required = false, name = "returnPage") String returnPage, @Valid Address address,
                                     BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "addAddress";
@@ -61,7 +62,11 @@ public class AddressController {
         User user = userService.getAuthenticatedUser();
         user.addAddressToUser(address);
         userService.updateUserLinks(user);
-        return "redirect:/address/listAddress";
+        String redirectAddress = "redirect:/address/listAddress";
+        if (!returnPage.equals("")) {
+            redirectAddress = redirectAddress + "?returnPage=" + returnPage;
+        }
+        return redirectAddress;
     }
 
     /**
@@ -71,10 +76,11 @@ public class AddressController {
      * @return
      */
     @GetMapping("/address/listAddress")
-    public String listAddress(Model model) {
+    public String listAddress(@RequestParam(required = false, name = "returnPage") String returnPage, Model model) {
         User user = userService.getAuthenticatedUser();
         List<Address> addresses = user.getAddressList();
         model.addAttribute("addresses", addresses);
+        model.addAttribute("returnPage", returnPage);
         return "listAddress";
     }
 
@@ -86,13 +92,14 @@ public class AddressController {
      * @return
      */
     @GetMapping("/address/updateAddressForm")
-    public String showFormUpdateAddress(@RequestParam("id") Long id,
+    public String showFormUpdateAddress(@RequestParam(required = false, name = "returnPage") String returnPage, @RequestParam("id") Long id,
                                         Model model) {
         User user = userService.getAuthenticatedUser();
         List<Address> addresses = user.getAddressList();
         for (Address address : addresses) {
             if (address.getId().equals(id)) {
                 model.addAttribute("address", address);
+                model.addAttribute("returnPage", returnPage);
                 return "addressForm";
             }
         }
@@ -108,7 +115,7 @@ public class AddressController {
      * @return
      */
     @PostMapping("/address/updateAddress")
-    public String updateAddressToUser(@Valid Address address,
+    public String updateAddressToUser(@RequestParam(required = false, name = "returnPage") String returnPage, @Valid Address address,
                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "addressForm";
@@ -127,11 +134,15 @@ public class AddressController {
         }
         user.setAddressList(addresses);
         userService.updateUserLinks(user);
-        return "redirect:/address/listAddress";
+        String redirectAddress = "redirect:/address/listAddress";
+        if (!returnPage.equals("")) {
+            redirectAddress = redirectAddress + "?returnPage=" + returnPage;
+        }
+        return redirectAddress;
     }
 
     @GetMapping("/address/deleteAddress")
-    public String deleteAddressFromUser(Address address) {
+    public String deleteAddressFromUser(@RequestParam(required = false, name = "returnPage") String returnPage, Address address) {
         User user = userService.getAuthenticatedUser();
         List<Address> addresses = user.getAddressList();
         List<Address> temp = new ArrayList<>();
@@ -142,6 +153,10 @@ public class AddressController {
             user.setAddressList(temp);
         }
         userService.updateUserLinks(user);
-        return "redirect:/address/listAddress";
+        String redirectAddress = "redirect:/address/listAddress";
+        if (returnPage != null) {
+            redirectAddress = redirectAddress + "?returnPage=" + returnPage;
+        }
+        return redirectAddress;
     }
 }

@@ -81,7 +81,7 @@ public class BookingController {
             }
             bookingsWithStoresSort.add(new Pair<>(booking, merchandisesByStore));
             totalSums.add(totalSum);
-            dates.add(new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(booking.getDate()));
+            dates.add(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(booking.getDate()));
         }
         model.addAttribute("bookingWithStoresSort", bookingsWithStoresSort);
         model.addAttribute("totalSums", totalSums);
@@ -207,7 +207,7 @@ public class BookingController {
         Payment payment = bookingService.refreshPaymentStatus(id);
         model.addAttribute("payment", payment);
         if (payment != null) {
-            model.addAttribute("date", new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(payment.getDate()));
+            model.addAttribute("date", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(payment.getDate()));
         }
         model.addAttribute("returnPage", returnPage);
         return "paymentDetails";
@@ -218,7 +218,7 @@ public class BookingController {
         Payment payment = bookingService.getPayment(id);
         model.addAttribute("payment", payment);
         if (payment != null) {
-            model.addAttribute("date", new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(payment.getDate()));
+            model.addAttribute("date", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(payment.getDate()));
         }
         model.addAttribute("returnPage", returnPage);
         return "paymentDetails";
