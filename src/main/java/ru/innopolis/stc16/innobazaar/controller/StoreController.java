@@ -212,7 +212,7 @@ public class StoreController {
             storeBookingAttribute.setAddress(booking.getAddress());
             storeBookingAttribute.setStatus(booking.getBookingStatus());
             storeBookingAttribute.setBuyer(booking.getBuyer());
-            storeBookingAttribute.setDate(new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(booking.getDate()));
+            storeBookingAttribute.setDate(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(booking.getDate()));
             storeBookingAttribute.setPaid(booking.getPaid());
             List<BookedMerchandise> merchandises = booking.getMerchandise();
             List<BookedMerchandise> merchandisesForStore = new ArrayList<>();
