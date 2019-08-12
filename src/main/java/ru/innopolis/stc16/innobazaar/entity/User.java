@@ -13,6 +13,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Entity
 @AllArgsConstructor
@@ -40,9 +41,6 @@ public class User implements UserDetails {
     private String username;
     @NotEmpty
     private String password;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn (name="basket_id")
-    private Basket basket;
 
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
@@ -77,6 +75,13 @@ public class User implements UserDetails {
 
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "basket_merchandise",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "merchandise_id"))
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Merchandise> merchandises = new CopyOnWriteArrayList<>();
 
     @Override
     public boolean isAccountNonExpired() {

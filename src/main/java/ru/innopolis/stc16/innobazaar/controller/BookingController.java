@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.innopolis.stc16.innobazaar.config.PayServiceIntegrator;
 import ru.innopolis.stc16.innobazaar.entity.*;
 import ru.innopolis.stc16.innobazaar.service.*;
 
@@ -12,6 +13,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -29,16 +31,18 @@ public class BookingController {
     private final BookingService bookingService;
     private final UserService userService;
     private final BookedMerchandiseService bookedMerchandiseService;
-    private final BasketService basketService;
     private final StoreService storeService;
+    private final HttpSession session;
+    private final PayServiceIntegrator payServiceIntegrator;
 
     @Autowired
-    public BookingController(BookingService bookingService, UserService userService, BookedMerchandiseService bookedMerchandiseService, BasketService basketService, StoreService storeService) {
+    public BookingController(BookingService bookingService, UserService userService, BookedMerchandiseService bookedMerchandiseService, StoreService storeService, HttpSession session, PayServiceIntegrator payServiceIntegrator) {
         this.bookingService = bookingService;
         this.userService = userService;
         this.bookedMerchandiseService = bookedMerchandiseService;
-        this.basketService = basketService;
         this.storeService = storeService;
+        this.session = session;
+        this.payServiceIntegrator = payServiceIntegrator;
     }
 
     @GetMapping("/bookings/{id}")
@@ -56,12 +60,12 @@ public class BookingController {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
             dispatcher.forward(request, response);
         }
-        List<Booking> bookings = user.getBookings();
+        List<Booking> bookings = refreshPaymentStatus(user);
         List<BigDecimal> totalSums = new ArrayList<>();
         List<Pair<Booking, Map<Store, List<BookedMerchandise>>>> bookingsWithStoresSort = new ArrayList<>();
         List<String> dates = new ArrayList<>();
         for (Booking booking: bookings) {
-            BigDecimal totalSum = new BigDecimal(0);
+            BigDecimal totalSum = BigDecimal.ZERO;
             List<BookedMerchandise> bookedMerchandises = booking.getMerchandise();
             Map<Store, List<BookedMerchandise>> merchandisesByStore = new HashMap<>();
             for (BookedMerchandise bookedMerchandise: bookedMerchandises) {
@@ -82,10 +86,17 @@ public class BookingController {
         model.addAttribute("bookingWithStoresSort", bookingsWithStoresSort);
         model.addAttribute("totalSums", totalSums);
         model.addAttribute("dates", dates);
+        model.addAttribute("store", payServiceIntegrator.getStore());
         return "mybookings";
     }
 
-
+    private List<Booking> refreshPaymentStatus(User user) {
+        for (Booking booking: user.getBookings()) {
+            bookingService.refreshPaymentStatus(booking.getId());
+        }
+        user = userService.getUser(user.getId());
+        return user.getBookings();
+    }
 
     @GetMapping("/booking/create")
     public String createBooking(Model model, HttpServletResponse response,
@@ -154,9 +165,9 @@ public class BookingController {
         booking = bookingService.saveBooking(booking);
         addBookingToUser(booking, user);
         addBookingToStores(booking, stores);
-        Basket basket = user.getBasket();
-        basket.getMerchandises().clear();
-        basketService.updateBasket(basket);
+        user.getMerchandises().clear();
+        userService.updateUser(user);
+        session.setAttribute("basketSize", 0);
         return "bookingCreated";
     }
 
@@ -168,8 +179,8 @@ public class BookingController {
             userBookings.add(booking);
         }
         user.setBookings(userBookings);
-        userService.updateUser(user);
     }
+
     private void addBookingToStores(Booking booking, Set<Store> stores) {
         for(Store store:stores) {
             List<Booking> storeBookings = store.getBookings();
@@ -183,21 +194,23 @@ public class BookingController {
         }
     }
 
-
     private Map<Merchandise,Integer> getMerchandisesWithCount(User user) {
-        Basket userBasket = user.getBasket();
         Map<Merchandise, Integer> merchandises = new HashMap<>();
-        for (Merchandise merchandise : userBasket.getMerchandises()) {
+        for (Merchandise merchandise : user.getMerchandises()) {
             merchandises.merge(merchandise, 1, (a, b) -> a + b);
         }
         return merchandises;
     }
 
-
     @GetMapping("/bookings/{id}/paidStatus")
     public String refreshPaymentStatus(@PathVariable Long id, @RequestParam("returnPage") String returnPage, Model model) {
-        bookingService.refreshPaymentStatus(id);
-        return getPaymentDetails(id, returnPage, model);
+        Payment payment = bookingService.refreshPaymentStatus(id);
+        model.addAttribute("payment", payment);
+        if (payment != null) {
+            model.addAttribute("date", new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(payment.getDate()));
+        }
+        model.addAttribute("returnPage", returnPage);
+        return "paymentDetails";
     }
 
     @GetMapping("/bookings/{id}/details")

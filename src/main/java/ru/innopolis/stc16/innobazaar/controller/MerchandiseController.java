@@ -20,17 +20,13 @@ import java.util.List;
 public class MerchandiseController {
 
     private final MerchandiseService merchandiseService;
-    private final UserService userService;
-    private final BasketService basketService;
     private final StoreService storeService;
     private final HttpSession session;
     private final CategoryService categoryService;
 
     @Autowired
-    public MerchandiseController(MerchandiseService merchandiseService, UserService userService, BasketService basketService, StoreService storeService, HttpSession session, CategoryService categoryService) {
+    public MerchandiseController(MerchandiseService merchandiseService, StoreService storeService, HttpSession session, CategoryService categoryService) {
         this.merchandiseService = merchandiseService;
-        this.userService = userService;
-        this.basketService = basketService;
         this.storeService = storeService;
         this.session = session;
         this.categoryService = categoryService;

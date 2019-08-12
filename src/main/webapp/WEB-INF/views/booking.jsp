@@ -73,7 +73,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <h4 class="font-weight-bold">Статус заказа: ${booking.bookingStatus.status}
+                                            <h4 class="font-weight-bold">Статус заказа: ${booking.bookingStatus}
                                                 <c:if test = "${booking.paid}"><a href="/bookings/${booking.id}/details?returnPage=/bookings/${booking.id}">оплачен</a></c:if>
                                                 <c:if test = "${!booking.paid}"><a href="/bookings/${booking.id}/paidStatus?returnPage=/bookings/${booking.id}">не оплачен</a></c:if>
                                             </h4>

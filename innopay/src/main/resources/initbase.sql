@@ -9,4 +9,4 @@ CREATE DATABASE innopay
 
 grant all privileges on database innopay to student;
 
-INSERT INTO store (id, name, secret_key) VALUES (1, 'test', '4728ac9e-4618-44ea-8a55-c915c1b33b43');
+INSERT INTO store (id, name, secret_key) VALUES (1, 'innobazaar', '4728ac9e-4618-44ea-8a55-c915c1b33b43');

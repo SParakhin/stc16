@@ -22,5 +22,5 @@ public interface BookingService {
 
     Payment getPayment(Long id);
 
-    void refreshPaymentStatus(Long id);
+    Payment refreshPaymentStatus(Long id);
 }

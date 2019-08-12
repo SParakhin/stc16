@@ -11,6 +11,8 @@ import ru.innopolis.stc16.innobazaar.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -166,16 +168,16 @@ public class StoreController {
         List<Store> stores = user.getStoreList();
         Store store = null;
         if (id == null) {
-            Object storeId = session.getAttribute("storeId");
+            id = (Long) session.getAttribute("storeId");
             for (Store s : stores) {
-                if (s.getId().equals(storeId)) {
-                    store = storeService.getStore((Long) storeId);
+                if (s.getId().equals(id)) {
+                    store = storeService.getStore(id);
                 }
             }
         } else {
             for (Store s : stores) {
                 if (s.getId().equals(id)) {
-                    store = storeService.getStore(id);
+                    store = s;
                 }
             }
         }
@@ -206,18 +208,23 @@ public class StoreController {
         List<StoreBookingAttribute> storeBookingAttributes = new ArrayList<>();
         for (Booking booking: bookings) {
             StoreBookingAttribute storeBookingAttribute = new StoreBookingAttribute();
+            storeBookingAttribute.setId(booking.getId());
             storeBookingAttribute.setAddress(booking.getAddress());
             storeBookingAttribute.setStatus(booking.getBookingStatus());
             storeBookingAttribute.setBuyer(booking.getBuyer());
-            storeBookingAttribute.setDate(booking.getDate());
+            storeBookingAttribute.setDate(new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(booking.getDate()));
+            storeBookingAttribute.setPaid(booking.getPaid());
             List<BookedMerchandise> merchandises = booking.getMerchandise();
             List<BookedMerchandise> merchandisesForStore = new ArrayList<>();
+            BigDecimal price = BigDecimal.ZERO;
             for(BookedMerchandise bookedMerchandise: merchandises) {
                 if (bookedMerchandise.getMerchandise().getStore().equals(store)) {
                     merchandisesForStore.add(bookedMerchandise);
+                    price = price.add(bookedMerchandise.getMerchandise().getPrice().multiply(BigDecimal.valueOf(bookedMerchandise.getCount())));
                 }
             }
             storeBookingAttribute.setMerchandise(merchandisesForStore);
+            storeBookingAttribute.setPrice(price);
             storeBookingAttributes.add(storeBookingAttribute);
         }
         return storeBookingAttributes;

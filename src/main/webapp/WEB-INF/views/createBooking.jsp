@@ -110,11 +110,6 @@
                 </div>
                 <div class="row">
                     <div class="col-md-auto">
-                        <button class="btn btn-success" <c:if
-                                test="${fn:length(user.addressList) == 0}"> disabled="disabled" </c:if> >Перейти к оплате заказа</button>
-                    </div>
-                    <br>
-                    <div class="col-md-auto">
                         <button class="btn btn-lg btn-success" type="submit" <c:if
                                 test="${fn:length(user.addressList) == 0}"> disabled="disabled" </c:if> >Подтвердить
                             заказ

@@ -59,11 +59,11 @@ public class UserServiceImpl implements UserService {
         oldUser.setLastName(user.getLastName());
         oldUser.setEmail(user.getEmail());
         oldUser.setPhone(user.getPhone());
-        oldUser.setBasket(user.getBasket());
         oldUser.setAddressList(user.getAddressList());
         oldUser.setStoreList(user.getStoreList());
         oldUser.setBookings(user.getBookings());
         oldUser.setEnabled(user.isEnabled());
+        oldUser.setMerchandises(user.getMerchandises());
         return userDAO.updateUser(oldUser);
     }
 
