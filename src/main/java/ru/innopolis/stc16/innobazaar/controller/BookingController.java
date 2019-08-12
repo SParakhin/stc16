@@ -190,7 +190,7 @@ public class BookingController {
                 storeBookings.add(booking);
             }
             store.setBookings(storeBookings);
-//            storeService.updateStore(store);
+            storeService.updateStore(store);
         }
     }
 
