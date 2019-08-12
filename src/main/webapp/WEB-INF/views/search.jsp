@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <img src="${product.pictureUrl}" alt="Нет картинки">
+                                            <img class="card-img-top" src="${product.pictureUrl}" alt="Нет картинки">
                                         </div>
                                         <div class="col-md-8 card-body">
                                             <h5> Описание: ${product.description}</h5>
@@ -67,8 +67,7 @@
                         <div class="btn-group">
                             <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle">
                                 Категории
-                                <span
-                                        class="caret"></span></button>
+                                <span class="caret"></span></button>
                             <ul class="dropdown-menu">
                                 <c:set var="index" value="0"/>
                                 <c:forEach var="category" items="${categories}">

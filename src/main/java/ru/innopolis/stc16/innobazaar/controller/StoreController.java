@@ -1,19 +1,18 @@
 package ru.innopolis.stc16.innobazaar.controller;
 
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.innopolis.stc16.innobazaar.entity.Merchandise;
-import ru.innopolis.stc16.innobazaar.entity.Store;
-import ru.innopolis.stc16.innobazaar.entity.User;
+import ru.innopolis.stc16.innobazaar.entity.*;
 import ru.innopolis.stc16.innobazaar.service.StoreService;
 import ru.innopolis.stc16.innobazaar.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +64,7 @@ public class StoreController {
         }
         User user = userService.getAuthenticatedUser();
         user.addStoreToUser(store);
-        userService.updateUserRelation(user);
+        userService.updateUserLinks(user);
         return "redirect:/store/listStore";
     }
 
@@ -128,7 +127,7 @@ public class StoreController {
             }
         }
         user.setStoreList(stores);
-        userService.updateUserRelation(user);
+        userService.updateUserLinks(user);
         return "redirect:/store/listStore";
     }
 
@@ -149,7 +148,7 @@ public class StoreController {
             }
             user.setStoreList(temp);
         }
-        userService.updateUserRelation(user);
+        userService.updateUserLinks(user);
         return "redirect:/store/listStore";
     }
 
@@ -169,16 +168,16 @@ public class StoreController {
         List<Store> stores = user.getStoreList();
         Store store = null;
         if (id == null) {
-            Object storeId = session.getAttribute("storeId");
+            id = (Long) session.getAttribute("storeId");
             for (Store s : stores) {
-                if (s.getId().equals(storeId)) {
-                    store = storeService.getStore((Long) storeId);
+                if (s.getId().equals(id)) {
+                    store = storeService.getStore(id);
                 }
             }
         } else {
             for (Store s : stores) {
                 if (s.getId().equals(id)) {
-                    store = storeService.getStore(id);
+                    store = s;
                 }
             }
         }
@@ -187,7 +186,7 @@ public class StoreController {
         model.addAttribute("store", store);
         model.addAttribute("user", user);
         model.addAttribute("products", products);
-        model.addAttribute("bookings", store.getBookings());
+        model.addAttribute("bookings", extractStoreMerchandises(store, store.getBookings()));
         return "store";
     }
 
@@ -201,8 +200,33 @@ public class StoreController {
         List<Merchandise> products = store.getMerchandiseList();
         model.addAttribute("store", store);
         model.addAttribute("products", products);
-        model.addAttribute("bookings", store.getBookings());
+        model.addAttribute("bookings", extractStoreMerchandises(store, store.getBookings()));
         return "store";
     }
 
+    private List<StoreBookingAttribute> extractStoreMerchandises(Store store, List<Booking> bookings) {
+        List<StoreBookingAttribute> storeBookingAttributes = new ArrayList<>();
+        for (Booking booking: bookings) {
+            StoreBookingAttribute storeBookingAttribute = new StoreBookingAttribute();
+            storeBookingAttribute.setId(booking.getId());
+            storeBookingAttribute.setAddress(booking.getAddress());
+            storeBookingAttribute.setStatus(booking.getBookingStatus());
+            storeBookingAttribute.setBuyer(booking.getBuyer());
+            storeBookingAttribute.setDate(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(booking.getDate()));
+            storeBookingAttribute.setPaid(booking.getPaid());
+            List<BookedMerchandise> merchandises = booking.getMerchandise();
+            List<BookedMerchandise> merchandisesForStore = new ArrayList<>();
+            BigDecimal price = BigDecimal.ZERO;
+            for(BookedMerchandise bookedMerchandise: merchandises) {
+                if (bookedMerchandise.getMerchandise().getStore().equals(store)) {
+                    merchandisesForStore.add(bookedMerchandise);
+                    price = price.add(bookedMerchandise.getMerchandise().getPrice().multiply(BigDecimal.valueOf(bookedMerchandise.getCount())));
+                }
+            }
+            storeBookingAttribute.setMerchandise(merchandisesForStore);
+            storeBookingAttribute.setPrice(price);
+            storeBookingAttributes.add(storeBookingAttribute);
+        }
+        return storeBookingAttributes;
+    }
 }

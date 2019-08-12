@@ -3,15 +3,18 @@ package ru.innopolis.stc16.innobazaar.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import ru.innopolis.stc16.innobazaar.entity.Category;
 import ru.innopolis.stc16.innobazaar.entity.Merchandise;
 import ru.innopolis.stc16.innobazaar.service.CategoryService;
 import ru.innopolis.stc16.innobazaar.service.MerchandiseService;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 @Controller
@@ -25,6 +28,72 @@ public class CategoryController {
 
     @Autowired
     private MerchandiseService merchandiseService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @GetMapping("/add")
+    public String addForm(Model theModel) {
+
+        Category category = new Category();
+        category.setParentCategory(new Category());
+        theModel.addAttribute("cat", category);
+
+        return "categoryForm";
+    }
+
+    @GetMapping("/edit")
+    public String editForm(@RequestParam("catName") String catName, Model theModel) {
+
+        Category category = categoryService.findCategoryByName(catName);
+        theModel.addAttribute("cat", category);
+        theModel.addAttribute("isEdit", "true");
+
+        return "categoryForm";
+    }
+
+    @PostMapping("/save")
+    public String saveCategory(@Valid @ModelAttribute("cat") Category category, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "categoryForm";
+        }
+
+        categoryService.saveCategory(category);
+
+        return "categoryList";
+    }
+
+    @PostMapping("/edit")
+    public String editategory(@Valid @ModelAttribute("cat") Category category, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "categoryForm";
+        }
+
+        categoryService.updateCategory(category);
+
+        return "categoryList";
+    }
+
+    @GetMapping("/list")
+    public String listCats(Model theModel) {
+
+        Map<String, String> catsContainer = new TreeMap<>();
+        List<Category> catsList = (categoryService != null) ? categoryService.getAllCategories() : null;
+
+        if (catsList == null || catsList.isEmpty()) {
+            catsContainer.put("категорий нет", "#");
+        } else {
+            for (Category cat : catsList) {
+                catsContainer.put(cat.getName(), cat.getName());
+            }
+        }
+
+        theModel.addAttribute("cats", catsContainer);
+
+        return "categoryList";
+    }
 
     @GetMapping("/openWithGoods")
     public String showCategoryWithGoods(

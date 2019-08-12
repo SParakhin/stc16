@@ -31,8 +31,12 @@ public class Store implements Serializable {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Merchandise> merchandiseList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "store", fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "store_bookings",
+            joinColumns = { @JoinColumn(name = "store_id") },
+            inverseJoinColumns = { @JoinColumn(name = "booking_id") }
+    )
     private List<Booking> bookings;
 
     public Store() {

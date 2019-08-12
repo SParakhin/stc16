@@ -8,6 +8,7 @@ import ru.innopolis.stc16.innobazaar.config.PayServiceIntegrator;
 import ru.innopolis.stc16.innobazaar.dao.BookingDAO;
 import ru.innopolis.stc16.innobazaar.dto.Payment;
 import ru.innopolis.stc16.innobazaar.dto.Store;
+import ru.innopolis.stc16.innobazaar.entity.BookedMerchandise;
 import ru.innopolis.stc16.innobazaar.entity.Booking;
 
 import java.math.BigDecimal;
@@ -35,8 +36,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public void saveBooking(Booking booking) {
-        bookingDAO.saveBooking(booking);
+    public Booking saveBooking(Booking booking) {
+        return bookingDAO.saveBooking(booking);
     }
 
     @Override
@@ -64,18 +65,28 @@ public class BookingServiceImpl implements BookingService {
             return null;
         }
     }
+
     @Override
-    public void refreshPaymentStatus(Long id) {
+    public Payment refreshPaymentStatus(Long id) {
+        Payment payment = null;
         Booking booking = getBooking(id);
         try {
-            Payment payment = getPayment(id);
+            payment = getPayment(id);
             boolean isStoreEquals = payment.getStoreName().equals(payServiceIntegrator.getStore().getName());
-            boolean isAmountEquals = booking.getMerchandise().getPrice().multiply(BigDecimal.valueOf(booking.getCount())).equals(Objects.requireNonNull(payment).getAmount());
+            BigDecimal price = BigDecimal.ZERO;
+            for (BookedMerchandise merchandise: booking.getMerchandise()) {
+                price = price.add(merchandise.getMerchandise().getPrice().multiply(BigDecimal.valueOf(merchandise.getCount())));
+            }
+            boolean isAmountEquals = price.equals(Objects.requireNonNull(payment).getAmount());
             booking.setPaid(isStoreEquals && isAmountEquals);
+            if (booking.getPaid()) {
+                booking.setBookingStatus("Ожидается доставка");
+            }
         } catch(Exception e) {
             booking.setPaid(false);
         }
         updateBooking(booking);
+        return payment;
     }
 
 }

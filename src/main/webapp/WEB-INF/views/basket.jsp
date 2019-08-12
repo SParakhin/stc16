@@ -60,7 +60,7 @@
                                                 <c:param name="id" value="${merchandise.id}"/>
                                             </c:url>
                                             <div class="col-md-2">
-                                                <button class="btn btn-danger btn-sm"
+                                                <button class="btncreateBooking btn-danger btn-sm"
                                                         onclick="window.location.href='${deleteLink}'">Удалить
                                                 </button>
                                             </div>
@@ -76,11 +76,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-auto">
-                            <button class="btn btn-success">Оплатить</button>
-                        </div>
-                        <br>
-                        <div class="col-md-auto">
-                            <button class="btn btn-success">Оформить заказ</button>
+                            <button class="btn btn-success" onclick="window.location.href='/booking/create'">Оформить заказ</button>
                         </div>
                     </div>
                 </div>

@@ -31,9 +31,14 @@
                         </c:forEach>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/listUsers">пользователи</a>
-                </li>
+                <security:authorize access="hasRole('ADMIN')">
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/cat/list">управление категориями</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/listUsers">пользователи</a>
+                    </li>
+                </security:authorize>
             </ul>
 
             <span class="navbar-text">
@@ -48,7 +53,7 @@
                 <ul class="navbar-nav ml-auto">
 
 
-                    <button type="button" class="btn btn-success"  onclick="window.location.href='/basket'">Корзина
+                    <button type="button" class="btn btn-success" onclick="window.location.href='/basket'">Корзина
                     <span class="badge badge-light">${basketSize}</span>
                     </button>
 
@@ -65,7 +70,7 @@
               <div class="dropdown-menu">
                 <a class="dropdown-item" href="${pageContext.request.contextPath}/user/updateUserForm">Мои профиль</a>
                 <a class="dropdown-item" href="${pageContext.request.contextPath}/store/listStore">Мои магазины</a>
-                <a class="dropdown-item" href="#">Мои заказы</a>
+                <a class="dropdown-item" href="${pageContext.request.contextPath}/bookings">Мои заказы</a>
                 <a class="dropdown-item" href="${pageContext.request.contextPath}/address/listAddress">Мои адреса доставки</a>
               </div>
             </li>

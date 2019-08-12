@@ -3,6 +3,7 @@ package ru.innopolis.stc16.innobazaar.dao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.innopolis.stc16.innobazaar.entity.Booking;
+import ru.innopolis.stc16.innobazaar.entity.Store;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,8 +25,10 @@ public class BookingDAOImpls implements BookingDAO {
     }
 
     @Override
-    public void saveBooking(Booking booking) {
+    public Booking saveBooking(Booking booking) {
         entityManager.persist(booking);
+        entityManager.flush();
+        return booking;
     }
 
     @Override
@@ -43,5 +46,6 @@ public class BookingDAOImpls implements BookingDAO {
     public Booking getBooking(Long id) {
         return entityManager.find(Booking.class, id);
     }
+
 }
 

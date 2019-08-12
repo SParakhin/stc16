@@ -11,7 +11,7 @@ public interface BookingDAO {
 
     List<Booking> getAllBooking();
 
-    void saveBooking(Booking booking);
+    Booking saveBooking(Booking booking);
 
     void deleteBooking(Long id);
 

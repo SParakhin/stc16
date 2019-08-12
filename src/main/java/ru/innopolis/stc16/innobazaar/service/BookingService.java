@@ -12,7 +12,7 @@ public interface BookingService {
 
     List<Booking> getAllBooking();
 
-    void saveBooking(Booking booking);
+    Booking saveBooking(Booking booking);
 
     Booking getBooking(Long id);
 
@@ -22,5 +22,5 @@ public interface BookingService {
 
     Payment getPayment(Long id);
 
-    void refreshPaymentStatus(Long id);
+    Payment refreshPaymentStatus(Long id);
 }

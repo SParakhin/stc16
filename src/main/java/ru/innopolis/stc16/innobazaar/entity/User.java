@@ -1,5 +1,8 @@
 package ru.innopolis.stc16.innobazaar.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,8 +14,12 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Table(name = "users")
 public class User implements UserDetails {
 
@@ -35,9 +42,6 @@ public class User implements UserDetails {
     private String username;
     @NotEmpty
     private String password;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn (name="basket_id")
-    private Basket basket;
 
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
@@ -62,89 +66,23 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
 
-    public void update(User user) {
-        setFirstName(user.getFirstName());
-        setLastName(user.getLastName());
-        setEmail(user.getEmail());
-        setPhone(user.getPhone());
-        setBasket(user.getBasket());
-    }
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_bookings",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "booking_id") }
+    )
+    private List<Booking> bookings;
 
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    public User() {
-    }
-
-    public User(String username, String password, String firstName, String lastName, String email) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-    }
-
-    public User(String username, String password, String firstName, String lastName, String email,
-                Collection<Role> roles) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.roles = roles;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public List<Address> getAddressList() {
-        return addressList;
-    }
-
-    public void setAddressList(List<Address> addressList) {
-        this.addressList = addressList;
-    }
-
-    public String getUsername() {
-        return username;
-    }
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "basket_merchandise",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "merchandise_id"))
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Merchandise> merchandises = new CopyOnWriteArrayList<>();
 
     @Override
     public boolean isAccountNonExpired() {
@@ -175,84 +113,16 @@ public class User implements UserDetails {
         return roles;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public List<Store> getStoreList() {
-        return storeList;
-    }
-
-    public void setStoreList(List<Store> storeList) {
-        this.storeList = storeList;
-    }
-
-    public Collection<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public Basket getBasket() {
-        return basket;
-    }
-
-    public void setBasket(Basket basket) {
-        this.basket = basket;
-    }
-
-    public boolean addAddressToUser(Address address) {
+    public void addAddressToUser(Address address) {
         address.setUser(this);
-        return getAddressList().add(address);
+        getAddressList().add(address);
     }
 
-    public boolean addStoreToUser(Store store) {
+    public void addStoreToUser(Store store) {
         store.setUser(this);
-        return getStoreList().add(store);
+        getStoreList().add(store);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("User{");
-        sb.append("id=").append(id);
-        sb.append(", firstName='").append(firstName).append('\'');
-        sb.append(", lastName='").append(lastName).append('\'');
-        sb.append(", email='").append(email).append('\'');
-        sb.append(", phone='").append(phone).append('\'');
-        sb.append(", username='").append(username).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
 }
 
 
