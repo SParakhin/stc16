@@ -1,0 +1,8 @@
+.logo-header {
+    background-image: url('../img/logo.jpg');
+    height: 400px;
+    background-size: cover;
+    background-attachment: scroll;
+    position: relative;
+    background-position: center center;
+}
