@@ -1,10 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<html>
-<body>
 
 <div class="row">
     <div class="col-md-3">
@@ -32,6 +29,3 @@
         </div>
     </div>
 </div>
-
-</body>
-</html>
