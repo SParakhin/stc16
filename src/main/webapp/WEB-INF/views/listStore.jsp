@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -7,14 +7,14 @@
     <jsp:attribute name="titleText">Список магазинов</jsp:attribute>
     <jsp:attribute name="metaDescription">Сервис для создания личных магазино</jsp:attribute>
     <jsp:body>
-
-
         <div class="container-fluid">
-            <jsp:include page="profileHeader.jsp"></jsp:include>
+            <jsp:include page="profileHeader.jsp"/>
             <div class="row">
                 <div class="col-md-auto">
                     <div class="panel-body">
-                        <table class="table table-striped table-bordered">
+                        <%--@elvariable id="stores" type="List"--%>
+                        <c:if test="${!stores.isEmpty()}">
+                            <table class="table table-striped table-bordered">
                             <tr>
                                 <th>Название</th>
                                 <th>Описание</th>
@@ -52,7 +52,10 @@
                                 </tr>
                             </c:forEach>
                         </table>
-
+                        </c:if>
+                        <c:if test="${stores.isEmpty()}">
+                            У Вас нет магазинов
+                        </c:if>
                         <form class="form-inline">
                             <button type="submit" class="btn btn-success" formmethod="get"
                                     formaction="${pageContext.request.contextPath}/store/addStoreForm" name="edit">
@@ -62,8 +65,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
     </jsp:body>
 </t:page-template>

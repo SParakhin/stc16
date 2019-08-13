@@ -38,7 +38,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment createPayment(ProcessCardRequest processRequest) {
         ru.innopolis.stc16.innopay.entity.Payment payment = null;
-        if (Math.random() > 0.5) {
+        if (Math.random() > 0.1) {
             try {
                 payment = new ru.innopolis.stc16.innopay.entity.Payment();
                 payment.setStore(storeRepository.getStoreByName(processRequest.getStoreName()));

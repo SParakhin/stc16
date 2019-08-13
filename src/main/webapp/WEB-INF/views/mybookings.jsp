@@ -11,6 +11,7 @@
             <jsp:include page="profileHeader.jsp"/>
             <c:set var="index" value="0"/>
                 <%--@elvariable id="bookingWithStoresSort" type="java.util.List"--%>
+            <c:if test="${!bookingWithStoresSort.isEmpty()}">
             <c:forEach var="bookingWithMerchandises"
                        items="${bookingWithStoresSort}"><%--@elvariable id="dates" type="java.util.List"--%>
                 <%--@elvariable id="totalSums" type="java.util.List"--%>
@@ -74,6 +75,10 @@
                 </c:if>
                 <c:set var="index" value="${index + 1}"/>
             </c:forEach>
+            </c:if>
+            <c:if test="${bookingWithStoresSort.isEmpty()}">
+                Вы ещё не делали никаких заказов
+            </c:if>
         </div>
     </jsp:body>
 </t:page-template>

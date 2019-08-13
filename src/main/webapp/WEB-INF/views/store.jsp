@@ -90,109 +90,125 @@
 
             <c:if test="${pageContext.request.userPrincipal.name eq store.user.username}">
                 <div class="tab-pane container-fluid fade" id="products">
-                    <table class="table table-striped table-bordered">
-                        <tr>
-                            <th>Название</th>
-                            <th>Описание</th>
-                            <th>Категория</th>
-                            <th>Цена</th>
-                            <th>Изображение</th>
-                            <th>Действие</th>
-                        </tr>
-
-                        <!-- loop over and print our users -->
-                            <%--@elvariable id="products" type="java.util.List"--%>
-                        <c:forEach var="product" items="${products}">
-                            <!-- construct an "update" link with username id -->
-                            <c:url var="updateLink" value="/product/updateProductForm">
-                                <c:param name="id" value="${product.id}"/>
-                            </c:url>
-
-                            <!-- construct an "delete" link with username id -->
-                            <c:url var="deleteLink" value="/product/deleteProduct">
-                                <c:param name="id" value="${product.id}"/>
-                            </c:url>
-
+                        <%--@elvariable id="products" type="List"--%>
+                    <c:if test="${!products.isEmpty()}">
+                        <table class="table table-striped table-bordered">
                             <tr>
-                                <td>${product.name}</td>
-                                <td>${product.description}</td>
-                                <td>${product.category.name}</td>
-                                <td>${product.price}</td>
-                                <td>
-                                    <div class="media">
-                                        <img src="${product.pictureUrl}" alt="изображение" class="img-thumbnail"
-                                             style="width:60px;">
-                                    </div>
-                                </td>
-                                <td>
-                                    <a href="${updateLink}">Изменить</a>
-                                    | <a href="${deleteLink}"
-                                         onclick="if (!(confirm('Вы хотите удалить товар ?'))) return false">Удалить</a>
-                                </td>
+                                <th>Название</th>
+                                <th>Описание</th>
+                                <th>Категория</th>
+                                <th>Цена</th>
+                                <th>Изображение</th>
+                                <th>Действие</th>
                             </tr>
-                        </c:forEach>
-                    </table>
-                    <a href="${pageContext.request.contextPath}/product/addProductForm?id=${store.id}"
-                       class="btn btn-success"
-                       role="button">Добавить товар</a>
+
+                            <!-- loop over and print our users -->
+                            <c:forEach var="product" items="${products}">
+                                <!-- construct an "update" link with username id -->
+                                <c:url var="updateLink" value="/product/updateProductForm">
+                                    <c:param name="id" value="${product.id}"/>
+                                </c:url>
+
+                                <!-- construct an "delete" link with username id -->
+                                <c:url var="deleteLink" value="/product/deleteProduct">
+                                    <c:param name="id" value="${product.id}"/>
+                                </c:url>
+
+                                <tr>
+                                    <td>${product.name}</td>
+                                    <td>${product.description}</td>
+                                    <td>${product.category.name}</td>
+                                    <td>${product.price}</td>
+                                    <td>
+                                        <div class="media">
+                                            <img src="${product.pictureUrl}" alt="изображение" class="img-thumbnail"
+                                                 style="width:60px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="${updateLink}">Изменить</a>
+                                        | <a href="${deleteLink}"
+                                             onclick="if (!(confirm('Вы хотите удалить товар ?'))) return false">Удалить</a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </c:if>
+                    <c:if test="${products.isEmpty()}">
+                        В этом магазине ещё нет товаров
+                    </c:if>
+                    <div class="col-md-auto">
+                        <a href="${pageContext.request.contextPath}/product/addProductForm?id=${store.id}"
+                           class="btn btn-success"
+                           role="button">Добавить товар</a>
+                    </div>
                 </div>
             </c:if>
 
             <div class="tab-pane container-fluid fade" id="orders">
-                <div class="row justify-content-center">
-                    <div class="col-md-9">
-                            <%--@elvariable id="bookings" type="java.util.List"--%>
-                        <c:forEach var="booking" items="${bookings}">
-                            <br>
-                            <div class="row">
-                                <div class="card w-100">
-                                    <div class="col-md-12 card-body">
-                                        <h5>Покупатель: ${booking.buyer.firstName} ${booking.buyer.lastName}</h5>
-                                        <h5>
-                                            Адрес: ${booking.address.country} ${booking.address.city} ${booking.address.address}</h5>
-                                        <div class="row">
-                                            <div class="card w-100">
-                                                <c:forEach var="merchandise" items="${booking.merchandise}">
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <div class="col-md-2">
-                                                                <img class="img-fluid"
-                                                                     src="${merchandise.merchandise.pictureUrl}"
-                                                                     alt="Нет картинки"
-                                                                     style="width: 60px;">
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <a href="${pageContext.request.contextPath}/merchandise?id=${merchandise.merchandise.id}"> ${merchandise.merchandise.name} </a>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <strong>${merchandise.merchandise.price} руб.</strong>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <strong>${merchandise.count} шт.</strong>
+                <%--@elvariable id="bookings" type="List"--%>
+                <c:if test="${!bookings.isEmpty()}">
+                    <div class="row justify-content-center">
+                        <div class="col-md-9">
+                            <c:forEach var="booking" items="${bookings}">
+                                <br>
+                                <div class="row">
+                                    <div class="card w-100">
+                                        <div class="col-md-12 card-body">
+                                            <h5>Покупатель: ${booking.buyer.firstName} ${booking.buyer.lastName}</h5>
+                                            <h5>
+                                                Адрес: ${booking.address.country} ${booking.address.city} ${booking.address.address}</h5>
+                                            <div class="row">
+                                                <div class="card w-100">
+                                                    <c:forEach var="merchandise" items="${booking.merchandise}">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-md-2">
+                                                                    <img class="img-fluid"
+                                                                         src="${merchandise.merchandise.pictureUrl}"
+                                                                         alt="Нет картинки"
+                                                                         style="width: 60px;">
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <a href="${pageContext.request.contextPath}/merchandise?id=${merchandise.merchandise.id}"> ${merchandise.merchandise.name} </a>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <strong>${merchandise.merchandise.price}
+                                                                        руб.</strong>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <strong>${merchandise.count} шт.</strong>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </c:forEach>
+                                                    </c:forEach>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <h5>Сумма заказа: <strong>${booking.price} руб.</strong></h5>
-                                                <h5>Дата заказа: <strong>${booking.date}</strong></h5>
-                                                <h5>Статус заказа: <strong>${booking.status}</strong></h5>
-                                                <h5>Статус оплаты:<strong>
-                                                    <c:if test="${booking.paid}"><a href="/bookings/${booking.id}/details?returnPage=/store?id=${store.id}%23orders">оплачен</a></c:if>
-                                                    <c:if test="${!booking.paid}"><a href="/bookings/${booking.id}/paidStatus?returnPage=/store?id=${store.id}%23orders">не оплачен</a></c:if>
-                                                </strong>
-                                                </h5>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <h5>Сумма заказа: <strong>${booking.price} руб.</strong></h5>
+                                                    <h5>Дата заказа: <strong>${booking.date}</strong></h5>
+                                                    <h5>Статус заказа: <strong>${booking.status}</strong></h5>
+                                                    <h5>Статус оплаты:<strong>
+                                                        <c:if test="${booking.paid}"><a
+                                                                href="/bookings/${booking.id}/details?returnPage=/store?id=${store.id}%23orders">оплачен</a></c:if>
+                                                        <c:if test="${!booking.paid}"><a
+                                                                href="/bookings/${booking.id}/paidStatus?returnPage=/store?id=${store.id}%23orders">не
+                                                            оплачен</a></c:if>
+                                                    </strong>
+                                                    </h5>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </c:forEach>
+                            </c:forEach>
+                        </div>
                     </div>
-                </div>
+                </c:if>
+                <c:if test="${bookings.isEmpty()}">
+                    У этого магазина ещё нет заказов
+                </c:if>
             </div>
         </div>
 
